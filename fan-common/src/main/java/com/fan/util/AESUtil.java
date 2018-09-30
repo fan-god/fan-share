@@ -18,7 +18,6 @@ import java.util.Properties;
  * @Description: AES加密和解密的工具类
  * @author lenovo
  * @date 2018年7月17日
- *
  */
 @Component
 public class AESUtil {
