@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fan.dao.UserMapper">
+  <resultMap id="BaseResultMap" type="com.fan.entity.User">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="sex" jdbcType="VARCHAR" property="sex" />
+    <result column="phone" jdbcType="INTEGER" property="phone" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="stat" jdbcType="INTEGER" property="stat" />
+    <result column="rema" jdbcType="VARCHAR" property="rema" />
+    <result column="gwf1" jdbcType="INTEGER" property="gwf1" />
+    <result column="gwf2" jdbcType="VARCHAR" property="gwf2" />
+    <result column="gwf3" jdbcType="VARCHAR" property="gwf3" />
+    <result column="gwf4" jdbcType="VARCHAR" property="gwf4" />
+    <result column="gwf5" jdbcType="VARCHAR" property="gwf5" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, username, password, sex, phone, address, stat, rema, gwf1, gwf2, gwf3, gwf4, 
+    gwf5
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="getAllUser" resultMap="BaseResultMap">
+    select * from user where stat=1
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.fan.entity.User">
+    insert into user (id, username, password, 
+      sex, phone, address, 
+      stat, rema, gwf1, gwf2, 
+      gwf3, gwf4, gwf5)
+    values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{sex,jdbcType=VARCHAR}, #{phone,jdbcType=INTEGER}, #{address,jdbcType=VARCHAR}, 
+      #{stat,jdbcType=INTEGER}, #{rema,jdbcType=VARCHAR}, #{gwf1,jdbcType=INTEGER}, #{gwf2,jdbcType=VARCHAR}, 
+      #{gwf3,jdbcType=VARCHAR}, #{gwf4,jdbcType=VARCHAR}, #{gwf5,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fan.entity.User">
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="username != null">
+        username,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="stat != null">
+        stat,
+      </if>
+      <if test="rema != null">
+        rema,
+      </if>
+      <if test="gwf1 != null">
+        gwf1,
+      </if>
+      <if test="gwf2 != null">
+        gwf2,
+      </if>
+      <if test="gwf3 != null">
+        gwf3,
+      </if>
+      <if test="gwf4 != null">
+        gwf4,
+      </if>
+      <if test="gwf5 != null">
+        gwf5,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=INTEGER},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="stat != null">
+        #{stat,jdbcType=INTEGER},
+      </if>
+      <if test="rema != null">
+        #{rema,jdbcType=VARCHAR},
+      </if>
+      <if test="gwf1 != null">
+        #{gwf1,jdbcType=INTEGER},
+      </if>
+      <if test="gwf2 != null">
+        #{gwf2,jdbcType=VARCHAR},
+      </if>
+      <if test="gwf3 != null">
+        #{gwf3,jdbcType=VARCHAR},
+      </if>
+      <if test="gwf4 != null">
+        #{gwf4,jdbcType=VARCHAR},
+      </if>
+      <if test="gwf5 != null">
+        #{gwf5,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fan.entity.User">
+    update user
+    <set>
+      <if test="username != null">
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=INTEGER},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="stat != null">
+        stat = #{stat,jdbcType=INTEGER},
+      </if>
+      <if test="rema != null">
+        rema = #{rema,jdbcType=VARCHAR},
+      </if>
+      <if test="gwf1 != null">
+        gwf1 = #{gwf1,jdbcType=INTEGER},
+      </if>
+      <if test="gwf2 != null">
+        gwf2 = #{gwf2,jdbcType=VARCHAR},
+      </if>
+      <if test="gwf3 != null">
+        gwf3 = #{gwf3,jdbcType=VARCHAR},
+      </if>
+      <if test="gwf4 != null">
+        gwf4 = #{gwf4,jdbcType=VARCHAR},
+      </if>
+      <if test="gwf5 != null">
+        gwf5 = #{gwf5,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fan.entity.User">
+    update user
+    set username = #{username,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=INTEGER},
+      address = #{address,jdbcType=VARCHAR},
+      stat = #{stat,jdbcType=INTEGER},
+      rema = #{rema,jdbcType=VARCHAR},
+      gwf1 = #{gwf1,jdbcType=INTEGER},
+      gwf2 = #{gwf2,jdbcType=VARCHAR},
+      gwf3 = #{gwf3,jdbcType=VARCHAR},
+      gwf4 = #{gwf4,jdbcType=VARCHAR},
+      gwf5 = #{gwf5,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="AddGwf1" parameterType="java.util.Map">
+  	update user set gwf1 = ifnull(gwf1,0)+#{score} where username = #{username,jdbcType=VARCHAR}
+  </update>
+</mapper>

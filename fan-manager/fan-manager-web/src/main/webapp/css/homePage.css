@@ -1,0 +1,17 @@
+﻿@charset "utf-8";
+/* CSS Document */
+.title{margin: 0 auto;width: 300px;text-align: center;font:bolder 50px "宋体";text-shadow: 0px 1px 0px #999, 0px 2px 0px #888, 0px 3px 0px #777, 0px 4px 0px #666, 0px 5px 0px #555, 0px 6px 0px #444, 0px 7px 0px #333, 0px 8px 7px;color:#fafafa; }
+.notes{margin: 0 auto;width: 500px;text-align: right;font: bolder 20px Tahoma;color: blueviolet;}
+
+.north-title{text-align:center;margin: 10px 0;}
+
+.six a{ text-decoration:none; color:#000; }
+.six a:hover{ text-decoration:underline; color:#F00;}
+.six{ width:100%;height: 180px; clear:both;text-align:center; font-size:14px; margin:0 auto;}
+.six p{ padding:8px 0px;}
+.six_ul1 div{ margin:0 auto;width: 820px;}
+.six .six_ul1 li{ float:left; margin:8px 0;}
+.six_ul2{ clear:left;width: 840px;; margin:0 auto;}
+.six .six_ul2 li{float:left;}
+.six ul li img{ margin-left:14px;}
+.six_ul2_li,.six_ul1_li img{ margin-top:-4px;}

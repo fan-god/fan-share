@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fan.dao.BaseFileMapper">
+  <resultMap id="BaseResultMap" type="com.fan.entity.BaseFile">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="fnna" jdbcType="VARCHAR" property="fnna" />
+    <result column="ofna" jdbcType="VARCHAR" property="ofna" />
+    <result column="updt" jdbcType="VARCHAR" property="updt" />
+    <result column="scrm" jdbcType="VARCHAR" property="scrm" />
+    <result column="stat" jdbcType="VARCHAR" property="stat" />
+    <result column="gwf1" jdbcType="VARCHAR" property="gwf1" />
+    <result column="gwf2" jdbcType="VARCHAR" property="gwf2" />
+    <result column="gwf3" jdbcType="VARCHAR" property="gwf3" />
+    <result column="gwf4" jdbcType="VARCHAR" property="gwf4" />
+    <result column="gwf5" jdbcType="VARCHAR" property="gwf5" />
+    <result column="rema" jdbcType="VARCHAR" property="rema" />
+    <result column="flag" jdbcType="VARCHAR" property="flag" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, fnna, ofna, updt, scrm, stat, gwf1, gwf2, gwf3, gwf4, gwf5, rema, flag
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from basefile
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="getFileByStat" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from basefile
+    where stat = #{stat,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from basefile
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.fan.entity.BaseFile">
+    insert into basefile (id, fnna, ofna, 
+      updt, scrm, stat, gwf1, 
+      gwf2, gwf3, gwf4, gwf5, 
+      rema, flag)
+    values (#{id,jdbcType=INTEGER}, #{fnna,jdbcType=VARCHAR}, #{ofna,jdbcType=VARCHAR}, 
+      #{updt,jdbcType=VARCHAR}, #{scrm,jdbcType=VARCHAR}, #{stat,jdbcType=VARCHAR}, #{gwf1,jdbcType=VARCHAR}, 
+      #{gwf2,jdbcType=VARCHAR}, #{gwf3,jdbcType=VARCHAR}, #{gwf4,jdbcType=VARCHAR}, #{gwf5,jdbcType=VARCHAR}, 
+      #{rema,jdbcType=VARCHAR}, #{flag,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fan.entity.BaseFile">
+    insert into basefile
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="fnna != null">
+        fnna,
+      </if>
+      <if test="ofna != null">
+        ofna,
+      </if>
+      <if test="updt != null">
+        updt,
+      </if>
+      <if test="scrm != null">
+        scrm,
+      </if>
+      <if test="stat != null">
+        stat,
+      </if>
+      <if test="gwf1 != null">
+        gwf1,
+      </if>
+      <if test="gwf2 != null">
+        gwf2,
+      </if>
+      <if test="gwf3 != null">
+        gwf3,
+      </if>
+      <if test="gwf4 != null">
+        gwf4,
+      </if>
+      <if test="gwf5 != null">
+        gwf5,
+      </if>
+      <if test="rema != null">
+        rema,
+      </if>
+      <if test="flag != null">
+        flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="fnna != null">
+        #{fnna,jdbcType=VARCHAR},
+      </if>
+      <if test="ofna != null">
+        #{ofna,jdbcType=VARCHAR},
+      </if>
+      <if test="updt != null">
+        #{updt,jdbcType=VARCHAR},
+      </if>
+      <if test="scrm != null">
+        #{scrm,jdbcType=VARCHAR},
+      </if>
+      <if test="stat != null">
+        #{stat,jdbcType=VARCHAR},
+      </if>
+      <if test="gwf1 != null">
+        #{gwf1,jdbcType=VARCHAR},
+      </if>
+      <if test="gwf2 != null">
+        #{gwf2,jdbcType=VARCHAR},
+      </if>
+      <if test="gwf3 != null">
+        #{gwf3,jdbcType=VARCHAR},
+      </if>
+      <if test="gwf4 != null">
+        #{gwf4,jdbcType=VARCHAR},
+      </if>
+      <if test="gwf5 != null">
+        #{gwf5,jdbcType=VARCHAR},
+      </if>
+      <if test="rema != null">
+        #{rema,jdbcType=VARCHAR},
+      </if>
+      <if test="flag != null">
+        #{flag,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fan.entity.BaseFile">
+    update basefile
+    <set>
+      <if test="fnna != null">
+        fnna = #{fnna,jdbcType=VARCHAR},
+      </if>
+      <if test="ofna != null">
+        ofna = #{ofna,jdbcType=VARCHAR},
+      </if>
+      <if test="updt != null">
+        updt = #{updt,jdbcType=VARCHAR},
+      </if>
+      <if test="scrm != null">
+        scrm = #{scrm,jdbcType=VARCHAR},
+      </if>
+      <if test="stat != null">
+        stat = #{stat,jdbcType=VARCHAR},
+      </if>
+      <if test="gwf1 != null">
+        gwf1 = #{gwf1,jdbcType=VARCHAR},
+      </if>
+      <if test="gwf2 != null">
+        gwf2 = #{gwf2,jdbcType=VARCHAR},
+      </if>
+      <if test="gwf3 != null">
+        gwf3 = #{gwf3,jdbcType=VARCHAR},
+      </if>
+      <if test="gwf4 != null">
+        gwf4 = #{gwf4,jdbcType=VARCHAR},
+      </if>
+      <if test="gwf5 != null">
+        gwf5 = #{gwf5,jdbcType=VARCHAR},
+      </if>
+      <if test="rema != null">
+        rema = #{rema,jdbcType=VARCHAR},
+      </if>
+      <if test="flag != null">
+        flag = #{flag,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fan.entity.BaseFile">
+    update basefile
+    set fnna = #{fnna,jdbcType=VARCHAR},
+      ofna = #{ofna,jdbcType=VARCHAR},
+      updt = #{updt,jdbcType=VARCHAR},
+      scrm = #{scrm,jdbcType=VARCHAR},
+      stat = #{stat,jdbcType=VARCHAR},
+      gwf1 = #{gwf1,jdbcType=VARCHAR},
+      gwf2 = #{gwf2,jdbcType=VARCHAR},
+      gwf3 = #{gwf3,jdbcType=VARCHAR},
+      gwf4 = #{gwf4,jdbcType=VARCHAR},
+      gwf5 = #{gwf5,jdbcType=VARCHAR},
+      rema = #{rema,jdbcType=VARCHAR},
+      flag = #{flag,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="getAllFile" resultMap="BaseResultMap">
+  	select * from basefile
+  </select>
+</mapper>

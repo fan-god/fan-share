@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fan.dao.IntegralMapper">
+  <resultMap id="BaseResultMap" type="com.fan.entity.Integral">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="stat" jdbcType="INTEGER" property="stat" />
+    <result column="reason" jdbcType="VARCHAR" property="reason" />
+    <result column="modu" jdbcType="VARCHAR" property="modu" />
+    <result column="score" jdbcType="INTEGER" property="score" />
+    <result column="rema" jdbcType="VARCHAR" property="rema" />
+    <result column="gwf1" jdbcType="VARCHAR" property="gwf1" />
+    <result column="gwf2" jdbcType="VARCHAR" property="gwf2" />
+    <result column="gwf3" jdbcType="VARCHAR" property="gwf3" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, stat, reason, modu, score, rema, gwf1, gwf2, gwf3
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from integral
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="getScoreByModu" parameterType="String" resultType="java.lang.Integer">
+    select 
+    score 
+    from integral
+    where modu = #{modu,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from integral
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.fan.entity.Integral">
+    insert into integral (id, stat, reason, 
+      modu, score, rema, 
+      gwf1, gwf2, gwf3)
+    values (#{id,jdbcType=INTEGER}, #{stat,jdbcType=INTEGER}, #{reason,jdbcType=VARCHAR}, 
+      #{modu,jdbcType=VARCHAR}, #{score,jdbcType=INTEGER}, #{rema,jdbcType=VARCHAR}, 
+      #{gwf1,jdbcType=VARCHAR}, #{gwf2,jdbcType=VARCHAR}, #{gwf3,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fan.entity.Integral">
+    insert into integral
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="stat != null">
+        stat,
+      </if>
+      <if test="reason != null">
+        reason,
+      </if>
+      <if test="modu != null">
+        modu,
+      </if>
+      <if test="score != null">
+        score,
+      </if>
+      <if test="rema != null">
+        rema,
+      </if>
+      <if test="gwf1 != null">
+        gwf1,
+      </if>
+      <if test="gwf2 != null">
+        gwf2,
+      </if>
+      <if test="gwf3 != null">
+        gwf3,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="stat != null">
+        #{stat,jdbcType=INTEGER},
+      </if>
+      <if test="reason != null">
+        #{reason,jdbcType=VARCHAR},
+      </if>
+      <if test="modu != null">
+        #{modu,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null">
+        #{score,jdbcType=INTEGER},
+      </if>
+      <if test="rema != null">
+        #{rema,jdbcType=VARCHAR},
+      </if>
+      <if test="gwf1 != null">
+        #{gwf1,jdbcType=VARCHAR},
+      </if>
+      <if test="gwf2 != null">
+        #{gwf2,jdbcType=VARCHAR},
+      </if>
+      <if test="gwf3 != null">
+        #{gwf3,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fan.entity.Integral">
+    update integral
+    <set>
+      <if test="stat != null">
+        stat = #{stat,jdbcType=INTEGER},
+      </if>
+      <if test="reason != null">
+        reason = #{reason,jdbcType=VARCHAR},
+      </if>
+      <if test="modu != null">
+        modu = #{modu,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null">
+        score = #{score,jdbcType=INTEGER},
+      </if>
+      <if test="rema != null">
+        rema = #{rema,jdbcType=VARCHAR},
+      </if>
+      <if test="gwf1 != null">
+        gwf1 = #{gwf1,jdbcType=VARCHAR},
+      </if>
+      <if test="gwf2 != null">
+        gwf2 = #{gwf2,jdbcType=VARCHAR},
+      </if>
+      <if test="gwf3 != null">
+        gwf3 = #{gwf3,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fan.entity.Integral">
+    update integral
+    set stat = #{stat,jdbcType=INTEGER},
+      reason = #{reason,jdbcType=VARCHAR},
+      modu = #{modu,jdbcType=VARCHAR},
+      score = #{score,jdbcType=INTEGER},
+      rema = #{rema,jdbcType=VARCHAR},
+      gwf1 = #{gwf1,jdbcType=VARCHAR},
+      gwf2 = #{gwf2,jdbcType=VARCHAR},
+      gwf3 = #{gwf3,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

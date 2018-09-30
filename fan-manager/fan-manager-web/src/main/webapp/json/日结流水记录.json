@@ -1,0 +1,24 @@
+[{
+  "id":1,
+  "text":"日结流水记录",
+  "state":"closed",
+  "children":[{
+	"id":11,
+	"text":"饮食消费",
+	"state":"closed",
+	"children":[{"id":111, "text":"早餐"},{"id":112, "text":"中餐"},{"id":113, "text":"晚餐"},{"id":114, "text":"零食和宵夜"}]
+  },{
+	"id":12,
+	"text":"烟酒消费",
+	"state":"closed",
+	"children":[{"id":121, "text":"烟"},{"id":122, "text":"酒", "attributes":{"p1":"Custom Attribute1", "p2":"Custom Attribute2"}}]
+  },{
+	"id":13,
+	"text":"交通",
+	"state":"closed",
+	"children":[{"id":131, "text":"地铁"},{"id":132, "text":"公交"},{"id":133, "text":"其他"}]
+  },{
+	"id":14,
+	"text":"其他"
+  }]
+}]

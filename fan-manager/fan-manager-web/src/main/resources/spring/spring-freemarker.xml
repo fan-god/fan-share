@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd">
+
+	<util:properties location="classpath:properties/freemark.properties" id="fm" />
+
+	<bean class="org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean" >
+		<property name="templateLoaderPath" value="#{fm.path}" />
+		<property name="defaultEncoding" value="#{fm.defaultEncoding}"/>
+		
+		<!-- <property name="freemarkerSettings">
+			<props>
+				<prop key="tag_syntax">auto_detect</prop>
+				检测模板跟新时间间隔，默认5秒
+				<prop key="template_update_delay">1</prop>
+				<prop key="default_encoding">UTF-8</prop>
+				<prop key="locale">zh_CN</prop>
+				<prop key="boolean_format">true,false</prop>
+				时间格式化
+				<prop key="datetime_format">yyyy-MM-dd HH:mm:ss</prop>
+				<prop key="date_format">yyyy-MM-dd</prop>
+				<prop key="time_format">HH:mm:ss</prop>
+				<prop key="number_format">0.######</prop>
+				去掉多余间隔
+				<prop key="whitespace_stripping">true</prop>
+				引入ftl文件
+				<prop key="auto_import">/com/fan_god/freemarker</prop>
+			</props>
+		</property> -->
+		<property name="freemarkerVariables">
+			<map>
+				<entry key="sortSalaryDirec" value="sortSalaryDriectiveModel"></entry>
+			</map>
+		</property>
+	</bean>
+	
+	<bean class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver" id="viewResolver">
+		<!-- 展示层所在目录,前缀 -->
+		<property name="prefix" value="/"/>
+		<!-- view页面类型，后缀 -->
+		<property name="suffix" value=".html"/>
+		<!-- 缓存 -->
+		<property name="cache" value="true"/>
+		<property name="contentType" value="text/html;charset=UTF-8"/>
+	</bean>
+	
+	<bean class="org.springframework.web.multipart.commons.CommonsMultipartResolver" id="multipartResolver">
+		<property name="maxUploadSize" value="10000000"/>
+	</bean>
+</beans>

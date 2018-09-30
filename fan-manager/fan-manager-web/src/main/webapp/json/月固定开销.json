@@ -1,0 +1,41 @@
+[{
+  "id":1,
+  "text":"月固定开销",
+  "state":"closed",
+  "children":[{
+	"id":11,
+	"text":"房租"
+  },{
+	"id":12,
+	"text":"水电网费（含垃圾处理等）"
+  },{
+	"id":13,
+	"text":"月税后工资"
+  },{
+	"id":14,
+	"text":"还贷",
+	"state":"closed",
+	"children":[{"id":141, "text":"房贷"},{"id":142, "text":"车贷"},{"id":143, "text":"信用卡"},{"id":143, "text":"其他"}]
+  },{
+	"id":15,
+	"text":"社交",
+	"state":"closed",
+	"children":[{"id":151, "text":"聚餐"},{"id":152, "text":"看电影"},{"id":153, "text":"酒吧"},{"id":154, "text":"其他"}]
+  },{
+	"id":16,
+	"text":"购物",
+	"state":"closed",
+	"children":[{"id":161, "text":"衣服"},{"id":162, "text":"生活用品"},{"id":163, "text":"其他"}]
+  },{
+	"id":17,
+	"text":"汽车",
+	"state":"closed",
+	"children":[{"id":171, "text":"油费"},{"id":172, "text":"保养"},{"id":173, "text":"其他"}]
+  },{
+	"id":18,
+	"text":"看病"
+  },{
+	"id":19,
+	"text":"其他"
+  }]
+}]

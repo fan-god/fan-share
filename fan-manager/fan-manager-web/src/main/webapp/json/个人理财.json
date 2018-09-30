@@ -1,0 +1,39 @@
+[{
+  "id":1,
+  "text":"个人理财记录",
+  "state":"closed",
+  "children":[{
+	"id":11,
+	"text":"股票",
+	"state":"closed",
+	"children":[{"id":111, "text":"周盈亏"},{"id":112, "text":"月盈亏"},{"id":113, "text":"年盈亏"}]
+  },{
+	"id":12,
+	"text":"存款利息",
+	"state":"closed",
+	"children":[{"id":121, "text":"银行"},{"id":122, "text":"支付宝"},{"id":123, "text":"微信"},{"id":"124","text":"其他平台"}]
+  },{
+	"id":13,
+	"text":"无风险理财产品",
+	"state":"closed",
+	"children":[{"id":131, "text":"银行"},{"id":132, "text":"支付宝"},{"id":133, "text":"微信"},{"id":134,"text":"其他平台"}]
+  },{
+	"id":14,
+	"text":"有风险理财产品",
+	"state":"closed",
+	"children":[
+	  {"id":141, "text":"期货","state":"closed","children":[{"id":1411, "text":"月盈亏"},{"id":1412, "text":"年盈亏"}]},
+	  {"id":142, "text":"国债","state":"closed","children":[{"id":1421, "text":"月盈亏"},{"id":1422, "text":"年盈亏"}]},
+	  {"id":143, "text":"现货","state":"closed","children":[{"id":1431, "text":"月盈亏"},{"id":1432, "text":"年盈亏"}]},
+	  {"id":144,"text":"其他","state":"closed","children":[{"id":1441, "text":"月盈亏"},{"id":1442, "text":"年盈亏"}]}
+	]
+  },{
+	"id":15,
+	"text":"其他",
+	"state":"closed",
+	"children":[
+	  {"id":151, "text":"投资","state":"closed","children":[{"id":1511, "text":"月盈亏"},{"id":1512, "text":"年盈亏"}]},
+	  {"id":152, "text":"保险","state":"closed","children":[{"id":1521, "text":"月盈亏"},{"id":1522, "text":"年盈亏"}]},
+	  {"id":153, "text":"其他","state":"closed","children":[{"id":1531, "text":"月盈亏"},{"id":1532, "text":"年盈亏"}]}]
+  }]
+}]

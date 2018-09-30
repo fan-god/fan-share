@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
+
+	<!--&lt;!&ndash; 导入配置文件 &ndash;&gt;
+	<import resource="classpath:META-INF/cxf/cxf.xml" />
+	<import resource="classpath:META-INF/cxf/cxf-extension-soap.xml" />
+	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
+
+	&lt;!&ndash; 配置CXF接口 &ndash;&gt;
+	<bean class="org.apache.cxf.jaxws.JaxWsProxyFactoryBean" id="phoneServiceBean">
+		<property name="serviceClass" value="com.fan_god.cxf.IPhoneService" />
+		<property name="address"
+			value="http://localhost:8080/Spring_SpringMVC_Mybatis/webService/phoneService?wsdl" />
+	</bean>
+
+	&lt;!&ndash; 配置webService &ndash;&gt;
+	<bean class="com.fan_god.cxf.impl.PhoneServiceService" factory-bean="phoneServiceBean" factory-method="create" />
+
+	&lt;!&ndash; 天气配置 &ndash;&gt;
+	<bean class="org.apache.cxf.jaxws.JaxWsProxyFactoryBean" id="weatherBean">
+		<property name="serviceClass" value="com._36wu.WeatherServiceSoap" />
+		<property name="address" value="http://web.36wu.com/WeatherService.asmx?WSDL" />
+	</bean>                             
+
+	<bean class="com._36wu.WeatherService" factory-bean="weatherBean" factory-method="create" />
+	
+	&lt;!&ndash; 手机归属地查询 &ndash;&gt;
+	<bean class="org.apache.cxf.jaxws.JaxWsProxyFactoryBean" id="phoneBean">
+		<property name="serviceClass" value="com._36wu.MobileServiceSoap" />
+		<property name="address" value="http://web.36wu.com/MobileService.asmx?WSDL" />
+	</bean>
+
+	<bean class="com._36wu.MobileService" factory-bean="phoneBean" factory-method="create" />-->
+</beans>
