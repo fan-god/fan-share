@@ -1,4 +1,4 @@
-package com.pb;
+package com.fan;
 
 import static org.junit.Assert.assertTrue;
 
