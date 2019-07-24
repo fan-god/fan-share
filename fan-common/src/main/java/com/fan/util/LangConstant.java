@@ -1,7 +1,7 @@
 package com.fan.util;
 
 /**
- * Created by Achievo on 2018/9/5.
+ * Created by fan on 2018/9/5.
  * 这个类用于放国际化的配置文件每个key的名字常量
  */
 public interface LangConstant {

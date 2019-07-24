@@ -1,7 +1,7 @@
 package com.fan.util;
 
 /**
- * Created by Achievo on 2018/9/3.
+ * Created by fan on 2018/9/3.
  * 接口字段常量类，存放一些字段名称，便于方便管理，字段出处请写好注释
  */
 public interface FieldConstant {

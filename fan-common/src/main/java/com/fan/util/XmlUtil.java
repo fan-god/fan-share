@@ -9,7 +9,7 @@ import java.io.StringWriter;
 
 /**
  * xml转换工具
- * @author Achievo
+ * @author fan
  *
  */
 public class  XmlUtil {

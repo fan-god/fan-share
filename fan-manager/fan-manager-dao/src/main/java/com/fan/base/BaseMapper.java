@@ -5,7 +5,7 @@ import com.fan.entity.base.BaseEntity;
 import java.util.List;
 
 /**
- * Created by Administrator on 2019/7/3/0003.
+ * Created by fan on 2019/7/3/0003.
  */
 public interface BaseMapper<T extends BaseEntity> {
 

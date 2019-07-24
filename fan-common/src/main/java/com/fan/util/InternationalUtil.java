@@ -7,7 +7,7 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 import java.util.*;
 
 /**
- * Created by Achievo on 2018/9/5.
+ * Created by fan on 2018/9/5.
  * <p>
  * 国际化配置工具类
  */
