@@ -1,10 +1,11 @@
 package com.fan.util;
 
 import com.google.gson.*;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
-
+@Slf4j
 public class JsonUtil {
     private static final Gson gson = new GsonBuilder().setDateFormat("yyyyMMddHHmmss").create();
 
@@ -14,7 +15,7 @@ public class JsonUtil {
             JsonObject jsonObj = jsonEl.getAsJsonObject();// 转换成Json对象
             return jsonObj;
         } catch (Exception e) {
-            LoggerUtil.error("JsonUtil getJObject error{}:" + e);
+            log.error("JsonUtil getJObject error:{}" , e);
             return null;
         }
     }
@@ -58,7 +59,7 @@ public class JsonUtil {
             }
             return list;
         } catch (Exception e) {
-            LoggerUtil.error("json数组转换异常" + e);
+            log.error("json数组转换异常:{}" , e);
             return null;
         }
     }

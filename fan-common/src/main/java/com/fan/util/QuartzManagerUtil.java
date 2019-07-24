@@ -1,5 +1,6 @@
 package com.fan.util;
 
+import lombok.extern.slf4j.Slf4j;
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
 import org.quartz.simpl.RAMJobStore;
@@ -10,6 +11,7 @@ import java.util.Objects;
 /**
  * Created by Achievo on 2018/8/17.
  */
+@Slf4j
 @Component
 public class QuartzManagerUtil {
     private static SchedulerFactory schedulerFactory = new StdSchedulerFactory();
@@ -26,13 +28,13 @@ public class QuartzManagerUtil {
     //作业运行失败
     public final static String JOB_EXEC_RESULT_FAIL = "fail";
     //作业运行失败
-    public final static Long MIS_FIRE_THRESHOLD= 5000L;
+    public final static Long MIS_FIRE_THRESHOLD = 5000L;
 
     /**
      *默认作业组
-     * ConstantAiot.JOB_GROUP_DEFAULT)=server1
+     * ConstantFan.JOB_GROUP_DEFAULT)=server1
      *默认触发器组
-     * ConstantAiot.TRIGGER_GROUP_DEFAULT=server1
+     * ConstantFan.TRIGGER_GROUP_DEFAULT=server1
      */
 
     /**
@@ -45,14 +47,14 @@ public class QuartzManagerUtil {
     public static void addJob(String jobName, String triggerName, Class c, String cron, Boolean isInit) {
         try {
             Scheduler sched = schedulerFactory.getScheduler();
-            JobDetail jobDetail = JobBuilder.newJob(c).withIdentity(jobName, ConstantAiot.JOB_GROUP_DEFAULT).build();// 任务名，任务组，任务执行类
+            JobDetail jobDetail = JobBuilder.newJob(c).withIdentity(jobName, ConstantFan.JOB_GROUP_DEFAULT).build();// 任务名，任务组，任务执行类
             //解决弥补执行
             RAMJobStore jobStore = new RAMJobStore();
             jobStore.setMisfireThreshold(MIS_FIRE_THRESHOLD);
             // 触发器
             TriggerBuilder<Trigger> tb = TriggerBuilder.newTrigger();
             // 触发器名,触发器组
-            tb.withIdentity(triggerName, ConstantAiot.TRIGGER_GROUP_DEFAULT);
+            tb.withIdentity(triggerName, ConstantFan.TRIGGER_GROUP_DEFAULT);
             tb.startNow();
             // 触发器时间设定
             tb.withSchedule(CronScheduleBuilder.cronSchedule(cron).withMisfireHandlingInstructionDoNothing());
@@ -69,7 +71,7 @@ public class QuartzManagerUtil {
                 stopJob(jobName);
             }
         } catch (Exception e) {
-            LoggerUtil.info("QuartzManagerUtil add error{}:" + e);
+            log.info("QuartzManagerUtil add error:{}", e);
             throw new RuntimeException(e);
         }
     }
@@ -105,7 +107,7 @@ public class QuartzManagerUtil {
                 stopJob(jobName);
             }
         } catch (Exception e) {
-            LoggerUtil.info("QuartzManagerUtil add error{}:" + e);
+            log.info("QuartzManagerUtil add error:{}", e);
             throw new RuntimeException(e);
         }
     }
@@ -119,20 +121,20 @@ public class QuartzManagerUtil {
     public static void modifyJobWhenStop(String jobName, String triggerName, String cron) {
         try {
             Scheduler sched = schedulerFactory.getScheduler();
-            TriggerKey triggerKey = TriggerKey.triggerKey(triggerName, ConstantAiot.TRIGGER_GROUP_DEFAULT);
+            TriggerKey triggerKey = TriggerKey.triggerKey(triggerName, ConstantFan.TRIGGER_GROUP_DEFAULT);
             CronTrigger trigger = (CronTrigger) sched.getTrigger(triggerKey);
             if (trigger == null) {
                 return;
             }
             String oldTime = trigger.getCronExpression();
             if (!Objects.equals(oldTime, cron)) {
-                JobDetail jobDetail = sched.getJobDetail(JobKey.jobKey(jobName, ConstantAiot.JOB_GROUP_DEFAULT));
+                JobDetail jobDetail = sched.getJobDetail(JobKey.jobKey(jobName, ConstantFan.JOB_GROUP_DEFAULT));
                 Class<? extends Job> c = jobDetail.getJobClass();
                 removeJob(jobName, triggerName);
                 addJob(jobName, triggerName, c, cron, true);
             }
         } catch (SchedulerException e) {
-            LoggerUtil.info("QuartzManagerUtil modifyJobWhenStart error{}:" + e);
+            log.info("QuartzManagerUtil modifyJobWhenStart error:{}", e);
             throw new RuntimeException(e);
         }
     }
@@ -145,7 +147,7 @@ public class QuartzManagerUtil {
     public static void modifyJobWhenStart(String triggerName, String cron) {
         try {
             Scheduler sched = schedulerFactory.getScheduler();
-            TriggerKey triggerKey = TriggerKey.triggerKey(triggerName, ConstantAiot.TRIGGER_GROUP_DEFAULT);
+            TriggerKey triggerKey = TriggerKey.triggerKey(triggerName, ConstantFan.TRIGGER_GROUP_DEFAULT);
             CronTrigger trigger = (CronTrigger) sched.getTrigger(triggerKey);
             if (trigger == null) {
                 return;
@@ -155,7 +157,7 @@ public class QuartzManagerUtil {
                 //做一个新的触发器
                 TriggerBuilder<Trigger> tb = TriggerBuilder.newTrigger();
                 //触发器名，默认触发器组
-                tb.withIdentity(triggerName, ConstantAiot.TRIGGER_GROUP_DEFAULT);
+                tb.withIdentity(triggerName, ConstantFan.TRIGGER_GROUP_DEFAULT);
                 tb.startNow();
                 //设置触发器时间
                 tb.withSchedule(CronScheduleBuilder.cronSchedule(cron));
@@ -165,7 +167,7 @@ public class QuartzManagerUtil {
                 sched.rescheduleJob(triggerKey, trigger);
             }
         } catch (SchedulerException e) {
-            LoggerUtil.info("QuartzManagerUtil modifyJobWhenStop error{}:" + e);
+            log.info("QuartzManagerUtil modifyJobWhenStop error:{}", e);
             throw new RuntimeException(e);
         }
     }
@@ -193,7 +195,7 @@ public class QuartzManagerUtil {
                 addJob(jobName, jobGroupName, triggerName, triggerGroupName, c, cron, true);
             }
         } catch (Exception e) {
-            LoggerUtil.info("QuartzManagerUtil modify error{}:" + e);
+            log.info("QuartzManagerUtil modify error:{}", e);
             throw new RuntimeException(e);
         }
     }
@@ -206,12 +208,12 @@ public class QuartzManagerUtil {
     public static void removeJob(String jobName, String triggerName) {
         try {
             Scheduler sched = schedulerFactory.getScheduler();
-            TriggerKey triggerKey = TriggerKey.triggerKey(triggerName, ConstantAiot.TRIGGER_GROUP_DEFAULT);
+            TriggerKey triggerKey = TriggerKey.triggerKey(triggerName, ConstantFan.TRIGGER_GROUP_DEFAULT);
             sched.pauseTrigger(triggerKey);// 停止触发器
             sched.unscheduleJob(triggerKey);// 移除触发器
-            sched.deleteJob(JobKey.jobKey(jobName, ConstantAiot.JOB_GROUP_DEFAULT));// 删除任务
+            sched.deleteJob(JobKey.jobKey(jobName, ConstantFan.JOB_GROUP_DEFAULT));// 删除任务
         } catch (Exception e) {
-            LoggerUtil.error("QuartzManagerUtil remove error{}:" + e);
+            log.error("QuartzManagerUtil remove error:{}", e);
             throw new RuntimeException(e);
         }
     }
@@ -232,7 +234,7 @@ public class QuartzManagerUtil {
             sched.unscheduleJob(triggerKey);// 移除触发器
             sched.deleteJob(JobKey.jobKey(jobName, jobGroupName));// 删除任务
         } catch (Exception e) {
-            LoggerUtil.error("QuartzManagerUtil remove error{}:" + e);
+            log.error("QuartzManagerUtil remove error:{}", e);
             throw new RuntimeException(e);
         }
     }
@@ -244,10 +246,10 @@ public class QuartzManagerUtil {
     public static void startJob(String jobName) {
         try {
             Scheduler sched = schedulerFactory.getScheduler();
-            JobKey jobKey = JobKey.jobKey(jobName, ConstantAiot.JOB_GROUP_DEFAULT);
+            JobKey jobKey = JobKey.jobKey(jobName, ConstantFan.JOB_GROUP_DEFAULT);
             sched.resumeJob(jobKey);
         } catch (Exception e) {
-            LoggerUtil.error("QuartzManagerUtil start error{}:" + e);
+            log.error("QuartzManagerUtil start error:{}", e);
             throw new RuntimeException(e);
         }
     }
@@ -262,7 +264,7 @@ public class QuartzManagerUtil {
             JobKey jobKey = JobKey.jobKey(jobName, jobGroupName);
             sched.resumeJob(jobKey);
         } catch (Exception e) {
-            LoggerUtil.error("QuartzManagerUtil start error{}:" + e);
+            log.error("QuartzManagerUtil start error:{}", e);
             throw new RuntimeException(e);
         }
     }
@@ -276,7 +278,7 @@ public class QuartzManagerUtil {
             Scheduler sched = schedulerFactory.getScheduler();
             sched.start();
         } catch (Exception e) {
-            LoggerUtil.error("QuartzManagerUtil start all error{}:" + e);
+            log.error("QuartzManagerUtil start all error:{}", e);
             throw new RuntimeException(e);
         }
     }
@@ -288,10 +290,10 @@ public class QuartzManagerUtil {
     public static void stopJob(String jobName) {
         try {
             Scheduler sched = schedulerFactory.getScheduler();
-            JobKey jobKey = JobKey.jobKey(jobName, ConstantAiot.JOB_GROUP_DEFAULT);
+            JobKey jobKey = JobKey.jobKey(jobName, ConstantFan.JOB_GROUP_DEFAULT);
             sched.pauseJob(jobKey);
         } catch (Exception e) {
-            LoggerUtil.error("QuartzManagerUtil shutdown error{}:" + e);
+            log.error("QuartzManagerUtil shutdown error:{}", e);
             throw new RuntimeException(e);
         }
     }
@@ -306,7 +308,7 @@ public class QuartzManagerUtil {
             JobKey jobKey = JobKey.jobKey(jobName, jobGroupName);
             sched.pauseJob(jobKey);
         } catch (Exception e) {
-            LoggerUtil.error("QuartzManagerUtil shutdown error{}:" + e);
+            log.error("QuartzManagerUtil shutdown error:{}", e);
             throw new RuntimeException(e);
         }
     }
@@ -321,7 +323,7 @@ public class QuartzManagerUtil {
                 sched.shutdown();
             }
         } catch (Exception e) {
-            LoggerUtil.error("QuartzManagerUtil shutdown all error{}:" + e);
+            log.error("QuartzManagerUtil shutdown all error:{}", e);
             throw new RuntimeException(e);
         }
     }
@@ -331,7 +333,7 @@ public class QuartzManagerUtil {
             Class<?> c = Class.forName(BASE_URL + classUrl);
             return c;
         } catch (ClassNotFoundException e) {
-            LoggerUtil.error("QuartzManagerUtil classFactory error{}:" + e);
+            log.error("QuartzManagerUtil classFactory error:{}", e);
             return null;
         }
     }

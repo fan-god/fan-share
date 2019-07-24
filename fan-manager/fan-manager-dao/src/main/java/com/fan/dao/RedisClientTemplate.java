@@ -1,6 +1,5 @@
 //package com.fan.dao;
 //
-//import com.fan_god.service.IRedisDataSource;
 //import org.apache.log4j.Logger;
 //import org.springframework.beans.factory.annotation.Autowired;
 //import redis.clients.jedis.BinaryClient.LIST_POSITION;

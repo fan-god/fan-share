@@ -1,5 +1,7 @@
 package com.fan.util;
 
+import com.google.common.collect.Lists;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpEntity;
@@ -21,12 +23,10 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
 import java.net.InetAddress;
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -36,8 +36,9 @@ import java.util.Map;
  *
  * @author Achievo
  */
+@Slf4j
 public class HttpCilentUtil {
-    private static final String charset = ConstantAiot.CHARSET;
+    private static final String charset = ConstantFan.CHARSET;
 
     private static HttpClient httpClient;
 
@@ -74,19 +75,63 @@ public class HttpCilentUtil {
      * @return
      */
     public static String doGet(String url, String params) {
-        LoggerUtil.info("request:" + url + "?" + params);
+        log.info(String.format("%s?%s", url, params));
         try {
             HttpClient client = getHttpClient();
-            HttpGet get = new HttpGet(url + "?" + params);
+            HttpGet get = new HttpGet(url.concat("?").concat(params));
 
             HttpResponse response = client.execute(get);
             String result = EntityUtils.toString(response.getEntity(), charset);
-            LoggerUtil.info("response:" + result);
+            log.info("response:" + result);
             if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
                 return result;
             }
         } catch (Exception e) {
-            LoggerUtil.error("HttpClientUtil doGet error{}:" + e);
+            log.error("HttpClientUtil doGet error{}:", e);
+            return null;
+        }
+        return null;
+    }
+
+    /**
+     * get请求工具
+     *
+     * @param url
+     * @return
+     */
+    public static String doGet(String url, Map<String, String> params, Map<String, String> headers) {
+        try {
+            HttpClient client = getHttpClient();
+            StringBuffer sb = new StringBuffer();
+            String param = "";
+            // 设置参数
+            if (null != params && !params.isEmpty()) {
+                for (String key : params.keySet()) {
+                    sb.append("&").append(key).append("=").append(params.get(key));
+                }
+                param = sb.toString().replaceFirst("&", "");
+            }
+            log.info(String.format("%s?%s", url, param));
+            HttpGet get;
+            if (param.length() > 0) {
+                get = new HttpGet(url.concat("?").concat(param));
+            } else {
+                get = new HttpGet(url);
+            }
+            //设置头部
+            if (null != headers && !headers.isEmpty()) {
+                for (String key : headers.keySet()) {
+                    get.setHeader(key, headers.get(key));
+                }
+            }
+            HttpResponse response = client.execute(get);
+            String result = EntityUtils.toString(response.getEntity(), charset);
+            log.info("response:" + result);
+            if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+                return result;
+            }
+        } catch (Exception e) {
+            log.error("HttpClientUtil doGet error{}:", e);
             return null;
         }
         return null;
@@ -99,27 +144,27 @@ public class HttpCilentUtil {
      * @return
      * @throws Exception
      */
-    public static String doPost(String url, byte[] bs, String serviceName, String host,String format) {
+    public static InputStream doPost(String url, byte[] bs, String serviceName, String host) {
         try {
             HttpClient client = getHttpClient();
             HttpPost post = new HttpPost(url);
             // 请求头部信息
             post.setHeader("Host", host);
             post.setHeader("Locations", serviceName);
-            post.setHeader("Format", format);
+            post.setHeader("Format", ConstantFan.PROTOBUF);
+            post.setHeader("Content-Type", ConstantFan.CONTENT_TYPE);
             post.setEntity(new ByteArrayEntity(bs));
             HttpResponse response = client.execute(post);
-            String result = EntityUtils.toString(response.getEntity(), charset);
+            InputStream content = response.getEntity().getContent();
             if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-                return result;
+                return content;
             }
         } catch (Exception e) {
-            LoggerUtil.error("HttpClientUtil doPost error{}:" + e);
+            log.error("HttpClientUtil doPost error{}:", e);
             return null;
         }
         return null;
     }
-
 
     /**
      * post请求(用于key-value格式的参数)
@@ -129,6 +174,17 @@ public class HttpCilentUtil {
      * @return
      */
     public static String doPost(String url, Map<String, String> params) {
+        return doPost(url, params, "");
+    }
+
+    /**
+     * post请求(用于key-value格式的参数)
+     *
+     * @param url
+     * @param params
+     * @return
+     */
+    public static String doPost(String url, Map<String, String> params, String logInfo) {
         String result = null;
         BufferedReader in = null;
         try {
@@ -139,32 +195,30 @@ public class HttpCilentUtil {
             request.setURI(new URI(url));
 
             // 设置参数
-            List<NameValuePair> nvps = new ArrayList<NameValuePair>();
+            List<NameValuePair> nvps = Lists.newArrayList();
             for (Iterator<String> iter = params.keySet().iterator(); iter.hasNext(); ) {
                 String name = iter.next();
                 String value = String.valueOf(params.get(name));
                 nvps.add(new BasicNameValuePair(name, value));
-
-                //LoggerUtil.log.info("param:" + name + "-" + value);
+                //log.log.info("param:" + name + "-" + value);
             }
             request.setEntity(new UrlEncodedFormEntity(nvps, charset));
 
             HttpResponse response = client.execute(request);
             in = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), charset));
-            StringBuffer sb = new StringBuffer("");
+            StringBuffer sb = new StringBuffer();
             String line = "";
             String NL = System.getProperty("line.separator");
             while ((line = in.readLine()) != null) {
                 sb.append(line + NL);
             }
-
             result = sb.toString();
+            log.info(logInfo.concat("response:").concat(result));
             if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) { // 请求成功
                 return result;
             }
         } catch (Exception e) {
-            LoggerUtil.error(e, ConstantAiot.LOG_WRITE);
-            return null;
+            log.error("{}", e);
         } finally {
             IOUtils.closeQuietly(in);
         }
@@ -214,29 +268,67 @@ public class HttpCilentUtil {
      * @return
      * @throws Exception
      */
-    public static String doPost(String url, String input, String serviceName, String host, String format) {
+    public static String doPost(String url, String input, String serviceName, String host) {
         try {
             HttpClient client = getHttpClient();
             if (null == input) {
                 input = "";
             }
             HttpPost post = new HttpPost(url);
-            LoggerUtil.info("request==>" + url + "?" + input);
+            log.info("request==>" + url + "?" + input, false);
             // 请求头部信息
             post.setHeader("Host", host);
             post.setHeader("Locations", serviceName);
-            post.setHeader("Format", format);
+            post.setHeader("Format", ConstantFan.JSON);
+            post.setHeader("Addition", ConstantFan.JSON);
             HttpEntity entity = new StringEntity(input, charset);
             post.setEntity(entity);
             HttpResponse response = client.execute(post);
             String result = EntityUtils.toString(response.getEntity(), charset);
-            LoggerUtil.info("response==>" + result);
+            log.info("response==>" + result, true);
             int statusCode = response.getStatusLine().getStatusCode();
             if (statusCode == HttpStatus.SC_OK || statusCode == HttpStatus.SC_CREATED) {
                 return result;
             }
         } catch (Exception e) {
-            LoggerUtil.error("HttpClientUtil doPost error{}" + e);
+            log.error("HttpClientUtil doPost error{}", e);
+            return null;
+        }
+        return null;
+    }
+
+    /**
+     * post请求工具
+     *
+     * @param url
+     * @return
+     * @throws Exception
+     */
+    public static String doPost(String url, Map<String, String> params, String body, Map<String, String> headers) {
+        try {
+            HttpClient client = getHttpClient();
+            StringBuffer sb = new StringBuffer();
+            for (String key : params.keySet()) {
+                sb.append("&").append(key).append("=").append(params.get(key));
+            }
+            String param = sb.toString().replaceFirst("&", "");
+            HttpPost post = new HttpPost(url.concat("?").concat(param));
+            if (!headers.isEmpty()) {
+                for (String key : headers.keySet()) {
+                    post.setHeader(key, headers.get(key));
+                }
+            }
+            HttpEntity entity = new StringEntity(body, charset);
+            post.setEntity(entity);
+            HttpResponse response = client.execute(post);
+            String result = EntityUtils.toString(response.getEntity(), charset);
+            log.info("response==>" + result, true);
+            int statusCode = response.getStatusLine().getStatusCode();
+            if (statusCode == HttpStatus.SC_OK || statusCode == HttpStatus.SC_CREATED) {
+                return result;
+            }
+        } catch (Exception e) {
+            log.error("HttpClientUtil doPost error{}", e);
             return null;
         }
         return null;
@@ -255,7 +347,7 @@ public class HttpCilentUtil {
         BufferedReader br = null;
         try {
             is = request.getInputStream();
-            isr = new InputStreamReader(is, ConstantAiot.CHARSET);
+            isr = new InputStreamReader(is, ConstantFan.CHARSET);
             br = new BufferedReader(isr);
             StringBuffer sb = new StringBuffer();
             String s;
@@ -267,7 +359,7 @@ public class HttpCilentUtil {
             }
             return null;
         } catch (Exception e) {
-            LoggerUtil.error("HttpClientUtil getContent error{}" + e);
+            log.error("HttpClientUtil getContent error{}", e);
             return null;
         } finally {
             IOUtils.closeQuietly(br);
@@ -282,13 +374,29 @@ public class HttpCilentUtil {
      * @return
      */
     public static HttpServletRequest getRequest() {
-
         try {
             HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
             return request;
         } catch (Exception e) {
-            LoggerUtil.error("HttpClientUtil getRequest error{}:" + e);
+            log.error("HttpClientUtil getRequest error{}:", e);
             return null;
+        }
+    }
+
+    /**
+     * 向页面输出
+     * @param response
+     * @param str
+     */
+    public static void printOut(HttpServletResponse response, String str) {
+        PrintWriter out = null;
+        try {
+            out = response.getWriter();
+            out.append(str);
+        } catch (IOException e) {
+            log.error("printOut error:{}", e);
+        } finally {
+            IOUtils.closeQuietly(out);
         }
     }
 }

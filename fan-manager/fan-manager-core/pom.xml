@@ -12,26 +12,21 @@
 
     <groupId>com.fan</groupId>
     <artifactId>fan-manager-core</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>${SNAPSHOT-version}</version>
 
     <dependencies>
         <dependency>
             <groupId>com.fan</groupId>
-            <artifactId>fan-manager-service</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.fan</groupId>
             <artifactId>fan-manager-timetask</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>${SNAPSHOT-version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.fan</groupId>
             <artifactId>fan-manager-remote</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>${SNAPSHOT-version}</version>
         </dependency>
+
     </dependencies>
 
 </project>

@@ -25,13 +25,13 @@
 		<!-- 触发器任务列表 -->
 		<property name="jobDetail" ref="jobDetail" />
 		<!-- 触发时间 -->
-		<property name="cronExpression" value="0/8 * * * * ?" />
+		<property name="cronExpression" value="0 30 8 * * ?" />
 	</bean>
 	<bean class="org.springframework.scheduling.quartz.CronTriggerFactoryBean" id="cronTriggerFactoryBean2">
 		<!-- 触发器任务列表 -->
 		<property name="jobDetail" ref="jobDetail2" />
 		<!-- 触发时间 -->
-		<property name="cronExpression" value="0 0/10 * * * ?" />
+		<property name="cronExpression" value="0 30 8 * * ?" />
 	</bean>
 
 	<!-- 4.调度 -->

@@ -1,26 +1,24 @@
 package com.fan.dao;
 
-
+import com.fan.base.BaseMapper;
 import com.fan.entity.User;
+import com.fan.annotation.DataSource;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Map;
 @Repository
-public interface UserMapper {
-    int deleteByPrimaryKey(Integer userid);
+@Transactional
+@DataSource("dataSource_first")
+public interface UserMapper extends BaseMapper<User>{
+    int deleteByPrimaryKey(Long id);
 
     int insert(User record);
 
     int insertSelective(User record);
 
-    User selectByPrimaryKey(Integer userid);
+    User selectByPrimaryKey(Long id);
 
     int updateByPrimaryKeySelective(User record);
 
     int updateByPrimaryKey(User record);
-    
-    List<User> getAllUser();
-    
-    int AddGwf1(Map<String, Object> map);
 }

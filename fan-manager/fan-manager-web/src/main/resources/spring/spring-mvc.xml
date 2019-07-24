@@ -10,13 +10,28 @@
     <context:annotation-config/>
     <!-- 扫描路径 -->
     <context:component-scan base-package="com.fan.controller"/>
+    <context:component-scan base-package="com.fan.config"/>
+    <context:component-scan base-package="com.fan.timetask"/>
+    <context:component-scan base-package="com.fan.remote"/>
 
+<!--
     <mvc:annotation-driven conversion-service="conversionService" validator="validator"/>
+-->
     <mvc:interceptors>
+        <!--国际化配置自定义语言拦截器-->
+      <!--  <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <bean class="com.fan.service.interceptors.LanguageInterceptor"/>
+        </mvc:interceptor>-->
+
         <mvc:interceptor>
             <mvc:mapping path="/**"/>
-            <!--拦截器-->
-            <bean class="com.fan.service.interceptors.UserInterceptor"/>
+            <mvc:exclude-mapping path="/app/user/*/login"/>
+            <mvc:exclude-mapping path="/swagger-resources/**"/><!-- swagger静态资源-->
+            <mvc:exclude-mapping path="/webjars/**"/><!-- swagger静态资源-->
+            <mvc:exclude-mapping path="/v2/**"/><!-- swagger静态资源-->
+            <mvc:exclude-mapping path="/swagger-ui.html/**"/><!-- swagger静态资源-->
+            <bean class="com.fan.service.interceptors.LoginInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>
 
@@ -29,7 +44,6 @@
         <!-- Spring不能解析JSTL代码，此配置是为了Spring能解析JSTL代码 -->
         <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
     </bean>
-    <import resource="classpath:spring/spring-freemarker.xml"/>
 
     <!-- 1.注册ConversionService -->
     <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
@@ -53,9 +67,9 @@
     </bean>
     <!-- 第二步,国际化配置 -->
     <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
-        <property name="basename" value="properties.message"/>
-        <property name="fileEncodings" value="UTF-8"/>
-        <property name="cacheSeconds" value="120"/>
+        <property name="basename" value="config.message"/>
+        <property name="defaultEncoding" value="UTF-8"/>
+        <property name="cacheSeconds" value="3600"/>
     </bean>
     <!-- 第三步 -->
     <bean class="org.springframework.web.bind.support.ConfigurableWebBindingInitializer" id="webBindingInitializer">
@@ -70,7 +84,6 @@
         <property name="maxInMemorySize" value="4096"/>
         <property name="defaultEncoding" value="UTF-8"/>
     </bean>
-    <!-- 该异常是SpringMVC在检查上传的文件信息时抛出来的，而且此时还没有进入到Controller方法中 -->
     <!-- 该异常是SpringMVC在检查上传的文件信息时抛出来的,而且此时还没有进入到Controller方法中 -->
     <bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
         <property name="exceptionMappings">
@@ -79,5 +92,11 @@
                 <prop key="org.springframework.web.multipart.MaxUploadSizeExceededException">error</prop>
             </props>
         </property>
+    </bean>
+
+    <!--session共享-->
+    <bean id="redisHttpSessionConfiguration"
+          class="org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration">
+        <property name="maxInactiveIntervalInSeconds" value="600"/>
     </bean>
 </beans>

@@ -1,23 +1,33 @@
 package com.fan.entity;
 
-public class User {
-    private Integer id;
+import com.fan.entity.base.BaseEntity;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@ApiModel
+@NoArgsConstructor
+@AllArgsConstructor
+public class User extends BaseEntity {
+    @ApiModelProperty("姓名")
     private String username;
-
+    @ApiModelProperty("密码")
     private String password;
-
+    @ApiModelProperty("性别")
     private String sex;
-
-    private Integer phone;
-
+    @ApiModelProperty("电话")
+    private String phone;
+    @ApiModelProperty("地址")
     private String address;
-
+    @ApiModelProperty("状态")
     private Integer stat;
+    @ApiModelProperty("备注")
+    private String remark;
 
-    private String rema;
-
-    private Integer gwf1;
+    private String gwf1;
 
     private String gwf2;
 
@@ -27,107 +37,4 @@ public class User {
 
     private String gwf5;
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username == null ? null : username.trim();
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password == null ? null : password.trim();
-    }
-
-    public String getSex() {
-        return sex;
-    }
-
-    public void setSex(String sex) {
-        this.sex = sex == null ? null : sex.trim();
-    }
-
-    public Integer getPhone() {
-        return phone;
-    }
-
-    public void setPhone(Integer phone) {
-        this.phone = phone;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address == null ? null : address.trim();
-    }
-
-    public Integer getStat() {
-        return stat;
-    }
-
-    public void setStat(Integer stat) {
-        this.stat = stat;
-    }
-
-    public String getRema() {
-        return rema;
-    }
-
-    public void setRema(String rema) {
-        this.rema = rema == null ? null : rema.trim();
-    }
-
-    public Integer getGwf1() {
-		return gwf1;
-	}
-
-	public void setGwf1(Integer gwf1) {
-		this.gwf1 = gwf1;
-	}
-
-	public String getGwf2() {
-        return gwf2;
-    }
-
-    public void setGwf2(String gwf2) {
-        this.gwf2 = gwf2 == null ? null : gwf2.trim();
-    }
-
-    public String getGwf3() {
-        return gwf3;
-    }
-
-    public void setGwf3(String gwf3) {
-        this.gwf3 = gwf3 == null ? null : gwf3.trim();
-    }
-
-    public String getGwf4() {
-        return gwf4;
-    }
-
-    public void setGwf4(String gwf4) {
-        this.gwf4 = gwf4 == null ? null : gwf4.trim();
-    }
-
-    public String getGwf5() {
-        return gwf5;
-    }
-
-    public void setGwf5(String gwf5) {
-        this.gwf5 = gwf5 == null ? null : gwf5.trim();
-    }
 }

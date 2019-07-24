@@ -12,7 +12,7 @@ import java.io.StringWriter;
  * @author Achievo
  *
  */
-public class XmlUtil {
+public class  XmlUtil {
 	/**
 	 * 对象转xml
 	 * 
@@ -24,7 +24,7 @@ public class XmlUtil {
 		JAXBContext context = JAXBContext.newInstance(obj.getClass());
 		Marshaller marshaller = context.createMarshaller();
 		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-		marshaller.setProperty(Marshaller.JAXB_ENCODING, ConstantAiot.CHARSET);
+		marshaller.setProperty(Marshaller.JAXB_ENCODING, ConstantFan.CHARSET);
 		StringWriter writer = new StringWriter();
 		marshaller.marshal(obj, writer);
 		return writer.toString();

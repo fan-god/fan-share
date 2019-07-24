@@ -101,7 +101,7 @@ public class PropertiesUtil {
 
 	public static void main(String[] args) {
 
-		PropertiesUtil p = new PropertiesUtil("interfaceInfo.properties");
+		PropertiesUtil p = new PropertiesUtil("interfaceInfo.config");
 		String url = p.readProperty("url");
 		String secret = p.readProperty("secret");
 		System.out.println(url + "," + secret);

@@ -2,11 +2,6 @@ package com.fan.listener;
 
 import java.util.TimerTask;
 
-import com.fan.entity.BaseFile;
-import com.fan.entity.User;
-import com.fan.interfaces.IBaseFileService;
-import com.fan.interfaces.IUserService;
-import com.fan.util.RedisUtil;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 

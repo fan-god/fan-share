@@ -27,7 +27,7 @@ public class MyBeanUtils extends PropertyUtilsBean {
           throw new IllegalArgumentException("No origin bean specified");
       }
 
-      // Copy the properties, converting as necessary
+      // Copy the config, converting as necessary
       if (orig instanceof DynaBean) {
           DynaProperty origDescriptors[] =
               ( (DynaBean) orig).getDynaClass().getDynaProperties();

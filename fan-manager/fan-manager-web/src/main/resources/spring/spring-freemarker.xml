@@ -2,11 +2,10 @@
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd">
 
-	<util:properties location="classpath:properties/freemark.properties" id="fm" />
 
 	<bean class="org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean" >
-		<property name="templateLoaderPath" value="#{fm.path}" />
-		<property name="defaultEncoding" value="#{fm.defaultEncoding}"/>
+		<property name="templateLoaderPath" value="${fm.path}" />
+		<property name="defaultEncoding" value="${fm.defaultEncoding}"/>
 		
 		<!-- <property name="freemarkerSettings">
 			<props>
@@ -24,7 +23,7 @@
 				去掉多余间隔
 				<prop key="whitespace_stripping">true</prop>
 				引入ftl文件
-				<prop key="auto_import">/com/fan_god/freemarker</prop>
+				<prop key="auto_import">/com/fan_share/freemarker</prop>
 			</props>
 		</property> -->
 		<property name="freemarkerVariables">

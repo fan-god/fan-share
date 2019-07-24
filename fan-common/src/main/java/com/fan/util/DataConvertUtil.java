@@ -1,5 +1,7 @@
 package com.fan.util;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.List;
 
 /**
@@ -7,6 +9,7 @@ import java.util.List;
  *
  * @author Achievo
  */
+@Slf4j
 public class DataConvertUtil {
     /**
      * 对象转json或xml数据
@@ -17,15 +20,15 @@ public class DataConvertUtil {
      */
     public static String beanToString(Object obj, String format) {
         try {
-            if (format.equalsIgnoreCase(ConstantAiot.JSON)) {
+            if (format.equalsIgnoreCase(ConstantFan.JSON)) {
                 return JsonUtil.beanToJson(obj);
-            } else if (format.equalsIgnoreCase(ConstantAiot.XML)) {
+            } else if (format.equalsIgnoreCase(ConstantFan.XML)) {
                 return XmlUtil.beanToXml(obj);
             } else {
                 throw new Exception("不支持的数据格式");
             }
         } catch (Exception e) {
-            LoggerUtil.error("数据转换出错,错误信息:" + e);
+            log.error("数据转换出错,错误信息:{}", e);
             return null;
         }
     }
@@ -40,15 +43,15 @@ public class DataConvertUtil {
      */
     public static <T> T stringToBean(Class<T> c, String data, String format) {
         try {
-            if (format.equalsIgnoreCase(ConstantAiot.JSON)) {
+            if (format.equalsIgnoreCase(ConstantFan.JSON)) {
                 return JsonUtil.jsonTobean(c, data);
-            } else if (format.equalsIgnoreCase(ConstantAiot.XML)) {
+            } else if (format.equalsIgnoreCase(ConstantFan.XML)) {
                 return XmlUtil.xmlTobean(c, data);
             } else {
                 throw new Exception("不支持的数据格式");
             }
         } catch (Exception e) {
-            LoggerUtil.error("数据转换出错,错误信息:" + e);
+            log.error("数据转换出错,错误信息:{}", e);
             return null;
         }
     }
@@ -63,16 +66,16 @@ public class DataConvertUtil {
      */
     public static <T> List<T> stringToList(String data, String format, Class<T> c) {
         try {
-            if (format.equalsIgnoreCase(ConstantAiot.JSON)) {
+            if (format.equalsIgnoreCase(ConstantFan.JSON)) {
                 return JsonUtil.jsonToList(data, c);
-            } else if (format.equalsIgnoreCase(ConstantAiot.XML)) {
+            } else if (format.equalsIgnoreCase(ConstantFan.XML)) {
                 // 暂时没写
                 return null;
             } else {
                 throw new Exception("不支持的数据格式");
             }
         } catch (Exception e) {
-            LoggerUtil.error("数据转换出错,错误信息:" + e);
+            log.error("数据转换出错,错误信息:{}", e);
             return null;
         }
     }

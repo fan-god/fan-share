@@ -1,41 +1,84 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:context="http://www.springframework.org/schema/context"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+	   xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+	   xmlns:aop="http://www.springframework.org/schema/aop"
+	   xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+		http://www.springframework.org/schema/tx
+		http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/aop
+		http://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/data/mongo
+		http://www.springframework.org/schema/data/mongo/spring-mongo.xsd
+		http://www.springframework.org/schema/data/repository
+   	   http://www.springframework.org/schema/data/repository/spring-repository-1.5.xsd">
 
 	<!-- 自动扫描 -->
-	<context:component-scan base-package="com.fan.dao">
-		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
-	</context:component-scan>
-	
+	<context:component-scan base-package="com.fan.dao"/>
+	<context:component-scan base-package="com.fan.mongoDao"/>
+
 	<!-- 引入配置文件 -->
-	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="location" value="classpath:properties/database.properties" />
+	<bean class="com.fan.util.EncryptPropertyPlaceholderConfigurer">
+		<!--locations能配置多个properties文件，location只能配置一个-->
+		<property name="locations" value="classpath:config/*.properties" />
+		<property name="fileEncoding" value="UTF-8"/>
 	</bean>
-	<!-- 配置数据源信息 -->
-	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
-		<property name="driverClassName" value="${driver-mysql}" />
-		<property name="url" value="${url-mysql}" />
-		<property name="username" value="${username-mysql}" />
-		<property name="password" value="${password-mysql}" />
+
+
+	<!-- 配置数据源信息一 -->
+	<bean id="dataSource_first" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="${mysql.driver}" />
+		<property name="url" value="${mysql1.url}" />
+		<property name="username" value="${mysql.username}" />
+		<property name="password" value="${mysql.password}" />
 		<!-- 初始化连接大小 -->
-		<property name="initialSize" value="${initialSize-mysql}"></property>
+		<property name="initialSize" value="${mysql.initialSize}"/>
 		<!-- 连接池最大数量 -->
-		<property name="maxActive" value="${maxActive-mysql}"></property>
+		<property name="maxActive" value="${mysql.maxActive}"/>
 		<!-- 连接池最大空闲 -->
-		<property name="maxIdle" value="${maxIdle-mysql}"></property>
+		<property name="maxIdle" value="${mysql.maxIdle}"/>
 		<!-- 连接池最小空闲 -->
-		<property name="minIdle" value="${minIdle-mysql}"></property>
+		<property name="minIdle" value="${mysql.minIdle}"/>
 		<!-- 获取连接最大等待时间 -->
-		<property name="maxWait" value="${maxWait-mysql}"></property>
+		<property name="maxWait" value="${mysql.maxWait}"/>
+	</bean>
+
+	<!-- 配置数据源信息二 -->
+	<bean id="dataSource_second" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="${mysql.driver}" />
+		<property name="url" value="${mysql2.url}" />
+		<property name="username" value="${mysql.username}" />
+		<property name="password" value="${mysql.password}" />
+		<!-- 初始化连接大小 -->
+		<property name="initialSize" value="${mysql.initialSize}"/>
+		<!-- 连接池最大数量 -->
+		<property name="maxActive" value="${mysql.maxActive}"/>
+		<!-- 连接池最大空闲 -->
+		<property name="maxIdle" value="${mysql.maxIdle}"/>
+		<!-- 连接池最小空闲 -->
+		<property name="minIdle" value="${mysql.minIdle}"/>
+		<!-- 获取连接最大等待时间 -->
+		<property name="maxWait" value="${mysql.maxWait}"/>
+	</bean>
+
+	<!-- 下面的是切换数据库的自定义类 -->
+	<bean id="dataSource" class="com.fan.util.MultipleDataSource">
+		<!-- 默认使用dataSource_first-->
+		<property name="defaultTargetDataSource" ref="dataSource_first"/>
+		<property name="targetDataSources">
+			<map>
+				<entry key="dataSource_first" value-ref="dataSource_first"/>
+				<entry key="dataSource_second" value-ref="dataSource_second"/>
+			</map>
+		</property>
 	</bean>
 
 	<!-- spring和MyBatis完美整合，不需要mybatis的配置映射文件 -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<!-- 自动扫描mapping.xml文件 -->
-		<property name="mapperLocations" value="classpath*:com/fan/mapper/*.xml"></property>
+		<property name="mapperLocations" value="classpath*:com/fan/mapper/*.xml"/>
+		<!--引入mybatis配置-->
+		<property name="configLocation" value="classpath:spring/mybatis-config.xml"/>
 	</bean>
 
 	<!-- DAO接口所在包名，Spring会自动查找其下的类 -->
@@ -48,5 +91,51 @@
 	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
+	<tx:annotation-driven transaction-manager="transactionManager" />
 
+	<!-- 切面 -->
+	<aop:aspectj-autoproxy/>
+	<bean id="dataSourceAspect" class="com.fan.util.DataSourceAspect"/>
+	<aop:config>
+		<aop:aspect ref="dataSourceAspect">
+			<!-- 拦截所有service方法，在dao层添加注解 -->
+			<aop:pointcut expression="execution(* com.fan.dao..*.*(..))" id="dataSourcePointcut"/>
+			<aop:before method="intercept" pointcut-ref="dataSourcePointcut"/>
+		</aop:aspect>
+	</aop:config>
+
+	<bean id="redisTemplate" name="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
+		<property name="connectionFactory" ref="redisConnectionFactory"/>
+	</bean>
+
+	<!--1.服务器连接信息 -->
+	<mongo:mongo-client id="mongo" host="${mongo.host}" port="${mongo.port}" credentials="${mongo.username}:${mongo.password}@${mongo.database}">
+		<mongo:client-options connections-per-host="${mongo.connectionsPerHost}"
+							  min-connections-per-host="${mongo.minConnectionsPerHost}"
+							  threads-allowed-to-block-for-connection-multiplier="${mongo.threadsAllowedToBlockForConnectionMultiplier}"
+
+							  connect-timeout="${mongo.connectTimeout}"
+							  max-wait-time="${mongo.maxWaitTime}"
+
+							  socket-keep-alive="${mongo.socketKeepAlive}"
+							  socket-timeout="${mongo.socketTimeout}"
+							  write-concern="SAFE"
+
+
+							  heartbeat-socket-timeout="${mongo.heartbeatSocketTimeout}"
+							  heartbeat-connect-timeout="${mongo.heartbeatConnectTimeout}"
+							  min-heartbeat-frequency="${mongo.minHeartbeatFrequency}"
+							  heartbeat-frequency="${mongo.heartbeatFrequency}"
+		></mongo:client-options>
+	</mongo:mongo-client>
+
+	<mongo:db-factory id="mongoDbFactory" dbname="${mongo.database}" mongo-ref="mongo" />
+
+	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+		<constructor-arg name="mongoDbFactory" ref="mongoDbFactory" />
+	</bean>
+
+	<!-- MongoDB GridFS Template 支持，操作mongodb存放的文件 -->
+	<mongo:mapping-converter id="converter" db-factory-ref="mongoDbFactory" base-package="com.fan.mongoDao"/>
+	<mongo:gridFsTemplate id="gridFsTemplcate" db-factory-ref="mongoDbFactory" converter-ref="converter" />
 </beans>

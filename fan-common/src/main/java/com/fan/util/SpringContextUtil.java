@@ -13,26 +13,27 @@ import org.springframework.stereotype.Component;
 @Component
 public class SpringContextUtil implements ApplicationContextAware {
 
-    private static ApplicationContext applicationContext; // Spring应用上下文环境
+    private static ApplicationContext ac; // Spring应用上下文环境
 
     /*
     * 实现了ApplicationContextAware 接口，必须实现该方法；
     *通过传递applicationContext参数初始化成员变量applicationContext
     */
+    @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        SpringContextUtil.applicationContext = applicationContext;
+        SpringContextUtil.ac = applicationContext;
     }
 
 
     public static ApplicationContext getApplicationContext() {
-        return applicationContext;
+        return ac;
     }
 
     public static <T> T getBean(String name) throws BeansException {
-        String[] beans = applicationContext.getBeanDefinitionNames();
-        for (String bean : beans) {
-            System.out.printf("==============================>%s%n",bean);
-        }
-        return (T) applicationContext.getBean(name);
+        return (T) ac.getBean(name);
+    }
+
+    public static <T> T getBean(Class<T> c) throws BeansException {
+        return (T) ac.getBean(c);
     }
 }

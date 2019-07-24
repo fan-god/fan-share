@@ -1,11 +1,10 @@
 package com.fan.listener;
 
-import com.fan.interfaces.IIntegralService;
-import com.fan.interfaces.IUserService;
+import com.fan.service.IIntegralService;
+import com.fan.service.IUserService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import javax.jms.JMSException;
 import javax.jms.Message;

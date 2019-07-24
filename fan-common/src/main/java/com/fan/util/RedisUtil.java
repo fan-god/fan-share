@@ -2,6 +2,7 @@
 package com.fan.util;
 
 import com.google.common.collect.Lists;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.slf4j.Logger;
@@ -14,6 +15,7 @@ import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.data.redis.serializer.RedisSerializer;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
@@ -38,6 +40,7 @@ import java.util.concurrent.TimeUnit;
  *       redisTemplate.opsForZSet();//操作有序set
  *
  */
+@Slf4j
 @Component("redisUtil")
 public class RedisUtil {
 
@@ -59,50 +62,28 @@ public class RedisUtil {
 	 * 调用set后的返回值
 	 */
 	public static final String OK = "OK";
-	
-	
-	@Autowired
-    @Resource(name = "redisTemplate0") 
-	private RedisTemplate<String,Object> redisTemplate0;
-  
-    @Autowired
-    @Resource(name = "redisTemplate1")
-    private RedisTemplate<String,Object> redisTemplate1; 
-    
-    @Autowired
-    @Resource(name = "redisTemplate2")  
-    private RedisTemplate<String,Object> redisTemplate2; 
-    
-    @Autowired
-    @Resource(name = "redisTemplate3")  
-    private RedisTemplate<String,Object> redisTemplate3; 
-    
-    @Autowired
-    @Resource(name = "redisTemplate4")  
-    private RedisTemplate<String,Object> redisTemplate4;
-    
-    @Autowired
-    @Resource(name = "redisTemplate5")  
-    private RedisTemplate<String,Object> redisTemplate5; 
-	
-	private RedisTemplate<String, Object> getRedisTemplate(Integer dbIndex) {
-		if (dbIndex == 1) {
-			return redisTemplate1;
-		}else if (dbIndex == 2) {
-			return redisTemplate2;
-		}else if (dbIndex == 3) {
-			return redisTemplate3;
-		}else if (dbIndex == 4) {
-			return redisTemplate4;
-		}else if (dbIndex == 5) {
-			return redisTemplate5;
-		}else{
-			return redisTemplate0;
-		}
-	}
-	@Autowired
-	@Resource(name = "redisTemplate") 
+
+    @Resource(name = "redisTemplate")
 	private RedisTemplate<String,Object> redisTemplate;
+
+	@Resource(name = "redisConnectionFactory")
+	private JedisConnectionFactory redisConnectionFactory;
+
+	@Autowired(required = false)
+	public void setRedisTemplate(RedisTemplate redisTemplate) {
+		RedisSerializer stringSerializer = new StringRedisSerializer();
+		redisTemplate.setKeySerializer(stringSerializer);
+		redisTemplate.setValueSerializer(stringSerializer);
+		redisTemplate.setHashKeySerializer(stringSerializer);
+		redisTemplate.setHashValueSerializer(stringSerializer);
+		this.redisTemplate = redisTemplate;
+	}
+
+	private RedisTemplate<String, Object> getRedisTemplate(Integer dbIndex) {
+		redisConnectionFactory.setDatabase(dbIndex);
+        redisTemplate.setConnectionFactory(redisConnectionFactory);
+        return redisTemplate;
+    }
 	/**
 	 * @Title: emptyRedis
 	 * @Description: 该方法用于清空库缓存
@@ -121,7 +102,7 @@ public class RedisUtil {
 			});
 			return true;
 		} catch (Exception e) {
-			logger.error("RedisUtil.emptyRedis()  error " + e);
+			logger.error("RedisUtil.emptyRedis()  error:{} " + e);
 			return false;
 		}
 	}
@@ -142,7 +123,7 @@ public class RedisUtil {
 			redisTemplate.setConnectionFactory(jedisConnectionFactory);
 			return true;
 		} catch (Exception e) {
-			logger.error("RedisUtil.switchRedisLibrary()  error " + e);
+			logger.error("RedisUtil.switchRedisLibrary()  error:{} " + e);
 			return false;
 		}
 	}
@@ -161,7 +142,7 @@ public class RedisUtil {
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
-			logger.error("RedisUtil.expire()  error " + e);
+			logger.error("RedisUtil.expire()  error:{} " + e);
 			return false;
 		}
 	}
@@ -185,7 +166,7 @@ public class RedisUtil {
 			return getRedisTemplate(dbIndex).hasKey(key);
 		} catch (Exception e) {
 			e.printStackTrace();
-			logger.error("RedisUtil.hasKey()  error " + e);
+			logger.error("RedisUtil.hasKey()  error:{} " + e);
 			return false;
 		}
 	}
@@ -210,7 +191,7 @@ public class RedisUtil {
 			}
 			return true;
 		} catch (Exception e) {
-			logger.error("RedisUtil.addValue()  error " + e);
+			logger.error("RedisUtil.addValue()  error:{} " + e);
 			return false;
 		}
 	}
@@ -259,7 +240,7 @@ public class RedisUtil {
 			}
 			return true;
 		} catch (Exception e) {
-			logger.error("RedisUtil.addValueTime()  error " + e);
+			logger.error("RedisUtil.addValueTime()  error:{} " + e);
 			e.printStackTrace();
 			return false;
 		}
@@ -281,7 +262,7 @@ public class RedisUtil {
 			getRedisTemplate(dbIndex).delete(key);
 			return true;
 		} catch (Exception e) {
-			logger.error("RedisUtil.deleteValue()  error " + e);
+			logger.error("RedisUtil.deleteValue()  error:{} " + e);
 			return false;
 		}
 	}
@@ -303,7 +284,7 @@ public class RedisUtil {
 			getRedisTemplate(dbIndex).opsForValue().set(key, value);
 			return true;
 		} catch (Exception e) {
-			logger.error("RedisUtil.updateValue()  error " + e);
+			logger.error("RedisUtil.updateValue()  error:{} " + e);
 			return false;
 		}
 	}
@@ -328,7 +309,7 @@ public class RedisUtil {
 			}
 			return value;
 		} catch (Exception e) {
-			logger.error("RedisUtil.getValue()  error " + e);
+			logger.error("RedisUtil.getValue()  error:{} " + e);
 			return null;
 		}
 	}
@@ -357,7 +338,7 @@ public class RedisUtil {
 				return BooleanUtils.toBoolean(value);
 			}
 		} catch (Exception e) {
-			logger.error("RedisUtil.getValue()  error " + e);
+			logger.error("RedisUtil.getValue()  error:{} " + e);
 			return defValue;
 		}
 	}
@@ -385,7 +366,7 @@ public class RedisUtil {
 			}
 			return value;
 		} catch (Exception e) {
-			logger.error("RedisUtil.getValue()  error " + e);
+			logger.error("RedisUtil.getValue()  error:{} " + e);
 			return null;
 		}
 	}
@@ -410,7 +391,7 @@ public class RedisUtil {
 				return true;
 			}
 		} catch (Exception e) {
-			logger.error("RedisUtil.checkValue()  error " + e);
+			logger.error("RedisUtil.checkValue()  error:{} " + e);
 			return false;
 		}
 	}
@@ -433,7 +414,7 @@ public class RedisUtil {
 			return getRedisTemplate(dbIndex).opsForList().range(key, start, end);
 		} catch (Exception e) {
 			e.printStackTrace();
-			logger.error("RedisUtil.getListStartEnd()  error " + e);
+			logger.error("RedisUtil.getListStartEnd()  error:{} " + e);
 			return null;
 		}
 	}
@@ -450,7 +431,7 @@ public class RedisUtil {
 			return getRedisTemplate(dbIndex).opsForList().size(key);
 		} catch (Exception e) {
 			e.printStackTrace();
-			logger.error("RedisUtil.getListSize()  error " + e);
+			logger.error("RedisUtil.getListSize()  error:{} " + e);
 			return 0;
 		}
 	}
@@ -468,7 +449,7 @@ public class RedisUtil {
 		try {
 			return getRedisTemplate(dbIndex).opsForList().index(key, index);
 		} catch (Exception e) {
-			logger.error("RedisUtil.getListIndex()  error " + e);
+			logger.error("RedisUtil.getListIndex()  error:{} " + e);
 			e.printStackTrace();
 			return null;
 		}
@@ -479,15 +460,14 @@ public class RedisUtil {
      * 将list放入缓存 
      * @param key 键 
      * @param value 值 
-     * @param time 时间(秒) 
-     * @return 
+     * @return
      */  
     public boolean setList(String key, List<Object> value,Integer dbIndex) {  
         try {  
         	getRedisTemplate(dbIndex).opsForList().rightPushAll(key, value);  
             return true;  
         } catch (Exception e) {  
-        	logger.error("RedisUtil.setList()  error " + e);
+        	logger.error("RedisUtil.setList()  error:{} " + e);
             return false;  
         }  
     }  
@@ -505,7 +485,7 @@ public class RedisUtil {
             if (time > 0) expire(key, time, dbIndex);  
             return true;  
         } catch (Exception e) {  
-        	logger.error("RedisUtil.setListTime()  error " + e); 
+        	logger.error("RedisUtil.setListTime()  error:{} " + e);
             return false;  
         }  
     }  
@@ -523,7 +503,7 @@ public class RedisUtil {
 			getRedisTemplate(dbIndex).opsForList().rightPush(key, value);
 			return true;
 		} catch (Exception e) {
-			logger.error("RedisUtil.setListObject()  error " + e);
+			logger.error("RedisUtil.setListObject()  error:{} " + e);
 			e.printStackTrace();
 			return false;
 		}
@@ -542,7 +522,7 @@ public class RedisUtil {
             if (time > 0) expire(key, time, dbIndex);
             return true;
         } catch (Exception e) {
-        	logger.error("RedisUtil.setListObject()  error " + e);
+        	logger.error("RedisUtil.setListObject()  error:{} " + e);
         	return false;
         }
 	}
@@ -563,7 +543,7 @@ public class RedisUtil {
 			getRedisTemplate(dbIndex).opsForList().set(key, index, value);
 			return true;
 		} catch (Exception e) {
-			logger.error("RedisUtil.updateListIndex()  error " + e);
+			logger.error("RedisUtil.updateListIndex()  error:{} " + e);
 			e.printStackTrace();
 			return false;
 		}
@@ -585,7 +565,7 @@ public class RedisUtil {
 			Long remove = getRedisTemplate(dbIndex).opsForList().remove(key, count, value);
 			return remove;
 		} catch (Exception e) {
-			logger.error("RedisUtil.removeListCount()  error " + e);
+			logger.error("RedisUtil.removeListCount()  error:{} " + e);
 			e.printStackTrace();
 			return 0;
 		}
@@ -623,7 +603,7 @@ public class RedisUtil {
 		try {
 			return getRedisTemplate(dbIndex).opsForSet().members(key);
 		} catch (Exception e) {
-			logger.error("RedisUtil.getSetValue()  error " + e);
+			logger.error("RedisUtil.getSetValue()  error:{} " + e);
 			e.printStackTrace();
 			return null;
 		}
@@ -642,7 +622,7 @@ public class RedisUtil {
 		try {
 			return getRedisTemplate(dbIndex).opsForSet().isMember(key, value);
 		} catch (Exception e) {
-			logger.error("RedisUtil.sHasKey()  error " + e);
+			logger.error("RedisUtil.sHasKey()  error:{} " + e);
 			e.printStackTrace();
 			return false;
 		}
@@ -661,7 +641,7 @@ public class RedisUtil {
 		try {
 			return getRedisTemplate(dbIndex).opsForSet().add(key, values);
 		} catch (Exception e) {
-			logger.error("RedisUtil.insertSet()  error " + e);
+			logger.error("RedisUtil.insertSet()  error:{} " + e);
 			e.printStackTrace();
 			return 0;
 		}
@@ -678,7 +658,7 @@ public class RedisUtil {
 		try {
 			return getRedisTemplate(dbIndex).opsForSet().size(key);
 		} catch (Exception e) {
-			logger.error("RedisUtil.sGetSetSize()  error " + e);
+			logger.error("RedisUtil.sGetSetSize()  error:{} " + e);
 			e.printStackTrace();
 			return 0;
 		}
@@ -698,7 +678,7 @@ public class RedisUtil {
 			Long count = getRedisTemplate(dbIndex).opsForSet().remove(key, values);
 			return count;
 		} catch (Exception e) {
-			logger.error("RedisUtil.setRemove()  error " + e);
+			logger.error("RedisUtil.setRemove()  error:{} " + e);
 			e.printStackTrace();
 			return 0;
 		}
@@ -718,10 +698,10 @@ public class RedisUtil {
 		long currentTimeMillis = System.currentTimeMillis();
 		while ((System.currentTimeMillis() - currentTimeMillis) < timeOutms) {
 			if (OK.equalsIgnoreCase(this.set(lockKey, lockValue, expireTime))) {
-				String dateStr = DateFormatUtils.format(System.currentTimeMillis(),ConstantAiot.DATE_PATTERN_17);
+				String dateStr = DateFormatUtils.format(System.currentTimeMillis(),ConstantFan.DATE_PATTERN_17);
 				String uuid = dateStr+"_"+UUID.randomUUID().toString();
 				String value = dateStr+"_"+lockKey;
-				redisTemplate0.opsForValue().set(uuid,value,12*60*60, TimeUnit.SECONDS);
+				redisTemplate.opsForValue().set(uuid,value,12*60*60, TimeUnit.SECONDS);
 				return true;
 			}
 			if(Thread.currentThread().isInterrupted()){
@@ -765,7 +745,7 @@ public class RedisUtil {
 	 */
 	private String set(final String key, final String value, final long seconds) {
 		Assert.isTrue(!StringUtils.isEmpty(key), "key不能为空");
-		return redisTemplate0.execute(new RedisCallback<String>() {
+		return redisTemplate.execute(new RedisCallback<String>() {
 			@Override
 			public String doInRedis(RedisConnection connection) throws DataAccessException {
 				Object nativeConnection = connection.getNativeConnection();
@@ -803,14 +783,14 @@ public class RedisUtil {
 		keys.add(lockKey);
 		List<String> values = Lists.newArrayList();
 		values.add(lockValue);
-		Object obj = redisTemplate0.execute(new DefaultRedisScript<>(UNLOCK_LUA, String.class),keys,values.toArray());
+		Object obj = redisTemplate.execute(new DefaultRedisScript<>(UNLOCK_LUA, String.class),keys,values.toArray());
 		Long result = (Long)obj;
 		if (result == 0 && !StringUtils.isEmpty(lockKey)) {
-			Object object = redisTemplate0.opsForValue().get(lockKey);
+			Object object = redisTemplate.opsForValue().get(lockKey);
 			logger.debug("Redis distributed lock,result:{},lockValue:{},resultlockValue:{}"+object, result,lockValue);
 			if(object != null){
 				if(org.apache.commons.lang3.StringUtils.equals(object.toString(),lockValue)){
-                    redisTemplate0.delete(lockKey);
+                    redisTemplate.delete(lockKey);
 					return true;
 				}
 			}else{
