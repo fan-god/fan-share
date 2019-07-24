@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!--<settings>
+        &lt;!&ndash; 打印查询语句 &ndash;&gt;
+        <setting name="lazyLoadingEnabled" value="false" />
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
+    </settings>-->
+
+    <!-- 配置分页插件 -->
+    <plugins>
+        <plugin interceptor="com.github.pagehelper.PageInterceptor">
+            <property name="helperDialect" value="mysql"/>
+            <!--分页合理化参数-->
+            <!--此配置在数量不足时默认查询所有，例如一共有五条数据，分页一页分十条，分到第二页时数据在正常情况下是没有的，
+            但是当value为true时查询的数量是5，数据是不准确的，所以慎填true，最好填false-->
+            <property name="reasonable" value="false"/>
+        </plugin>
+    </plugins>
+</configuration>
