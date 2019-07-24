@@ -2,7 +2,7 @@ package com.fan.util;
 
 
 /**
- * @author boway
+ * @author fan
  * @ClassName: DbContextHolder
  * @Description: 该类为数据源切换类
  * @date 2018年9月11日

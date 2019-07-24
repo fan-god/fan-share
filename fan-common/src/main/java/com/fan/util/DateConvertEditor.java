@@ -9,7 +9,7 @@ import java.util.Date;
 
 /**
  * @description:日期转化器
- * @author: shil20
+ * @author: fan
  * @date: 2018/7/25 15:00
  **/
 public class DateConvertEditor extends PropertyEditorSupport {

@@ -33,7 +33,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * @ClassName: RedisUtils
  * @Description: 该类用于reids的工具类，
- * @author boway
+ * @author fan
  * @date 2018年7月19日 redisTemplate.opsForHash();//操作hash
  *       redisTemplate.opsForValue();//操作字符串 redisTemplate.opsForSet();//操作set
  *       redisTemplate.opsForList();//操作list

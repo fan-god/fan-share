@@ -19,7 +19,7 @@
 ///**
 //* @ClassName: RedisConfig
 //* @Description: 配置多个reis连接
-//* @author boway
+//* @author fan
 //* @date 2018年8月9日
 //*
 //*/

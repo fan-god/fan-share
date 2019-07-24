@@ -8,7 +8,7 @@ import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 /**
 * @ClassName: EncryptPropertyPlaceholderConfigurer
 * @Description: 该类用于对属性集中密码的数据进行加密解密
-* @author boway
+* @author fan
 * @date 2018年7月26日
 *
 */

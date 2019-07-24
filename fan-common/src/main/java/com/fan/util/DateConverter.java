@@ -8,7 +8,7 @@ import java.util.Date;
 
 /**
  * @description:
- * @author: shil20
+ * @author: fan
  * @date: 2018/7/25 14:25
  **/
 public class DateConverter implements Converter<String, Date> {

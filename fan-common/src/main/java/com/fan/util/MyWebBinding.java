@@ -8,7 +8,7 @@ import java.util.Date;
 
 /**
  * @description:日期转化器
- * @author: shil20
+ * @author: fan
  * @date: 2018/7/25 14:59
  **/
 public class MyWebBinding implements WebBindingInitializer {

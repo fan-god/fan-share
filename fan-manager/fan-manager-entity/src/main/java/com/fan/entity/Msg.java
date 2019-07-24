@@ -5,7 +5,7 @@ import java.util.Map;
 
 
 /**
- * @author lenovo
+ * @author fan
  * @ClassName: Msg
  * @Description:该类作为通用的返回类使用，进行统一的包装
  * @date 2018年7月10日

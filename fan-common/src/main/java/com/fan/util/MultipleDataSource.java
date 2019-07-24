@@ -6,7 +6,7 @@ import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 /**
 * @ClassName: MultipleDataSource
 * @Description:  该类用于切换多个mysql数据源 
-* @author boway
+* @author fan
 * @date 2018年9月11日
 *
 */  

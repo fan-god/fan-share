@@ -15,7 +15,7 @@ import java.math.BigInteger;
 import java.util.Properties;
 
 /**
- * @author lenovo
+ * @author fan
  * @ClassName: AESUtil
  * @Description: AES加密和解密的工具类
  * @date 2018年7月17日

@@ -5,7 +5,7 @@ import java.util.Map;
 
 
 /**
- * @author boway
+ * @author fan
  * @ClassName: ConstantFan
  * @Description: 该 类用于存取系统常量
  * @date 2018年7月24日

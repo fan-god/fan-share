@@ -9,7 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 /**
  * 通用的Bean, 所有POJO实体类务必实现些类
  *
- * @author aaron
+ * @author fan
  */
 @Document
 public class GeneralBean implements Serializable {

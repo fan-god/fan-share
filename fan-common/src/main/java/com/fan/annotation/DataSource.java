@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
 /**
 * @ClassName: DataSource
 * @Description: 该类为自定义注解类，用于在dao层时切换数据源 
-* @author boway
+* @author fan
 * @date 2018年9月14日
 */
 /*@Retention(RetentionPolicy.RUNTIME)
