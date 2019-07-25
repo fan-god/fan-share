@@ -1,5 +1,7 @@
 package com.fan.util;
 
+import com.mchange.lang.IntegerUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StringUtils;
 
 import java.beans.PropertyEditorSupport;
@@ -12,10 +14,12 @@ import java.util.Date;
  * @author: fan
  * @date: 2018/7/25 15:00
  **/
+@Slf4j
 public class DateConvertEditor extends PropertyEditorSupport {
-    private static SimpleDateFormat datetimeFormat = new SimpleDateFormat(
-            "yyyy-MM-dd HH:mm:ss");
-    private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+    private static SimpleDateFormat datetimeFormat = new SimpleDateFormat(ConstantFan.DATE_PATTERN_19);
+    private static SimpleDateFormat dateFormat = new SimpleDateFormat(ConstantFan.DATE_PATTERN_10);
+
     public void setAsText(String text) throws IllegalArgumentException {
         if (StringUtils.hasText(text)) {
             try {
@@ -31,8 +35,7 @@ public class DateConvertEditor extends PropertyEditorSupport {
                             "Could not parse date, date format is error ");
                 }
             } catch (ParseException ex) {
-                IllegalArgumentException iae = new IllegalArgumentException(
-                        "Could not parse date: " + ex.getMessage());
+                IllegalArgumentException iae = new IllegalArgumentException("Could not parse date: " + ex.getMessage());
                 iae.initCause(ex);
                 throw iae;
             }
@@ -41,7 +44,68 @@ public class DateConvertEditor extends PropertyEditorSupport {
         }
     }
 
-    public static String getDateTime(){
-        return datetimeFormat.format(new Date());
+    public static String getDateTime() {
+        try {
+            return datetimeFormat.format(new Date());
+        } catch (Exception e) {
+            log.error("DateConvertEditor getDateTime error:", e);
+            return null;
+        }
+    }
+
+    public static String getDate() {
+        try {
+            return dateFormat.format(new Date());
+        } catch (Exception e) {
+            log.error("DateConvertEditor getDate error:", e);
+            return null;
+        }
+    }
+
+    public static String getDateTime(Date date) {
+        try {
+            return datetimeFormat.format(date);
+        } catch (Exception e) {
+            log.error("DateConvertEditor getDateTime error:", e);
+            return null;
+        }
+    }
+
+    public static String getDate(Date date) {
+        try {
+            return dateFormat.format(date);
+        } catch (Exception e) {
+            log.error("DateConvertEditor getDate error:", e);
+            return null;
+        }
+    }
+
+    public static String getDateTime(Long date) {
+        try {
+            return datetimeFormat.format(date);
+        } catch (Exception e) {
+            log.error("DateConvertEditor getDateTime error:", e);
+            return null;
+        }
+    }
+
+    public static String getDate(Long date) {
+        try {
+            return dateFormat.format(date);
+        } catch (Exception e) {
+            log.error("DateConvertEditor getDate error:", e);
+            return null;
+        }
+    }
+
+    /**
+     * 获取当前日期推前日期的时间戳
+     *
+     * @param dayOfNum
+     * @return
+     */
+    public static Long getDayOfLong(Integer dayOfNum) {
+        Long i = IntegerUtils.toUnsigned(ConstantFan.BASE_DAY_0F_LONG * dayOfNum);
+        return System.currentTimeMillis() - i;
     }
 }

@@ -29,7 +29,7 @@ public interface ConstantFan {
 
     String ARGS = "args";
 
-     int ARGS_DB_INDEX = 3;
+    int ARGS_DB_INDEX = 3;
 
     String CRM = "crm";
 
@@ -69,6 +69,7 @@ public interface ConstantFan {
     Integer SESSION_SECOND = 60;
     Map<String, String> devDicMap = new HashMap<String, String>() {
         private static final long serialVersionUID = 1L;
+
         {
             put("", "");
         }
@@ -168,4 +169,17 @@ public interface ConstantFan {
     byte PONG = 2;
     //顾客
     byte CUSTOMER = 3;
+
+    /*****************************导入导出文件***********************************/
+    int SHEET_NO = 1;
+    String SHEET_NAME = "sheet1";
+    int HEAD_LINE_MUN = 0;
+    //导出文件路径
+    String EXPORT_FILE_PATH = "D:\\fan-share\\exportFiles\\";
+    //导入文件路径
+    String IMPORT_FILE_PATH = "D:\\fan-share\\importFiles\\";
+    //导出excel文件后缀
+    String FILE_SUFFIX_XLSX = ".xlsx";
+    String FILE_SUFFIX_XLS = ".xls";
+    Integer BASE_DAY_0F_LONG = 24 * 60 * 60 * 1000;
 }

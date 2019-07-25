@@ -73,6 +73,7 @@
         <mongo.java.driver.version>3.0.0</mongo.java.driver.version>
         <spring.data.mongodb.version>1.7.2.RELEASE</spring.data.mongodb.version>
         <spring.data.commons.core>1.4.0.RELEASE</spring.data.commons.core>
+        <easyexcel.version>1.0.2</easyexcel.version>
     </properties>
 
     <dependencyManagement>
@@ -477,7 +478,12 @@
                 <artifactId>mongo-java-driver</artifactId>
                 <version>${mongo.java.driver.version}</version>
             </dependency>
-
+            <!-- https://mvnrepository.com/artifact/com.alibaba/easyexcel -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>easyexcel</artifactId>
+                <version>${easyexcel.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
