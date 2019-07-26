@@ -102,12 +102,8 @@ public class ExcelFactory<T extends BaseRowModel> {
             String className = c.getSimpleName();
             String exportFilePath = ConstantFan.EXPORT_FILE_PATH.concat(DateConvertEditor.getDate());
             //检查文件路径是否存在
-            File file = new File(exportFilePath);
-            //如果文件目录不存在则创建目录
-            if (!file.exists()) {
-                file.mkdirs();
-            }
-            exportFilePath = exportFilePath.concat(File.separator).concat(className).concat(ConstantFan.FILE_SUFFIX_XLSX);
+            OperateFileUtil.checkFilePath(exportFilePath);
+            exportFilePath = exportFilePath.concat(File.separator).concat(className).concat(ConstantFan.XLSX);
             OutputStream out = new FileOutputStream(exportFilePath);
             ExcelWriter writer = new ExcelWriter(out, ExcelTypeEnum.XLSX);
             Sheet sheet = new Sheet(ConstantFan.SHEET_NO, ConstantFan.HEAD_LINE_MUN, c);

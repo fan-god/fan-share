@@ -1,10 +1,16 @@
 package com.fan.test;
 
 import com.fan.entity.excelmodel.TestExcelModel;
+import com.fan.util.ConstantFan;
 import com.fan.util.ExcelFactory;
+import com.fan.util.QRCodeUtil;
 import com.google.common.collect.Lists;
 
+import javax.swing.filechooser.FileSystemView;
+import java.io.File;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -16,7 +22,7 @@ import java.util.List;
  */
 public class TestWhitoutProperties {
 
-    public static void main(String[] args) throws ParseException {
+    public static void main(String[] args) throws Exception {
 //        Pattern pattern = Pattern.compile("v([+-]?\\d*\\.\\d*)");
 //        Matcher matcher = pattern.matcher("fan-manager-web/app/user/v1.0/listPageAll");
 //        System.out.println(matcher.find());
@@ -36,14 +42,31 @@ public class TestWhitoutProperties {
 //        }
 //        System.out.println(age);
 
-        ExcelFactory excelFactory = new ExcelFactory();
-        List<TestExcelModel> list = Lists.newArrayList();
-        TestExcelModel m1 = TestExcelModel.builder().age(13).email("ctv@bnj.com").name("ftgvyubh").build();
-        TestExcelModel m2 = TestExcelModel.builder().age(11).email("dwfevgrtgbhn@163.com").name("qaqzzxswx").build();
-        TestExcelModel m3 = TestExcelModel.builder().age(23).email("1129985465@qq.com").name("wf").build();
-        list.add(m1);
-        list.add(m2);
-        list.add(m3);
-        excelFactory.getExcelWrite(TestExcelModel.class,list);
+//        ExcelFactory excelFactory = new ExcelFactory();
+//        List<TestExcelModel> list = Lists.newArrayList();
+//        TestExcelModel m1 = TestExcelModel.builder().age(13).email("ctv@bnj.com").name("ftgvyubh").build();
+//        TestExcelModel m2 = TestExcelModel.builder().age(11).email("dwfevgrtgbhn@163.com").name("qaqzzxswx").build();
+//        TestExcelModel m3 = TestExcelModel.builder().age(23).email("1129985465@qq.com").name("wf").build();
+//        list.add(m1);
+//        list.add(m2);
+//        list.add(m3);
+//        excelFactory.getExcelWrite(TestExcelModel.class,list);
+
+        // 存放在二维码中的内容
+        String text = "http://www.baidu.com";
+        // 嵌入二维码的图片路径
+        String imgPath = "D:\\fan-share/美女.png";
+
+        //生成二维码
+        QRCodeUtil.createQRCode(text, imgPath, "dashabi", true);
+        // 解析二维码
+        String str = QRCodeUtil.decode("dashabi");
+        // 打印出解析出的内容
+        System.out.println(str);
+
+//        String url = "http://baidu.com";
+//        String path = FileSystemView.getFileSystemView().getHomeDirectory() + File.separator + "testQrcode";
+//        String fileName = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + ".jpg";
+//        QRCodeUtil.createQRCode(url, path, fileName);
     }
 }

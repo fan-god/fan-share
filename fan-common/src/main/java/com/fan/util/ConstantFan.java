@@ -178,8 +178,12 @@ public interface ConstantFan {
     String EXPORT_FILE_PATH = "D:\\fan-share\\exportFiles\\";
     //导入文件路径
     String IMPORT_FILE_PATH = "D:\\fan-share\\importFiles\\";
-    //导出excel文件后缀
-    String FILE_SUFFIX_XLSX = ".xlsx";
-    String FILE_SUFFIX_XLS = ".xls";
+    //生成二维码路径
+    String QRCODE_PATH = "D:\\fan-share\\qrcode\\";
+    //文件后缀
+    String XLSX = ".xlsx";
+    String XLS = ".xls";
+    String JPG = ".jpg";
+    String PNG = ".png";
     Integer BASE_DAY_0F_LONG = 24 * 60 * 60 * 1000;
 }

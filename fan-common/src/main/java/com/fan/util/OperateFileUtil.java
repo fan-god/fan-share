@@ -165,4 +165,17 @@ public class OperateFileUtil {
         }
         return true;
     }
+
+    /**
+     * 检查路径是否存在不存咋
+     *
+     * @param filePath
+     */
+    public static void checkFilePath(String filePath) {
+        File file = new File(filePath);
+        // 当文件夹不存在时，mkdirs会自动创建多层目录，区别于mkdir．(mkdir如果父目录不存在则会抛出异常)
+        if (!file.exists() && !file.isDirectory()) {
+            file.mkdirs();
+        }
+    }
 }
