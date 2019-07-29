@@ -73,7 +73,7 @@
         <!-- MongoDB版本号 -->
         <mongo.java.driver.version>3.0.0</mongo.java.driver.version>
         <spring.data.mongodb.version>1.7.2.RELEASE</spring.data.mongodb.version>
-        <spring.data.commons.core>1.4.0.RELEASE</spring.data.commons.core>
+        <spring.data.commons.core>2.1.9.RELEASE</spring.data.commons.core>
         <easyexcel.version>1.0.2</easyexcel.version>
         <google.zxing>3.3.0</google.zxing>
     </properties>
@@ -465,11 +465,11 @@
                 <version>${msgpack.version}</version>
             </dependency>
             <!-- MongoDB依赖 -->
-            <dependency>
+            <!--<dependency>
                 <groupId>org.springframework.data</groupId>
                 <artifactId>spring-data-commons-core</artifactId>
                 <version>${spring.data.commons.core}</version>
-            </dependency>
+            </dependency>-->
             <dependency>
                 <groupId>org.springframework.data</groupId>
                 <artifactId>spring-data-mongodb</artifactId>

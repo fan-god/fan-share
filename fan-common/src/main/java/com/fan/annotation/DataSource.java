@@ -12,8 +12,6 @@ import java.lang.annotation.Target;
 * @author fan
 * @date 2018年9月14日
 */
-/*@Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.METHOD)*/
 @Target({ElementType.TYPE,ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface DataSource {

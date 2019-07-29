@@ -5,6 +5,7 @@ import com.fan.util.ConstantFan;
 import com.fan.util.ExcelFactory;
 import com.fan.util.QRCodeUtil;
 import com.google.common.collect.Lists;
+import org.apache.commons.lang3.RandomUtils;
 
 import javax.swing.filechooser.FileSystemView;
 import java.io.File;
@@ -52,21 +53,37 @@ public class TestWhitoutProperties {
 //        list.add(m3);
 //        excelFactory.getExcelWrite(TestExcelModel.class,list);
 
-        // 存放在二维码中的内容
-        String text = "http://www.baidu.com";
-        // 嵌入二维码的图片路径
-        String imgPath = "D:\\fan-share/美女.png";
-
-        //生成二维码
-        QRCodeUtil.createQRCode(text, imgPath, "dashabi", true);
-        // 解析二维码
-        String str = QRCodeUtil.decode("dashabi");
-        // 打印出解析出的内容
-        System.out.println(str);
+//        // 存放在二维码中的内容
+//        String text = "http://m16808311q.iask.in:47429/fan-manager-web/api/testing/v1.0/sendEmailBySweepCode";
+//        // 嵌入二维码的图片路径
+//        String imgPath = "D:\\fan-share/美女.png";
+//
+//        //生成二维码
+//        QRCodeUtil.createQRCode(text, imgPath, "测试", true);
+//        // 解析二维码
+//        String str = QRCodeUtil.decode("测试");
+//        // 打印出解析出的内容
+//        System.out.println(str);
 
 //        String url = "http://baidu.com";
 //        String path = FileSystemView.getFileSystemView().getHomeDirectory() + File.separator + "testQrcode";
 //        String fileName = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + ".jpg";
 //        QRCodeUtil.createQRCode(url, path, fileName);
+
+        //洗牌算法
+        int[] arr = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+        int n = arr.length;
+        for (int i = n - 1; i >= 0; i--) {
+            swap(arr, i, RandomUtils.nextInt(0, i));
+        }
+        for (int element : arr) {
+            System.out.print(element + " ");
+        }
+    }
+
+    static void swap(int[] array, int index1, int index2) {
+        int t = array[index1];
+        array[index1] = array[index2];
+        array[index2] = t;
     }
 }

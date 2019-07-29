@@ -66,8 +66,8 @@ public class TestData {
     @Test
     public void test4(){
         try {
-            CarInfo carInfo = CarInfo.builder().brandName("五菱宏光").color("白色").displacement(2.0).build();
-            carInfoService.insert(carInfo);
+//            CarInfo carInfo = CarInfo.builder().brandName("五菱宏光").color("白色").displacement(2.0).build();
+//            carInfoService.insert(carInfo);
             Pagination<CarInfo> pagination = carInfoService.findPaginationByQuery(null, 1, 2);
             System.out.println(pagination);
         } catch (Exception e) {

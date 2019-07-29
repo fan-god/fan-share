@@ -25,8 +25,8 @@ public class AESUtil {
     /**
      * 密钥 abcdefgabcdefg12
      */
-	public static String KEY;
-//    public static String KEY = "abcdefgabcdefg12";
+//	public static String KEY;
+    public static String KEY = "abcdefgabcdefg12";
 
     static {
         if (KEY == null) {

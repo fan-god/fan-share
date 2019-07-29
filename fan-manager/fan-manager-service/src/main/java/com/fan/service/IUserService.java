@@ -11,7 +11,7 @@ public interface IUserService extends IBaseService<User>{
 
     int AddGwf1(Map<String, Object> map);
 
-    PageInfo<User> listPageAll(int pageNo, int pageSize, User user);
+   PageInfo<User> listPageAll(int pageNo, int pageSize, User user);
 
     User queryOne(Long id);
 }
