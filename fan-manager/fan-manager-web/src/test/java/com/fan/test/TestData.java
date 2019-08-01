@@ -43,7 +43,7 @@ public class TestData {
     private ICarInfoService carInfoService;
 
     @Test
-    public void test1(){
+    public void test1() {
         User user = new User();
         PageInfo<User> pageInfo = userService.listPageAll(1, 20, user);
         System.out.println(DataConvertUtil.beanToString(pageInfo, ConstantFan.JSON));
@@ -51,37 +51,44 @@ public class TestData {
 
     @Test
     public void test2() {
-        System.out.println(redis.getValue("vtykkp",10));
+        try {
+            String str = redis.getHashValue("spring:session:sessions:ea1be81a-3df7-42d8-babf-03f65e828e3f", "sessionAttr:user", 0);
+            String s = new String(str.getBytes(ConstantFan.CHARSET));
+            System.out.println(s);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println();
     }
 
     @Test
-    public void test3(){
+    public void test3() {
         String s_sms = sendSms.sendTplSms("18627054863", "@1@=Zhang_Chuan_Pu");
 //        String s_report = sendSmsUtil.queryReport();
 //        String s_balance = sendSmsUtil.getBalance();
 //        String s_mo = sendSmsUtil.queryMo();
-        System.out.printf("================>%s",s_sms);
+        System.out.printf("================>%s", s_sms);
     }
 
     @Test
-    public void test4(){
+    public void test4() {
         try {
 //            CarInfo carInfo = CarInfo.builder().brandName("五菱宏光").color("白色").displacement(2.0).build();
 //            carInfoService.insert(carInfo);
             Pagination<CarInfo> pagination = carInfoService.findPaginationByQuery(null, 1, 2);
             System.out.println(pagination);
         } catch (Exception e) {
-          log.error("test4 error:{}",e);
+            log.error("test4 error:{}", e);
         }
     }
 
     @Test
-    public void test5(){
+    public void test5() {
         try {
             CarInfo carInfo = CarInfo.builder().brandName("五菱宏光").build();
             carInfoService.update(carInfo);
         } catch (Exception e) {
-            log.error("test4 error:{}",e);
+            log.error("test4 error:{}", e);
         }
     }
 }
