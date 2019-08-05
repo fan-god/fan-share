@@ -5,8 +5,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.io.UnsupportedEncodingException;
@@ -27,8 +25,6 @@ import java.util.Map.Entry;
 @Component
 @Slf4j
 public class SignUtil {
-
-    private static final Logger logger = LoggerFactory.getLogger(SignUtil.class);
 
     private static final String charset = ConstantFan.CHARSET;
 
@@ -62,7 +58,7 @@ public class SignUtil {
      * @throws UnsupportedEncodingException
      */
     public static String encodeUri(String s) {
-        String str = "";
+        String str;
         try {
             str = URLEncoder.encode(s, charset);
         } catch (Exception e) {
@@ -75,7 +71,7 @@ public class SignUtil {
      * md5加密
      */
     public static String getMD5(String input) {
-        String result = null;
+        String result;
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
             result = byte2hex(md.digest(input.getBytes(charset)));
@@ -90,18 +86,17 @@ public class SignUtil {
      *
      * @param secret 分配给您的APP_SECRET
      */
-    public static String md5Signature(TreeMap<String, String> params,
-                                      String secret) {
+    public static String md5Signature(TreeMap<String, String> params, String secret) {
         String result = null;
-        StringBuffer orgin = getBeforeSign(params, new StringBuffer(secret));
-        if (orgin == null) {
-            return result;
-        }
         try {
+            StringBuffer orgin = getBeforeSign(params, new StringBuffer(secret));
+            if (orgin == null) {
+                return result;
+            }
             MessageDigest md = MessageDigest.getInstance("MD5");
             result = byte2hex(md.digest(orgin.toString().getBytes(charset)));
         } catch (Exception e) {
-            throw new java.lang.RuntimeException("sign error !");
+            throw new java.lang.RuntimeException("sign error !" + e);
         }
         return result;
     }
@@ -111,14 +106,18 @@ public class SignUtil {
      */
     private static String byte2hex(byte[] b) {
         StringBuffer hs = new StringBuffer();
-        String stmp = "";
-        for (int n = 0; n < b.length; n++) {
-            stmp = (java.lang.Integer.toHexString(b[n] & 0XFF));
-            if (stmp.length() == 1) {
-                hs.append("0").append(stmp);
-            } else {
-                hs.append(stmp);
+        String s;
+        try {
+            for (int n = 0; n < b.length; n++) {
+                s = (Integer.toHexString(b[n] & 0XFF));
+                if (s.length() == 1) {
+                    hs.append("0").append(s);
+                } else {
+                    hs.append(s);
+                }
             }
+        } catch (Exception e) {
+            log.error("byte2hex error:{}", e);
         }
         return hs.toString().toUpperCase();
     }
@@ -144,16 +143,15 @@ public class SignUtil {
      * 添加参数的封装方法
      */
 
-    private static StringBuffer getBeforeSign(TreeMap<String, String> params,
-                                              StringBuffer orgin) {
+    private static StringBuffer getBeforeSign(TreeMap<String, String> params, StringBuffer orgin) {
         if (params == null) {
             return null;
         }
-        Map<String, String> treeMap = new TreeMap<String, String>();
+        Map<String, String> treeMap = new TreeMap<>();
         treeMap.putAll(params);
-        Iterator<String> iter = treeMap.keySet().iterator();
-        while (iter.hasNext()) {
-            String name = (String) iter.next();
+        Iterator<String> it = treeMap.keySet().iterator();
+        while (it.hasNext()) {
+            String name = it.next();
             orgin.append(name).append(params.get(name));
         }
         return orgin;
@@ -165,9 +163,9 @@ public class SignUtil {
      * @throws IllegalArgumentException
      * @throws IllegalAccessException
      */
-    public static String afterSortJson(String input) {
+    public static String sortJson(String input) {
         // TreeMap默认对key进行排序
-        TreeMap<Integer, String> map = new TreeMap<Integer, String>();
+        TreeMap<Integer, String> map = new TreeMap<>();
         JsonObject jsonObj = JsonUtil.getJObject(input);
 
         Set<Entry<String, JsonElement>> entrySet = jsonObj.entrySet();
@@ -180,7 +178,6 @@ public class SignUtil {
                 map.put(entry.getKey().hashCode(), entry.getKey());
             }
         }
-
         StringBuffer sb = new StringBuffer();
         sb.append("params={");
         for (Integer mapKey : map.keySet()) {
@@ -258,19 +255,19 @@ public class SignUtil {
      * @return String
      */
     public static String getSha256(String shaValue) {
-        if (StringUtils.isBlank(shaValue)) {
-            return shaValue;
-        }
         String encodeStr = "";
-        MessageDigest messageDigest = null;
         try {
+            if (StringUtils.isBlank(shaValue)) {
+                return shaValue;
+            }
+            MessageDigest messageDigest = null;
             messageDigest = MessageDigest.getInstance("SHA-256");
             messageDigest.update(shaValue.getBytes("UTF-8"));
             encodeStr = byte2hex(messageDigest.digest());
         } catch (NoSuchAlgorithmException e) {
-            logger.error("getSha256 error:{}", e);
+            log.error("getSha256 error:{}", e);
         } catch (UnsupportedEncodingException e) {
-            logger.error("getSha256 error:{}", e);
+            log.error("getSha256 error:{}", e);
         }
         return encodeStr;
     }
@@ -289,14 +286,14 @@ public class SignUtil {
     }
 
 
-    public static String SHA1(Map<String, Object> maps) throws DigestException {
+    public static String SHA1(Map<String, Object> maps) {
         //获取信息摘要 - 参数字典排序后字符串
         String decrypt = getOrderByLexicographic(maps);
         try {
             return SHA1(decrypt);
         } catch (Exception e) {
             log.error("SHA1Util error:", e);
-            throw new DigestException("签名错误！");
+            return null;
         }
     }
 
@@ -307,11 +304,11 @@ public class SignUtil {
      * @return
      * @throws DigestException
      */
-    public static String SHA1(String decrypt) throws DigestException {
-        if (null == decrypt || decrypt.length() == 0) {
-            return null;
-        }
+    public static String SHA1(String decrypt) {
         try {
+            if (null == decrypt || decrypt.length() == 0) {
+                return null;
+            }
             MessageDigest mdTemp = MessageDigest.getInstance("SHA1");
             mdTemp.update(decrypt.getBytes(charset));
 
@@ -327,7 +324,7 @@ public class SignUtil {
             return new String(buf);
         } catch (Exception e) {
             log.error("SHA1Util error:{}", e);
-            throw new DigestException("SHA1 error!");
+            return null;
         }
     }
 

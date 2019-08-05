@@ -4,6 +4,7 @@ import com.fan.entity.excelmodel.TestExcelModel;
 import com.fan.util.ConstantFan;
 import com.fan.util.ExcelFactory;
 import com.fan.util.QRCodeUtil;
+import com.fan.util.SignUtil;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.RandomUtils;
 
@@ -71,14 +72,16 @@ public class TestWhitoutProperties {
 //        QRCodeUtil.createQRCode(url, path, fileName);
 
         //洗牌算法
-        int[] arr = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-        int n = arr.length;
-        for (int i = n - 1; i >= 0; i--) {
-            swap(arr, i, RandomUtils.nextInt(0, i));
-        }
-        for (int element : arr) {
-            System.out.print(element + " ");
-        }
+//        int[] arr = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+//        int n = arr.length;
+//        for (int i = n - 1; i >= 0; i--) {
+//            swap(arr, i, RandomUtils.nextInt(0, i));
+//        }
+//        for (int element : arr) {
+//            System.out.print(element + " ");
+//        }
+
+        System.out.println(SignUtil.getSha256("1111"));
     }
 
     static void swap(int[] array, int index1, int index2) {

@@ -11,7 +11,7 @@
     </parent>
 
     <groupId>com.fan</groupId>
-    <artifactId>fan-manager-interface</artifactId>
+    <artifactId>fan-manager-mq</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
     <dependencies>

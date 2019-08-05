@@ -186,4 +186,7 @@ public interface ConstantFan {
     String JPG = ".jpg";
     String PNG = ".png";
     Integer BASE_DAY_0F_LONG = 24 * 60 * 60 * 1000;
+
+    /*****************************登录******************************/
+    String USER_SESSION = "userSession";
 }

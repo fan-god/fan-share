@@ -1,5 +1,7 @@
 package com.fan.entity;
 
+import com.fan.util.SignUtil;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,6 +33,8 @@ public class Msg {
     private Object datas;
     //接口版本
     private Double version;
+    //消息ID用于定位追踪
+    private String msgId;
 
     //成功信息
     public static Msg success() {
@@ -38,6 +42,7 @@ public class Msg {
         result.setCode(SUCCESS_CODE);
         result.setVersion(1.0);
         result.setMsg("处理成功！");
+        result.setMsgId(SignUtil.SHA1(String.valueOf(System.currentTimeMillis())));
         return result;
     }
 
@@ -47,6 +52,7 @@ public class Msg {
         result.setCode(FAIL_CODE);
         result.setVersion(1.0);
         result.setMsg("处理失败！");
+        result.setMsgId(SignUtil.SHA1(String.valueOf(System.currentTimeMillis())));
         return result;
     }
 
@@ -105,6 +111,10 @@ public class Msg {
     public Msg setVersion(Double version) {
         this.version = version;
         return this;
+    }
+
+    private void setMsgId(String msgId) {
+        this.msgId = msgId;
     }
 
     /**

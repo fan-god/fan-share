@@ -24,12 +24,12 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements IUserServi
 
     @Override
     public PageInfo<User> listPageAll(int pageNo, int pageSize, User user) {
-        return listPageAll(pageNo,pageSize,user,userMapper);
+        return listPageAll(pageNo, pageSize, user, userMapper);
     }
 
     @Override
-    public User queryOne(Long id) {
-        return userMapper.selectByPrimaryKey(id);
+    public Boolean login(User user) {
+        return null != userMapper.login(user);
     }
 
     @Override

@@ -19,7 +19,7 @@
         <module>fan-manager-service</module>
         <module>fan-manager-core</module>
         <module>fan-manager-remote</module>
-        <module>fan-manager-interface</module>
+        <module>fan-manager-mq</module>
         <module>fan-manager-timetask</module>
         <module>fan-manager-web</module>
     </modules>

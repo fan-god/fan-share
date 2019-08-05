@@ -13,5 +13,5 @@ public interface IUserService extends IBaseService<User>{
 
    PageInfo<User> listPageAll(int pageNo, int pageSize, User user);
 
-    User queryOne(Long id);
+    Boolean login(User user);
 }

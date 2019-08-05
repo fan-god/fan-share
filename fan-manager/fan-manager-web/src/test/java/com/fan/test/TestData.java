@@ -1,14 +1,15 @@
 package com.fan.test;
 
 import com.fan.entity.CarInfo;
+import com.fan.entity.DataDictionary;
 import com.fan.entity.User;
 import com.fan.remote.SendSms;
 import com.fan.service.ICarInfoService;
+import com.fan.service.IDictionaryService;
 import com.fan.service.ISeckillService;
 import com.fan.service.IUserService;
 import com.fan.util.ConstantFan;
 import com.fan.util.DataConvertUtil;
-import com.fan.util.Pagination;
 import com.fan.util.RedisUtil;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
@@ -41,6 +42,8 @@ public class TestData {
     private SendSms sendSms;
     @Autowired
     private ICarInfoService carInfoService;
+    @Autowired
+    private IDictionaryService dictionaryService;
 
     @Test
     public void test1() {
@@ -73,10 +76,10 @@ public class TestData {
     @Test
     public void test4() {
         try {
-//            CarInfo carInfo = CarInfo.builder().brandName("五菱宏光").color("白色").displacement(2.0).build();
-//            carInfoService.insert(carInfo);
-            Pagination<CarInfo> pagination = carInfoService.findPaginationByQuery(null, 1, 2);
-            System.out.println(pagination);
+//            DataDictionary dic = DataDictionary.builder().dicKey("ftvybyubn").dicValue("drcybgun").build();
+//           dictionaryService.addDic(dic);
+            String value = dictionaryService.getDicValueByKey("ftvybyubn");
+            System.out.println(value);
         } catch (Exception e) {
             log.error("test4 error:{}", e);
         }
