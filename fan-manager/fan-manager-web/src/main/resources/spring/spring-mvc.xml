@@ -5,7 +5,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd"
-       xmlns:p="http://www.springframework.org/schema/p">
+>
     <!-- 加载注解驱动 -->
     <context:annotation-config/>
     <!-- 扫描路径 -->
@@ -14,6 +14,12 @@
     <context:component-scan base-package="com.fan.timetask"/>
     <context:component-scan base-package="com.fan.remote"/>
 
+    <!-- 引入配置文件 -->
+    <bean class="com.fan.util.EncryptPropertyPlaceholderConfigurer">
+        <!--locations能配置多个properties文件，location只能配置一个-->
+        <property name="locations" value="classpath:config/*.properties" />
+        <property name="fileEncoding" value="UTF-8"/>
+    </bean>
 <!--
     <mvc:annotation-driven conversion-service="conversionService" validator="validator"/>
 -->
