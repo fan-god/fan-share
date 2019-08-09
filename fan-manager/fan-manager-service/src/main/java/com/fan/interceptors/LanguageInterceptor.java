@@ -1,4 +1,4 @@
-package com.fan.service.interceptors;
+package com.fan.interceptors;
 
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.LocaleResolver;

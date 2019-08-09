@@ -1,12 +1,10 @@
-package com.fan.service.interceptors;
+package com.fan.interceptors;
 
 import com.fan.entity.Msg;
 import com.fan.entity.User;
 import com.fan.util.ConstantFan;
 import com.fan.util.DataConvertUtil;
 import com.fan.util.HttpCilentUtil;
-import com.fan.util.InternationalUtil;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 

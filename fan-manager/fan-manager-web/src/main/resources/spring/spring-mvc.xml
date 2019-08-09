@@ -23,23 +23,23 @@
 <!--
     <mvc:annotation-driven conversion-service="conversionService" validator="validator"/>
 -->
-   <!-- <mvc:interceptors>
-        &lt;!&ndash;国际化配置自定义语言拦截器&ndash;&gt;
-      &lt;!&ndash;  <mvc:interceptor>
+    <mvc:interceptors>
+        <!--国际化配置自定义语言拦截器-->
+        <!--<mvc:interceptor>
             <mvc:mapping path="/**"/>
-            <bean class="com.fan.service.interceptors.LanguageInterceptor"/>
-        </mvc:interceptor>&ndash;&gt;
+            <bean class="com.fan.interceptors.LanguageInterceptor"/>
+        </mvc:interceptor>-->
 
         <mvc:interceptor>
             <mvc:mapping path="/**"/>
             <mvc:exclude-mapping path="/app/user/*/login"/>
-            <mvc:exclude-mapping path="/swagger-resources/**"/>&lt;!&ndash; swagger静态资源&ndash;&gt;
-            <mvc:exclude-mapping path="/webjars/**"/>&lt;!&ndash; swagger静态资源&ndash;&gt;
-            <mvc:exclude-mapping path="/v2/**"/>&lt;!&ndash; swagger静态资源&ndash;&gt;
-            <mvc:exclude-mapping path="/swagger-ui.html/**"/>&lt;!&ndash; swagger静态资源&ndash;&gt;
-            <bean class="com.fan.service.interceptors.LoginInterceptor"/>
+            <mvc:exclude-mapping path="/swagger-resources/**"/><!-- swagger静态资源-->
+            <mvc:exclude-mapping path="/webjars/**"/><!-- swagger静态资源-->
+            <mvc:exclude-mapping path="/v2/**"/><!-- swagger静态资源-->
+            <mvc:exclude-mapping path="/swagger-ui.html/**"/><!-- swagger静态资源-->
+            <bean class="com.fan.interceptors.LoginInterceptor"/>
         </mvc:interceptor>
-    </mvc:interceptors>-->
+    </mvc:interceptors>
 
     <!-- 配置视图解析器 -->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
