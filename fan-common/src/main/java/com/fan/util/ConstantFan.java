@@ -18,6 +18,7 @@ public interface ConstantFan {
     String PROTOBUF = "protobuf";
     String SESSION = "session";
     String MESSAGE = "message";
+    String EMPTY_STR = "";
     //文件后缀
     String XLSX = ".xlsx";
     String XLS = ".xls";
@@ -42,7 +43,7 @@ public interface ConstantFan {
     int DBINDEX_3 = 3;
     int DBINDEX_4 = 4;
     int DBINDEX_5 = 5;
-    Map<String, Integer> redisDicMap = new HashMap<>();
+
     String[] REDIS_MAP = {};
     String REDIS_SESSION_INDEX = "sessionIndex";
     String REDIS_SESSION_OUTTIME = "sessionOutTime";
@@ -57,6 +58,7 @@ public interface ConstantFan {
     Integer SESSION_SECOND = 60;
     Map<String, String> devDicMap = new HashMap<String, String>() {
         private static final long serialVersionUID = 1L;
+
         {
             put("", "");
         }
@@ -133,8 +135,6 @@ public interface ConstantFan {
 
 
     String USER_TYPE_ADMIN_NAME = "管理员";
-    String USER_TYPE_IOT_NAME = "";
-
 
     /*************************API******************************/
     String APINAME = "apiName";
@@ -171,4 +171,5 @@ public interface ConstantFan {
 
     /*****************************登录******************************/
     String USER_SESSION = "userSession";
+
 }

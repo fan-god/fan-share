@@ -28,7 +28,7 @@ public class WxBaseMessage {
     // 消息id，64位整型
     private long MsgId;
 
-    public enum MessageType{
-        text,voice,video,shortvideo,location,link;
+    public enum MessageType {
+        text, image, voice, video, shortvideo, location, link
     }
 }

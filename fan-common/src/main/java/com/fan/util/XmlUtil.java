@@ -64,10 +64,10 @@ public class XmlUtil {
     }
 
     /**
-     * 21      *  接收request对象，读取xml内容，转换成map对象
-     * 22      * @param request
-     * 23      * @return
-     * 24
+     * 接收request对象，读取xml内容，转换成map对象
+     * @param request
+     * @return
+     *
      */
     public static Map<String, String> parseXmlToMap(HttpServletRequest request) {
         InputStream ins = null;
