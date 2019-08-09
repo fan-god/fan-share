@@ -17,7 +17,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@XmlRootElement(name = "Image")
 public class MediaId {
     private String MediaId;
 }

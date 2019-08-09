@@ -45,7 +45,7 @@ public class WeChatController {
     private void initWxServiceMap(){
         WX_SERVICE_MAP.put(WxBaseMessage.MessageType.text.name(), "wxTextService");
         WX_SERVICE_MAP.put(WxBaseMessage.MessageType.image.name(), "wxImageService");
-        WX_SERVICE_MAP.put(WxBaseMessage.MessageType.voice.name(), "");
+        WX_SERVICE_MAP.put(WxBaseMessage.MessageType.voice.name(), "wxVoiceMessage");
         WX_SERVICE_MAP.put(WxBaseMessage.MessageType.video.name(), "");
         WX_SERVICE_MAP.put(WxBaseMessage.MessageType.shortvideo.name(), "");
         WX_SERVICE_MAP.put(WxBaseMessage.MessageType.location.name(), "");
@@ -103,8 +103,7 @@ public class WeChatController {
 
             //文本消息，消息内容
             String content = map.get("Content");
-            //图片消息
-            String picUrl = map.get("PicUrl");
+            //图片和语音消息的mediaId
             String mediaId = map.get("MediaId");
 
             //定义回复消息对象微信消息的基类 WxBaseMessage
@@ -118,6 +117,8 @@ public class WeChatController {
                     case "text":
                         return wxBaseService.exec(wxBaseMessage, content);
                     case "image":
+                        return wxBaseService.exec(wxBaseMessage,mediaId);
+                    case "voice":
                         return wxBaseService.exec(wxBaseMessage,mediaId);
                 }
             }

@@ -24,16 +24,16 @@ public class WxTextService implements IWxBaseService {
         if(StringUtils.isBlank(content)){
             resultContent = "caonima";
         }else{
-            if ("python".equals(content)) {
-                resultContent = "人生苦短，我用python";
-            } else if ("php".equals(content) || "PHP".equals(content)) {
-                resultContent = "PHP是世界上最好的语言";
-            } else if ("java".equals(content) || "JAVA".equals(content)) {
-                resultContent = "JAVA太特么复杂了";
-            } else if ("js".equals(content) || "javascript".equals(content)) {
-                resultContent = "老子是脚本！跟java没半毛钱关系！";
+            if ("童俊".equals(content)) {
+                resultContent = "童俊是傻逼";
+            } else if ("美女".equalsIgnoreCase(content)) {
+                resultContent = "<a href='https://image.baidu.com/search/index?tn=baiduimage&ct=201326592&lm=-1&cl=2&ie=gb18030&word=%C3%C0%C5%AE%CD%BC%C6%AC&fr=ala&ala=1&alatpl=adress&pos=0&hs=2&xthttps=111111'>美女</a>";
+            } else if ("俊儿".equals(content) || "JAVA".equals(content)) {
+                resultContent = "童俊草尼玛";
+            } else if ("tongjun".equals(content) || "javascript".equals(content)) {
+                resultContent = "童俊是狗";
             } else {
-                resultContent = "您的开发语言是：" + content;
+                resultContent = "发尼玛的什么鸡儿玩意：" + content;
             }
         }
         TextMessage textMessage = new TextMessage();

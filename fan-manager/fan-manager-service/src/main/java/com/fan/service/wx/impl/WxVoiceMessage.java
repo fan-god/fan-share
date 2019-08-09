@@ -1,7 +1,7 @@
 package com.fan.service.wx.impl;
 
-import com.fan.entity.wx.ImageMessage;
 import com.fan.entity.wx.MediaId;
+import com.fan.entity.wx.VoiceMessage;
 import com.fan.entity.wx.WxBaseMessage;
 import com.fan.service.wx.IWxBaseService;
 import com.fan.util.ConstantFan;
@@ -14,22 +14,21 @@ import java.util.List;
 
 /**
  * @author fan
- * @title: WxImageService
+ * @title: WxVoiceMessage
  * @projectName fan-share
  * @description: TODO
- * @date 2019/8/9/00099:54
+ * @date 2019/8/9/000914:47
  */
 @Service
-public class WxImageService implements IWxBaseService{
-
+public class WxVoiceMessage implements IWxBaseService{
     @Override
-    public String exec(WxBaseMessage wxBaseMessage, String... fields) {
-        ImageMessage imageMessage = new ImageMessage();
-        BeanUtils.copyProperties(wxBaseMessage, imageMessage);
-        List<MediaId> images = Lists.newArrayList();
-        images.add(new MediaId(fields[0]));
-        imageMessage.setImage(images);
-        String respMsg = XmlUtil.beanToXml(imageMessage, ImageMessage.class);
+    public String exec(WxBaseMessage wxBaseMessage, String... fields){
+        VoiceMessage voiceMessage = new VoiceMessage();
+        BeanUtils.copyProperties(wxBaseMessage,voiceMessage);
+        List<MediaId> voices = Lists.newArrayList();
+        voices.add(new MediaId(fields[0]));
+        voiceMessage.setVoice(voices);
+        String respMsg = XmlUtil.beanToXml(voiceMessage, VoiceMessage.class);
         respMsg = respMsg.replace("<com.fan.entity.wx.MediaId>", ConstantFan.EMPTY_STR);
         respMsg = respMsg.replace("</com.fan.entity.wx.MediaId>",ConstantFan.EMPTY_STR);
         return respMsg;
