@@ -48,4 +48,6 @@ public interface FieldConstant {
     String FAIL = "fail";
     String ID = "id";
 
+    /*****************************redis缓存key**********************************/
+    String WX_ACCESS_TOKEN_KEY = "wx.access.token.key";
 }

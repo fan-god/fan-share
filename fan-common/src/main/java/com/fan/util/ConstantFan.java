@@ -3,7 +3,6 @@ package com.fan.util;
 import java.util.HashMap;
 import java.util.Map;
 
-
 /**
  * @author fan
  * @ClassName: ConstantFan
@@ -13,45 +12,36 @@ import java.util.Map;
 public interface ConstantFan {
 
     /**
-     * 记录info级别日志
+     * @Fields 通用常量
      */
-    Boolean LOG_WRITE_INFO = true;
-
-    /**
-     * @Fields EXPIRATION : 该属性作为reids中CRM过期时间的字段，存放在MongoDB中
-     */
-    String CRNEXPIRATION = "crnExpiration";
-
-    /**
-     * @Fields ARGSEXPIRATION :该属性作为reids中ARGS过期时间的字段，存放在MongoDB中
-     */
-    String ARGSEXPIRATION = "argsExpiration";
-
-    String ARGS = "args";
-
-    int ARGS_DB_INDEX = 3;
-
-    String CRM = "crm";
-
     String CHARSET = "UTF-8";
-
-    String JSON = "json";
-
     String PROTOBUF = "protobuf";
-
+    String SESSION = "session";
+    String MESSAGE = "message";
+    //文件后缀
+    String XLSX = ".xlsx";
+    String XLS = ".xls";
+    String JPG = ".jpg";
+    String PNG = ".png";
+    String JSON = "json";
     String XML = "xml";
 
-    String USER_CONTEXT = "userInfo";
-
-    String SESSION = "session";
-
-    String MESSAGE = "message";
-
-
     /**
-     * reids对应的Map本地缓存
+     * 签名方式
      */
-
+    String SIGN_TYPE_SHA1 = "SHA-1";
+    String SIGN_TYPE_SHA256 = "SHA-256";
+    String SIGN_TYPE_MD5 = "MD5";
+    /**
+     * reids对应常量
+     */
+    //redis下标
+    int DBINDEX_0 = 0;
+    int DBINDEX_1 = 1;
+    int DBINDEX_2 = 2;
+    int DBINDEX_3 = 3;
+    int DBINDEX_4 = 4;
+    int DBINDEX_5 = 5;
     Map<String, Integer> redisDicMap = new HashMap<>();
     String[] REDIS_MAP = {};
     String REDIS_SESSION_INDEX = "sessionIndex";
@@ -63,13 +53,10 @@ public interface ConstantFan {
     String HOME_ERROR = "error";
     //检测session下标库是否发生了改变
     boolean SESSION_IS_UPDATE = false;
-    //首页默认显示条数
-    Integer HOME_COUNT = 20;
     //秒数
     Integer SESSION_SECOND = 60;
     Map<String, String> devDicMap = new HashMap<String, String>() {
         private static final long serialVersionUID = 1L;
-
         {
             put("", "");
         }
@@ -180,11 +167,6 @@ public interface ConstantFan {
     String IMPORT_FILE_PATH = "D:\\fan-share\\importFiles\\";
     //生成二维码路径
     String QRCODE_PATH = "D:\\fan-share\\qrcode\\";
-    //文件后缀
-    String XLSX = ".xlsx";
-    String XLS = ".xls";
-    String JPG = ".jpg";
-    String PNG = ".png";
     Integer BASE_DAY_0F_LONG = 24 * 60 * 60 * 1000;
 
     /*****************************登录******************************/

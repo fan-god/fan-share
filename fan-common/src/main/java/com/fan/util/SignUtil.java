@@ -1,6 +1,7 @@
 package com.fan.util;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import lombok.extern.slf4j.Slf4j;
@@ -26,9 +27,33 @@ import java.util.Map.Entry;
 @Slf4j
 public class SignUtil {
 
-    private static final String charset = ConstantFan.CHARSET;
-
     protected static char hexDigits[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
+
+    private static String token = "fan_sys_token";
+
+    /**
+     * 微信签名校验
+     *
+     * @param signature 微信签名
+     * @param timestamp 微信token
+     * @param nonce
+     * @return
+     */
+    public static boolean checkWxSignature(String signature, String timestamp, String nonce) {
+        String checkText = null;
+        try {
+            String[] params = {token, timestamp, nonce};
+            Arrays.sort(params);
+            String content = params[0].concat(params[1]).concat(params[2]);
+            MessageDigest md = MessageDigest.getInstance(ConstantFan.SIGN_TYPE_SHA1);
+            byte[] bytes = md.digest(content.toString().getBytes());
+            checkText = byte2hexLowerCase(bytes);
+        } catch (Exception e) {
+            log.error("checkWxSignature error:{}", e);
+        }
+        return checkText != null ? checkText.equalsIgnoreCase(signature) : false;
+    }
+
 
     /**
      * base64签名
@@ -37,13 +62,13 @@ public class SignUtil {
      * @throws UnsupportedEncodingException
      */
     public static String getBase64(String input) throws UnsupportedEncodingException {
-        byte[] bs = input.getBytes(charset);
-        String encodeBytes = new String(Base64.getEncoder().encode(bs), charset);
-        return encodeBytes;
+        byte[] bs = input.getBytes(ConstantFan.CHARSET);
+        String base64Str = new String(Base64.getEncoder().encode(bs), ConstantFan.CHARSET);
+        return base64Str;
     }
 
     /**
-     * 时间戳倒序
+     * 获取倒序时间戳
      *
      * @return
      */
@@ -60,7 +85,7 @@ public class SignUtil {
     public static String encodeUri(String s) {
         String str;
         try {
-            str = URLEncoder.encode(s, charset);
+            str = URLEncoder.encode(s, ConstantFan.CHARSET);
         } catch (Exception e) {
             throw new java.lang.RuntimeException("encode error !");
         }
@@ -73,8 +98,9 @@ public class SignUtil {
     public static String getMD5(String input) {
         String result;
         try {
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            result = byte2hex(md.digest(input.getBytes(charset)));
+            MessageDigest md = MessageDigest.getInstance(ConstantFan.SIGN_TYPE_MD5);
+            byte[] bytes = md.digest(input.getBytes(ConstantFan.CHARSET));
+            result = byte2hex(bytes);
         } catch (Exception e) {
             throw new java.lang.RuntimeException("sign error !");
         }
@@ -93,8 +119,9 @@ public class SignUtil {
             if (orgin == null) {
                 return result;
             }
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            result = byte2hex(md.digest(orgin.toString().getBytes(charset)));
+            MessageDigest md = MessageDigest.getInstance(ConstantFan.SIGN_TYPE_MD5);
+            byte[] bytes = md.digest(orgin.toString().getBytes(ConstantFan.CHARSET));
+            result = byte2hex(bytes);
         } catch (Exception e) {
             throw new java.lang.RuntimeException("sign error !" + e);
         }
@@ -102,14 +129,14 @@ public class SignUtil {
     }
 
     /**
-     * 二行制转字符串
+     * 二进制转字符串(转16进制)，大写
      */
-    private static String byte2hex(byte[] b) {
+    private static String byte2hex(byte[] bytes) {
         StringBuffer hs = new StringBuffer();
         String s;
         try {
-            for (int n = 0; n < b.length; n++) {
-                s = (Integer.toHexString(b[n] & 0XFF));
+            for (int n = 0; n < bytes.length; n++) {
+                s = (Integer.toHexString(bytes[n] & 0XFF));
                 if (s.length() == 1) {
                     hs.append("0").append(s);
                 } else {
@@ -122,6 +149,12 @@ public class SignUtil {
         return hs.toString().toUpperCase();
     }
 
+    /**
+     * 二进制转字符串(转16进制),小写
+     */
+    private static String byte2hexLowerCase(byte[] bytes) {
+        return byte2hex(bytes).toLowerCase();
+    }
     private static String bufferToHex(byte bytes[], int m, int n) {
         StringBuffer stringbuffer = new StringBuffer(2 * n);
         int k = m + n;
@@ -142,7 +175,6 @@ public class SignUtil {
     /**
      * 添加参数的封装方法
      */
-
     private static StringBuffer getBeforeSign(TreeMap<String, String> params, StringBuffer orgin) {
         if (params == null) {
             return null;
@@ -165,9 +197,8 @@ public class SignUtil {
      */
     public static String sortJson(String input) {
         // TreeMap默认对key进行排序
-        TreeMap<Integer, String> map = new TreeMap<>();
+        TreeMap<Integer, String> map = Maps.newTreeMap();
         JsonObject jsonObj = JsonUtil.getJObject(input);
-
         Set<Entry<String, JsonElement>> entrySet = jsonObj.entrySet();
         if (entrySet.size() == 0) {
             log.error("json数据中字段为空");
@@ -260,13 +291,10 @@ public class SignUtil {
             if (StringUtils.isBlank(shaValue)) {
                 return shaValue;
             }
-            MessageDigest messageDigest = null;
-            messageDigest = MessageDigest.getInstance("SHA-256");
-            messageDigest.update(shaValue.getBytes("UTF-8"));
+            MessageDigest messageDigest = MessageDigest.getInstance(ConstantFan.SIGN_TYPE_SHA256);
+            messageDigest.update(shaValue.getBytes(ConstantFan.CHARSET));
             encodeStr = byte2hex(messageDigest.digest());
-        } catch (NoSuchAlgorithmException e) {
-            log.error("getSha256 error:{}", e);
-        } catch (UnsupportedEncodingException e) {
+        } catch (Exception e) {
             log.error("getSha256 error:{}", e);
         }
         return encodeStr;
@@ -285,7 +313,12 @@ public class SignUtil {
         return encodeStr;
     }
 
-
+    /**
+     * 参数排序后的SHA1签名
+     *
+     * @param maps
+     * @return
+     */
     public static String SHA1(Map<String, Object> maps) {
         //获取信息摘要 - 参数字典排序后字符串
         String decrypt = getOrderByLexicographic(maps);
@@ -309,9 +342,8 @@ public class SignUtil {
             if (null == decrypt || decrypt.length() == 0) {
                 return null;
             }
-            MessageDigest mdTemp = MessageDigest.getInstance("SHA1");
-            mdTemp.update(decrypt.getBytes(charset));
-
+            MessageDigest mdTemp = MessageDigest.getInstance(ConstantFan.SIGN_TYPE_SHA1);
+            mdTemp.update(decrypt.getBytes(ConstantFan.CHARSET));
             byte[] md = mdTemp.digest();
             int j = md.length;
             char[] buf = new char[j * 2];

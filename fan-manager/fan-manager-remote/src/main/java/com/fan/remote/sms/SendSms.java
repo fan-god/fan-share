@@ -1,4 +1,4 @@
-package com.fan.remote;
+package com.fan.remote.sms;
 
 import com.fan.util.ConstantFan;
 import com.fan.util.HttpCilentUtil;
@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.util.Map;
 
 /**
@@ -19,7 +20,7 @@ import java.util.Map;
 @Slf4j
 @Component
 public class SendSms {
-
+    private  Map<String, String> params = Maps.newHashMap();
     //账号
     @Value("${ms.sms.account}")
     private String account;
@@ -45,13 +46,17 @@ public class SendSms {
         }
     }
 
+    @PostConstruct
+    private Map<String, String> initParams() {
+        params.put("username", account);
+        params.put("password", password);
+        params.put("veryCode", veryCode);
+        return params;
+    }
+
     public String sendSms(String mobile, String content) {
         try {
             String sendSmsUrl = httpUrl + "/service/httpService/httpInterface.do?method=sendUtf8Msg";
-            Map<String, String> params = Maps.newHashMap();
-            params.put("username", account);
-            params.put("password", password);
-            params.put("veryCode", veryCode);
             params.put("mobile", mobile);
             params.put("content", content);
             params.put("msgtype", SmsType.MSG_TYPE_1.value);
@@ -67,10 +72,6 @@ public class SendSms {
     public String sendTplSms(String mobile, String content) {
         try {
             String sendTplSmsUrl = httpUrl + "/service/httpService/httpInterface.do?method=sendUtf8Msg";
-            Map<String, String> params = Maps.newHashMap();
-            params.put("username", account);
-            params.put("password", password);
-            params.put("veryCode", veryCode);
             params.put("mobile", mobile);
             params.put("content", content); //变量值，以英文逗号隔开，测试期间给模板变量的值传递字母、数据或下划线等半角字符才能免审
             params.put("msgtype", SmsType.MSG_TYPE_2.value);     //2-模板短信
@@ -87,10 +88,6 @@ public class SendSms {
     public String getBalance() {
         try {
             String balanceUrl = httpUrl + "/service/httpService/httpInterface.do?method=getAmount";
-            Map<String, String> params = Maps.newHashMap();
-            params.put("username", account);
-            params.put("password", password);
-            params.put("veryCode", veryCode);
             String result = HttpCilentUtil.doPost(balanceUrl, params);
             return result;
         } catch (Exception e) {
@@ -102,10 +99,6 @@ public class SendSms {
     public String queryReport() {
         try {
             String reportUrl = httpUrl + "/service/httpService/httpInterface.do?method=queryReport";
-            Map<String, String> params = Maps.newHashMap();
-            params.put("username", account);
-            params.put("password", password);
-            params.put("veryCode", veryCode);
             String result = HttpCilentUtil.doPost(reportUrl, params);
             return result;
         } catch (Exception e) {
@@ -117,10 +110,6 @@ public class SendSms {
     public String queryMo() {
         try {
             String moUrl = httpUrl + "/service/httpService/httpInterface.do?method=queryMo";
-            Map<String, String> params = Maps.newHashMap();
-            params.put("username", account);
-            params.put("password", password);
-            params.put("veryCode", veryCode);
             String result = HttpCilentUtil.doPost(moUrl, params);
             return result;
         } catch (Exception e) {

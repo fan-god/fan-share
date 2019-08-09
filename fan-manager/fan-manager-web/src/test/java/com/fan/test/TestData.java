@@ -1,9 +1,9 @@
 package com.fan.test;
 
 import com.fan.entity.CarInfo;
-import com.fan.entity.DataDictionary;
 import com.fan.entity.User;
-import com.fan.remote.SendSms;
+import com.fan.remote.sms.SendSms;
+import com.fan.remote.wx.WeChatRemote;
 import com.fan.service.ICarInfoService;
 import com.fan.service.IDictionaryService;
 import com.fan.service.ISeckillService;
@@ -44,6 +44,8 @@ public class TestData {
     private ICarInfoService carInfoService;
     @Autowired
     private IDictionaryService dictionaryService;
+    @Autowired
+    private WeChatRemote weChatRemote;
 
     @Test
     public void test1() {
@@ -90,6 +92,16 @@ public class TestData {
         try {
             CarInfo carInfo = CarInfo.builder().brandName("五菱宏光").build();
             carInfoService.update(carInfo);
+        } catch (Exception e) {
+            log.error("test4 error:{}", e);
+        }
+    }
+
+    @Test
+    public void test6() {
+        try {
+            String wxAccess_token = weChatRemote.getWxAccess_token();
+            System.out.println(wxAccess_token);
         } catch (Exception e) {
             log.error("test4 error:{}", e);
         }
