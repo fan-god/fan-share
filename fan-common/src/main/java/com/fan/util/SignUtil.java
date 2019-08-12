@@ -12,7 +12,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.security.DigestException;
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.*;
 import java.util.Map.Entry;
 
@@ -29,8 +28,6 @@ public class SignUtil {
 
     protected static char hexDigits[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
 
-    private static String token = "fan_sys_token";
-
     /**
      * 微信签名校验
      *
@@ -39,7 +36,7 @@ public class SignUtil {
      * @param nonce
      * @return
      */
-    public static boolean checkWxSignature(String signature, String timestamp, String nonce) {
+    public static boolean checkWxSignature(String signature, String timestamp, String nonce, String token) {
         String checkText = null;
         try {
             String[] params = {token, timestamp, nonce};
@@ -155,6 +152,7 @@ public class SignUtil {
     private static String byte2hexLowerCase(byte[] bytes) {
         return byte2hex(bytes).toLowerCase();
     }
+
     private static String bufferToHex(byte bytes[], int m, int n) {
         StringBuffer stringbuffer = new StringBuffer(2 * n);
         int k = m + n;

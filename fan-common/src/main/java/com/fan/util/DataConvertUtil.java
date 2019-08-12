@@ -46,7 +46,7 @@ public class DataConvertUtil {
             if (format.equalsIgnoreCase(ConstantFan.JSON)) {
                 return JsonUtil.jsonTobean(c, data);
             } else if (format.equalsIgnoreCase(ConstantFan.XML)) {
-                return XmlUtil.xmlTobean(c, data);
+                return XmlUtil.xmlToBean(data);
             } else {
                 throw new Exception("不支持的数据格式");
             }

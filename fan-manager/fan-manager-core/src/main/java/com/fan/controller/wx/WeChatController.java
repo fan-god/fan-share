@@ -12,6 +12,7 @@ import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,13 +37,14 @@ import java.util.Map;
 @RestController
 @RequestMapping("/app/wx/{version}")
 public class WeChatController {
-
+    @Value("${wx.token}")
+    private String token;
     @Autowired
     private WeChatRemote weChatRemote;
     private Map<String, String> WX_SERVICE_MAP = Maps.newHashMap();
 
     @PostConstruct
-    private void initWxServiceMap(){
+    private void initWxServiceMap() {
         WX_SERVICE_MAP.put(WxBaseMessage.MessageType.text.name(), "wxTextService");
         WX_SERVICE_MAP.put(WxBaseMessage.MessageType.image.name(), "wxImageService");
         WX_SERVICE_MAP.put(WxBaseMessage.MessageType.voice.name(), "wxVoiceMessage");
@@ -65,7 +67,7 @@ public class WeChatController {
             String timestamp = request.getParameter("timestamp");
             String nonce = request.getParameter("nonce");
             String echostr = request.getParameter("echostr");
-            if (StringUtils.isNotBlank(echostr) && SignUtil.checkWxSignature(signature, timestamp, nonce)) {
+            if (StringUtils.isNotBlank(echostr) && SignUtil.checkWxSignature(signature, timestamp, nonce, token)) {
                 System.out.printf("[signature:%s]<-->[timestamp:%s]<-->[nonce: %s]<-->[echostr:%s]%n", signature, timestamp, nonce, echostr);
                 response.getOutputStream().print(echostr);
             }
@@ -78,6 +80,17 @@ public class WeChatController {
     public Msg getWxAccess_token() {
         String wxAccess_token = weChatRemote.getWxAccess_token();
         return Msg.success().setDatas(wxAccess_token);
+    }
+
+    @GetMapping("/showWxQrcode")
+    public Msg showWxQrcode() {
+        try {
+            weChatRemote.showWxQrcode();
+            return Msg.success();
+        } catch (Exception e) {
+            log.error("showWxQrcode error:{}", e);
+            return Msg.fail();
+        }
     }
 
     /**
@@ -117,9 +130,9 @@ public class WeChatController {
                     case "text":
                         return wxBaseService.exec(wxBaseMessage, content);
                     case "image":
-                        return wxBaseService.exec(wxBaseMessage,mediaId);
+                        return wxBaseService.exec(wxBaseMessage, mediaId);
                     case "voice":
-                        return wxBaseService.exec(wxBaseMessage,mediaId);
+                        return wxBaseService.exec(wxBaseMessage, mediaId);
                 }
             }
         } catch (Exception e) {

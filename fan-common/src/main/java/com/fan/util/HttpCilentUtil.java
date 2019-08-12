@@ -11,22 +11,29 @@ import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.ssl.SSLContexts;
 import org.apache.http.util.EntityUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.net.ssl.SSLContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.InetAddress;
 import java.net.URI;
+import java.security.KeyStore;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -335,6 +342,51 @@ public class HttpCilentUtil {
     }
 
     /**
+     * 此方法用于xml数据传输格式请求，使用SSL安全协议，需要证书认证
+     * @param url
+     * @param xml
+     * @return
+     * @throws Exception
+     */
+    public static String doPost(String url, String xml) throws Exception {
+        StringBuffer sb = new StringBuffer();
+        CloseableHttpResponse response = null;
+        CloseableHttpClient httpclient = null;
+        try {
+            FileInputStream fis = new FileInputStream(new File(FieldConstant.WeChat.CERTIFICATE_ADDRESS));
+            KeyStore keyStore = KeyStore.getInstance("PKCS12");
+            keyStore.load(fis, FieldConstant.WeChat.mch_id.toCharArray());
+            SSLContext sslcontext = SSLContexts.custom().loadKeyMaterial(keyStore, FieldConstant.WeChat.mch_id.toCharArray()).build();
+            SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(sslcontext);
+            httpclient = HttpClients.custom().setSSLSocketFactory(sslsf).build();
+            HttpPost httpPost = new HttpPost(url);
+            httpPost.addHeader("Connection", "keep-alive");
+            httpPost.addHeader("Accept", "*/*");
+            httpPost.addHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+            httpPost.addHeader("Host", "api.mch.weixin.qq.com");
+            httpPost.addHeader("X-Requested-With", "XMLHttpRequest");
+            httpPost.addHeader("Cache-Control", "max-age=0");
+            httpPost.setEntity(new StringEntity(xml, ConstantFan.CHARSET));
+
+            log.info("执行请求:{}", httpPost.getRequestLine());
+            response = httpclient.execute(httpPost);
+            HttpEntity entity = response.getEntity();
+            if (entity != null) {
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(entity.getContent(), ConstantFan.CHARSET));
+                String text;
+                while ((text = bufferedReader.readLine()) != null) {
+                    sb.append(text);
+                }
+            }
+            EntityUtils.consume(entity);
+        } finally {
+            response.close();
+            httpclient.close();
+        }
+        return sb.toString();
+    }
+
+    /**
      * 当前请求获取数据体
      *
      * @param request
@@ -385,6 +437,7 @@ public class HttpCilentUtil {
 
     /**
      * 向页面输出
+     *
      * @param response
      * @param str
      */

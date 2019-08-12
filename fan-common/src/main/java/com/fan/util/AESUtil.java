@@ -8,11 +8,16 @@ import sun.misc.BASE64Decoder;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
+import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigInteger;
+import java.security.AlgorithmParameters;
+import java.security.Key;
+import java.security.Security;
 import java.util.Properties;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
 /**
  * @author fan
@@ -22,6 +27,7 @@ import java.util.Properties;
  */
 @Component
 public class AESUtil {
+    private static boolean initialized = false;
     /**
      * 密钥 abcdefgabcdefg12
      */
@@ -127,12 +133,12 @@ public class AESUtil {
      * @throws Exception
      */
     public static byte[] aesEncryptToBytes(String content, String encryptKey) throws Exception {
-        KeyGenerator kgen = KeyGenerator.getInstance("AES");
+        KeyGenerator kgen = KeyGenerator.getInstance(ConstantFan.SIGN_TYPE_AES);
         kgen.init(128);
         Cipher cipher = Cipher.getInstance(ALGORITHMSTR);
-        cipher.init(Cipher.ENCRYPT_MODE, new SecretKeySpec(encryptKey.getBytes(), "AES"));
+        cipher.init(Cipher.ENCRYPT_MODE, new SecretKeySpec(encryptKey.getBytes(), ConstantFan.SIGN_TYPE_AES));
 
-        return cipher.doFinal(content.getBytes("utf-8"));
+        return cipher.doFinal(content.getBytes(ConstantFan.CHARSET));
     }
 
 
@@ -157,14 +163,52 @@ public class AESUtil {
      * @throws Exception
      */
     public static String aesDecryptByBytes(byte[] encryptBytes, String decryptKey) throws Exception {
-        KeyGenerator kgen = KeyGenerator.getInstance("AES");
+        KeyGenerator kgen = KeyGenerator.getInstance(ConstantFan.SIGN_TYPE_AES);
         kgen.init(128);
 
         Cipher cipher = Cipher.getInstance(ALGORITHMSTR);
-        cipher.init(Cipher.DECRYPT_MODE, new SecretKeySpec(decryptKey.getBytes(), "AES"));
+        cipher.init(Cipher.DECRYPT_MODE, new SecretKeySpec(decryptKey.getBytes(), ConstantFan.SIGN_TYPE_AES));
         byte[] decryptBytes = cipher.doFinal(encryptBytes);
 
         return new String(decryptBytes);
+    }
+
+    /**
+     * 敏感数据对称解密
+     *
+     * @param content ——被加密的数据
+     * @param keyByte ——加密密匙
+     * @param ivByte  ——偏移量
+     * @return
+     */
+    public static byte[] decrypt(byte[] content, byte[] keyByte, byte[] ivByte) throws Exception {
+//        initialize();
+        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS7Padding");
+        Key sKeySpec = new SecretKeySpec(keyByte, ConstantFan.SIGN_TYPE_AES);
+        // 初始化
+        cipher.init(Cipher.DECRYPT_MODE, sKeySpec, generateIV(ivByte));
+        byte[] result = cipher.doFinal(content);
+        return result;
+    }
+
+    /**
+     * @return java.security.AlgorithmParameters
+     * @Description 生成iv
+     * @Param [iv]
+     **/
+    public static AlgorithmParameters generateIV(byte[] iv) throws Exception {
+        AlgorithmParameters params = AlgorithmParameters.getInstance(ConstantFan.SIGN_TYPE_AES);
+        params.init(new IvParameterSpec(iv));
+        return params;
+    }
+
+    /**
+     * 添加算法
+     */
+    public static void initialize() {
+        if (initialized) return;
+        Security.addProvider(new BouncyCastleProvider());
+        initialized = true;
     }
 
     /**

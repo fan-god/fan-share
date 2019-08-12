@@ -50,4 +50,55 @@ public interface FieldConstant {
 
     /*****************************redis缓存key**********************************/
     String WX_ACCESS_TOKEN_KEY = "wx.access.token.key";
+    String WX_TICKET_KEY = "wx.ticket.key";
+
+    /*********************************WeChat****************************************/
+    interface WeChat{
+        /**
+         * 小程序appid
+         */
+        String appid = "";
+        /**
+         * 商户号的Appid
+         */
+        String mch_appid = "";
+        /**
+         *商户号
+         */
+        String mch_id = "";
+        /**
+         *回调地址
+         */
+        String notify_url = "";
+        /**
+         *交易类型
+         */
+        String trade_type = "JSAPI";
+        /**
+         * 签名类型
+         */
+        String sign_type = "MD5";
+        /**
+         * 商户密匙
+         */
+        String key = "";
+        /**
+         * 小程序ApiSecret
+         */
+        String SECRET = "";
+        /**
+         * 证书地址
+         */
+        String CERTIFICATE_ADDRESS = "";
+        /**
+         * 二维码图片地址
+         */
+        String QRImgRootAddress ="";
+
+        /**
+         * 静态资源
+         */
+        String SourceUrl = "";
+    }
+
 }

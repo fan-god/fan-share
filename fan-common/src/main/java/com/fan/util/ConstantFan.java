@@ -19,6 +19,7 @@ public interface ConstantFan {
     String SESSION = "session";
     String MESSAGE = "message";
     String EMPTY_STR = "";
+    String EMPTY_JSON = "{}";
     //文件后缀
     String XLSX = ".xlsx";
     String XLS = ".xls";
@@ -33,6 +34,7 @@ public interface ConstantFan {
     String SIGN_TYPE_SHA1 = "SHA-1";
     String SIGN_TYPE_SHA256 = "SHA-256";
     String SIGN_TYPE_MD5 = "MD5";
+    String SIGN_TYPE_AES = "AES";
     /**
      * reids对应常量
      */
