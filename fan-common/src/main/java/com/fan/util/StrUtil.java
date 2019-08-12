@@ -47,4 +47,15 @@ public class StrUtil {
         }
         return ConstantFan.SUCCESS;
     }
+
+    /**
+     * 获取字段方法名称
+     *
+     * @param fieldName
+     * @return
+     */
+    public static String getFiledMethodName(String fieldName) {
+        char firstChar = fieldName.toCharArray()[0];
+        return "get" + String.valueOf(firstChar).toUpperCase() + fieldName.substring(1, fieldName.length());
+    }
 }

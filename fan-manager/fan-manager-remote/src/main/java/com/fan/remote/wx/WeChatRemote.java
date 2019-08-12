@@ -23,7 +23,7 @@ import java.util.Map;
  */
 @Slf4j
 @Component
-public class WeChatRemote {
+public class WeChatRemote extends WeChatResultParseAbstract {
     @Autowired
     private RedisUtil redisUtil;
     @Value("${wx.appId}")
@@ -99,22 +99,37 @@ public class WeChatRemote {
      * 统一下单
      *
      * @param orderParams
-     * @param resultParse
      * @return
      */
-    public Msg pay(CreateOrderParams orderParams, WeChatResultParseAbstract resultParse){
+    public Msg pay(CreateOrderParams orderParams) {
         //解析参数
         String urlParam = WeChatUtil.concatOrderParams(orderParams);//参数按字典顺序连接起来
+        System.out.println(urlParam);
         String sign = SignUtil.getMD5(urlParam);//MD5加密形成签名sign，官方文档固定格式
         orderParams.setSign(sign);//将生成的签名放入
-        String xmlStr = XmlUtil.beanToXml(orderParams);//转为xml
-
+        String xmlStr = XmlUtil.beanToXml(orderParams, CreateOrderParams.class);//转为xml
+        xmlStr = xmlStr.replaceAll("__","_");
         log.info("微信下单参数转换为xml:{}", xmlStr);
 
-        resultParse.setUrl(FieldConstant.WeChat.CREATE_ORDER_PREFIX_URL);
-        resultParse.setXmlStr(xmlStr);
-        resultParse.setApiDesc("<< 统一下单 >>");
+        setUrl(FieldConstant.WeChat.CREATE_ORDER_PREFIX_URL);
+        setXmlStr(xmlStr);
+        setApiDesc("<< 统一下单 >>");
 
-        return resultParse.ResultParse();
+        return resultParse();
+    }
+
+    @Override
+    protected Msg onSuccess(Map<String, String> resultMap) {
+        return null;
+    }
+
+    @Override
+    protected Msg onFail(Map<String, String> resultMap) {
+        return null;
+    }
+
+    @Override
+    protected Msg onLinkFail(Map<String, String> resultMap) {
+        return null;
     }
 }

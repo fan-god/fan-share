@@ -81,15 +81,27 @@ public class TestWhitoutProperties {
 //        for (int element : arr) {
 //            System.out.print(element + " ");
 //        }
-
-//        System.out.println(SignUtil.getMD5("1111"));
-        CarInfo carInfo = CarInfo.builder().color("red").brandName("奥迪").displacement(2.0).build();
-        String xml = XmlUtil.beanToXml(carInfo, CarInfo.class);
-        System.out.println(xml);
-        Map<String, String> map = XmlUtil.parseXmlToMap(xml);
-        map.forEach((k, v) -> {
+        StringBuffer sb = new StringBuffer("qvftgybikm");
+        sb.deleteCharAt(sb.length()-2);
+        System.out.println(sb.toString());
+//        CarInfo carInfo = CarInfo.builder().color("red").brandName("奥迪").displacement(2.0).build();
+//        String xml = XmlUtil.beanToXml(carInfo, CarInfo.class);
+//        System.out.println(xml);
+//        Map<String, String> map = XmlUtil.parseXmlToMap(xml);
+//        map.forEach((k, v) -> {
+//            System.out.printf("%s:%s%n", k, v);
+//        });
+        User user = new User();
+        user.setPhone("ertfyuio");
+        user.setUsername("ghjk");
+        user.setAddress("sdfghjk");
+        user.setPassword("1111111");
+        Map<String, Object> map = DataConvertUtil.beanToMap(user);
+        map.forEach((k,v)->{
             System.out.printf("%s:%s%n", k, v);
         });
+        User u = DataConvertUtil.mapToBean(map, User.class);
+        System.out.println(u);
     }
 
     static void swap(int[] array, int index1, int index2) {

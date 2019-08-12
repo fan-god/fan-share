@@ -52,7 +52,7 @@ public abstract class WeChatResultParseAbstract {
     public WeChatResultParseAbstract() {
     }
 
-    public Msg ResultParse() {
+    public Msg resultParse() {
         Msg msg;
         try {
             RestTemplate template = new RestTemplate();
@@ -61,15 +61,15 @@ public abstract class WeChatResultParseAbstract {
             if (resp == null || resp.getStatusCode() != HttpStatus.OK) {
                 return Msg.fail().setMsg("连接通信失败");
             }
-            Map<String, String> map;
-            map = XmlUtil.parseXmlToMap(resp.getBody());
+            String respBody = resp.getBody();
+            log.info("respBody:{}", respBody);
+            Map<String, String> map = XmlUtil.parseXmlToMap(respBody);
             if (ConstantFan.SUCCESS.equals(map.get("return_code"))) {
                 if (ConstantFan.SUCCESS.equals(map.get("result_code"))) {
                     msg = onSuccess(map);
                 } else {
                     msg = onFail(map);
                 }
-
             } else {
                 msg = onLinkFail(map);
             }

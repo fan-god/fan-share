@@ -24,38 +24,14 @@ public class WeChatUtil {
      * @param o
      * @return
      */
-    public static String concatOrderParams(Object o){
-        TreeMap<String, String> tree = new TreeMap<>(); //用于排序
-        Class clazz = o.getClass();
-        Field[] fields = clazz.getDeclaredFields();
-
-        //查找字段
-        for (Field field : fields) {
-            field.setAccessible(true);
-            String fieldName = field.getName();
-            String methodName = getFiledMethodName(fieldName);
-            try {
-                Method method = clazz.getMethod(methodName);
-                Object value = method.invoke(o);
-                if (value != null) {//不为空
-                    tree.put(fieldName, value.toString());
-                }
-            } catch (NoSuchMethodException e) {
-                log.error(e.getMessage());
-            } catch (IllegalAccessException e) {
-                log.error(e.getMessage());
-            } catch (InvocationTargetException e) {
-                log.error(e.getMessage());
-            }
+    public static String concatOrderParams(Object o) {
+        TreeMap<String, String> tree = DataConvertUtil.beanToTreeMap(o);
+        if (!tree.isEmpty()) {
+            String str = linkMapKeyValue(tree, "&");
+            return str.substring(1);//截取第一个&符号之后的内容
         }
-        if (tree.size() == 0) {
-            return null;
-        }
-        String str = linkMapKeyValue(tree, "&");
-
-        return str.substring(1);//截取第一个&符号之后的内容
+        return null;
     }
-
 
 
     /**
@@ -77,19 +53,9 @@ public class WeChatUtil {
             String key = it.next();
             sb.append(character + key + "=" + map.get(key));
         }
+        sb.append(character).append("key=192006250b4c09247ec02edce69f6a2d");
         return sb.toString();
     }
 
-
-    /**
-     * 获取字段方法名称
-     *
-     * @param fieldName
-     * @return
-     */
-    public static String getFiledMethodName(String fieldName) {
-        char firstChar = fieldName.toCharArray()[0];
-        return "get" + String.valueOf(firstChar).toUpperCase() + fieldName.substring(1, fieldName.length());
-    }
 
 }

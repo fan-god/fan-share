@@ -2,6 +2,7 @@ package com.fan.controller.wx;
 
 import com.fan.annotation.ApiVersion;
 import com.fan.entity.Msg;
+import com.fan.entity.wx.CreateOrderParams;
 import com.fan.entity.wx.WxBaseMessage;
 import com.fan.remote.wx.WeChatRemote;
 import com.fan.service.wx.IWxBaseService;
@@ -9,6 +10,8 @@ import com.fan.util.SignUtil;
 import com.fan.util.SpringContextUtil;
 import com.fan.util.XmlUtil;
 import com.google.common.collect.Maps;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +24,6 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -34,6 +35,7 @@ import java.util.Map;
  */
 @Slf4j
 @ApiVersion
+@Api(description = "微信API操作")
 @RestController
 @RequestMapping("/app/wx/{version}")
 public class WeChatController {
@@ -145,6 +147,30 @@ public class WeChatController {
             log.error("wx receiveMessage error:{}", e);
         }
         return null;
+    }
+
+    @PostMapping("/pay")
+    @ApiOperation("微信下单")
+    public Msg pay(CreateOrderParams createOrderParams) {
+        try {
+            Msg msg = weChatRemote.pay(createOrderParams);
+            return msg;
+        } catch (Exception e) {
+            log.error("getWxAccess_token error:{}", e);
+            return Msg.fail();
+        }
+    }
+
+    @PostMapping("/payBack")
+    @ApiOperation("微信下单回调")
+    public Msg payBack() {
+        try {
+            System.out.println(".........payBack.....coming.......");
+            return Msg.success();
+        } catch (Exception e) {
+            log.error("getWxAccess_token error:{}", e);
+            return Msg.fail();
+        }
     }
 }
 
