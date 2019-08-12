@@ -5,7 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.security.NoSuchAlgorithmException;
 import java.util.*;
 
 /**
@@ -25,8 +24,7 @@ public class WeChatUtil {
      * @param o
      * @return
      */
-    public static String concatOrderParams(Object o) throws Exception {
-
+    public static String concatOrderParams(Object o){
         TreeMap<String, String> tree = new TreeMap<>(); //用于排序
         Class clazz = o.getClass();
         Field[] fields = clazz.getDeclaredFields();
@@ -51,42 +49,13 @@ public class WeChatUtil {
             }
         }
         if (tree.size() == 0) {
-            throw new Exception("No field can be linked ! ");
+            return null;
         }
         String str = linkMapKeyValue(tree, "&");
 
         return str.substring(1);//截取第一个&符号之后的内容
     }
 
-
-    /**
-     * 从map创建签名
-     *
-     * @param parameters
-     * @return
-     */
-    public static String getSignFromMap(SortedMap<String, String> parameters) {
-        try {
-            StringBuffer sb = new StringBuffer();
-            Set es = parameters.entrySet();
-            Iterator it = es.iterator();
-            while (it.hasNext()) {
-                Map.Entry entry = (Map.Entry) it.next();
-                String k = (String) entry.getKey();
-                Object v = entry.getValue();
-                if (null != v && !"".equals(v) && !"sign".equals(k) && !"key".equals(k)) {
-                    sb.append(k + "=" + v + "&");
-                }
-            }
-            sb.append("key=" + FieldConstant.WeChat.key);
-            log.info("由MAP生产的字符串:{}", sb.toString());
-            String sign = SignUtil.getMD5(sb.toString());
-            return sign;
-        } catch (Exception e) {
-            log.error("MD5加密失败：{}", e);
-        }
-        return null;
-    }
 
 
     /**

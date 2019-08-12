@@ -28,32 +28,13 @@ public interface FieldConstant {
     String CONSTANT_THREE = "3";
     String CONSTANT_FOUR = "4";
     String CONSTANT_FIVE = "5";
-    // ，用于分割字符串
-    String REDIS_SPLIT = ",";
-    //redis用户类型缓存前缀
-    String URL_AUTHORITY = "userUrlAuthority_";
-    //reids缓存Key
-    String IOTSIMCARD_REDIS_KEY = "iotSimCardRedisKey";
-    //redis缓存过期时间
-    String IOTSIMCARD_OUTTIME_KEY = "iotSimCard";
-    //reids缓存key
-    String STATUS_REDIS_KEY = "statusList_reids_";
-    //首页设备总量计数缓存Key
-    String IOTSIMCARD_COUNT_KEY = "iotsimcard_count";
-    //成功
-    String SUCCESS = "success";
-    //OK
-    String OK = "ok";
-    //失败
-    String FAIL = "fail";
-    String ID = "id";
 
     /*****************************redis缓存key**********************************/
     String WX_ACCESS_TOKEN_KEY = "wx.access.token.key";
     String WX_TICKET_KEY = "wx.ticket.key";
 
     /*********************************WeChat****************************************/
-    interface WeChat{
+    interface WeChat {
         /**
          * 小程序appid
          */
@@ -63,15 +44,15 @@ public interface FieldConstant {
          */
         String mch_appid = "";
         /**
-         *商户号
+         * 商户号
          */
         String mch_id = "";
         /**
-         *回调地址
+         * 回调地址
          */
         String notify_url = "";
         /**
-         *交易类型
+         * 交易类型
          */
         String trade_type = "JSAPI";
         /**
@@ -93,12 +74,44 @@ public interface FieldConstant {
         /**
          * 二维码图片地址
          */
-        String QRImgRootAddress ="";
+        String QRImgRootAddress = "";
 
         /**
-         * 静态资源
+         * 获取access_token
          */
-        String SourceUrl = "";
+        String GET_ACCESS_TOKEN_URL = "https://api.weixin.qq.com/cgi-bin/token";
+        /**
+         * 登录地址
+         */
+        String LOGIN_URL = "https://api.weixin.qq.com/sns/jscode2session";
+
+        /**
+         * 统一下单url
+         */
+        String CREATE_ORDER_PREFIX_URL = "https://api.mch.weixin.qq.com/pay/unifiedorder";
+
+        /**
+         * 订单情况查询url
+         */
+        String ORDER_CHECK_URL = "https://api.mch.weixin.qq.com/pay/orderquery";
+
+        /**
+         * 企业付款到零钱
+         */
+        String COMPANY_TRANSFER_URL = "https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers";
+
+        /**
+         * 企业付款查询url
+         */
+        String TRANSFER_CHECK_URL = "https://api.mch.weixin.qq.com/mmpaymkttransfers/gettransferinfo";
+
+        /**
+         * 二维码url
+         */
+        String QRCODE_URL = "https://api.weixin.qq.com/wxa/getwxacodeunlimit";
+
+
+        String SEND_TEMPLATE_MSG_URL = "https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send";
     }
 
 }

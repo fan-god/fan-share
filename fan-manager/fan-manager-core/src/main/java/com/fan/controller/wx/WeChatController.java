@@ -78,8 +78,14 @@ public class WeChatController {
 
     @GetMapping("/getWxAccess_token")
     public Msg getWxAccess_token() {
-        String wxAccess_token = weChatRemote.getWxAccess_token();
-        return Msg.success().setDatas(wxAccess_token);
+
+        try {
+            String wxAccess_token = weChatRemote.getWxAccess_token();
+            return Msg.success().setDatas(wxAccess_token);
+        } catch (Exception e) {
+            log.error("getWxAccess_token error:{}", e);
+            return Msg.fail();
+        }
     }
 
     @GetMapping("/showWxQrcode")

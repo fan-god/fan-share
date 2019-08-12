@@ -133,10 +133,10 @@ public class AESUtil {
      * @throws Exception
      */
     public static byte[] aesEncryptToBytes(String content, String encryptKey) throws Exception {
-        KeyGenerator kgen = KeyGenerator.getInstance(ConstantFan.SIGN_TYPE_AES);
+        KeyGenerator kgen = KeyGenerator.getInstance(ConstantFan.AES);
         kgen.init(128);
         Cipher cipher = Cipher.getInstance(ALGORITHMSTR);
-        cipher.init(Cipher.ENCRYPT_MODE, new SecretKeySpec(encryptKey.getBytes(), ConstantFan.SIGN_TYPE_AES));
+        cipher.init(Cipher.ENCRYPT_MODE, new SecretKeySpec(encryptKey.getBytes(), ConstantFan.AES));
 
         return cipher.doFinal(content.getBytes(ConstantFan.CHARSET));
     }
@@ -163,11 +163,11 @@ public class AESUtil {
      * @throws Exception
      */
     public static String aesDecryptByBytes(byte[] encryptBytes, String decryptKey) throws Exception {
-        KeyGenerator kgen = KeyGenerator.getInstance(ConstantFan.SIGN_TYPE_AES);
+        KeyGenerator kgen = KeyGenerator.getInstance(ConstantFan.AES);
         kgen.init(128);
 
         Cipher cipher = Cipher.getInstance(ALGORITHMSTR);
-        cipher.init(Cipher.DECRYPT_MODE, new SecretKeySpec(decryptKey.getBytes(), ConstantFan.SIGN_TYPE_AES));
+        cipher.init(Cipher.DECRYPT_MODE, new SecretKeySpec(decryptKey.getBytes(), ConstantFan.AES));
         byte[] decryptBytes = cipher.doFinal(encryptBytes);
 
         return new String(decryptBytes);
@@ -184,7 +184,7 @@ public class AESUtil {
     public static byte[] decrypt(byte[] content, byte[] keyByte, byte[] ivByte) throws Exception {
 //        initialize();
         Cipher cipher = Cipher.getInstance("AES/CBC/PKCS7Padding");
-        Key sKeySpec = new SecretKeySpec(keyByte, ConstantFan.SIGN_TYPE_AES);
+        Key sKeySpec = new SecretKeySpec(keyByte, ConstantFan.AES);
         // 初始化
         cipher.init(Cipher.DECRYPT_MODE, sKeySpec, generateIV(ivByte));
         byte[] result = cipher.doFinal(content);
@@ -197,7 +197,7 @@ public class AESUtil {
      * @Param [iv]
      **/
     public static AlgorithmParameters generateIV(byte[] iv) throws Exception {
-        AlgorithmParameters params = AlgorithmParameters.getInstance(ConstantFan.SIGN_TYPE_AES);
+        AlgorithmParameters params = AlgorithmParameters.getInstance(ConstantFan.AES);
         params.init(new IvParameterSpec(iv));
         return params;
     }

@@ -2,6 +2,8 @@ package com.fan.remote.wx;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.fan.entity.Msg;
+import com.fan.entity.wx.CreateOrderParams;
 import com.fan.util.*;
 import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
@@ -10,8 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import java.io.UnsupportedEncodingException;
-import java.security.NoSuchAlgorithmException;
 import java.util.Map;
 
 /**
@@ -30,8 +30,6 @@ public class WeChatRemote {
     private String appid;
     @Value("${wx.appSecret}")
     private String secret;
-    @Value("${wx.url}")
-    private String url;
     @Value("${wx.grant_type}")
     private String grant_type;
 
@@ -47,7 +45,7 @@ public class WeChatRemote {
             params.put("appid", appid);
             params.put("secret", secret);
             params.put("grant_type", grant_type);
-            String result = HttpCilentUtil.doGet(url, params, null);
+            String result = HttpCilentUtil.doGet(FieldConstant.WeChat.GET_ACCESS_TOKEN_URL, params, null);
             if (StringUtils.isBlank(result)) {
                 throw new RuntimeException("获取会话失败");
             }
@@ -62,7 +60,7 @@ public class WeChatRemote {
     }
 
     /**
-     * 获取access_token
+     * 获取二维码
      *
      * @return
      */
@@ -88,7 +86,7 @@ public class WeChatRemote {
     }
 
     /**
-     * 获取access_token
+     * 展示二维码
      *
      * @return
      */
@@ -103,23 +101,20 @@ public class WeChatRemote {
      * @param orderParams
      * @param resultParse
      * @return
-     * @throws UnsupportedEncodingException
-     * @throws NoSuchAlgorithmException
      */
-//    public FlyResponse pay(CreateOrderParams orderParams, WeChatResultParseAbstract resultParse) throws UnsupportedEncodingException, NoSuchAlgorithmException {
-//
-//        //解析参数
-//        String urlParam = WeChatUtil.concatOrderParams(orderParams);//参数按字典顺序连接起来
-//        String sign = SignUtil.getMD5(urlParam);//MD5加密形成签名sign，官方文档固定格式
-//        orderParams.setSign(sign);//将生成的签名放入
-//        String xmlStr = XmlUtil.beanToXml(orderParams);//转为xml
-//
-//        log.info("微信下单参数转换为xml:{}", xmlStr);
-//
-//        resultParse.setUrl(WeChatAPIInfo.Create_Order_Prefix_Url);
-//        resultParse.setXmlStr(xmlStr);
-//        resultParse.setApiDesc("<< 统一下单 >>");
-//
-//        return resultParse.ResultParse();
-//    }
+    public Msg pay(CreateOrderParams orderParams, WeChatResultParseAbstract resultParse){
+        //解析参数
+        String urlParam = WeChatUtil.concatOrderParams(orderParams);//参数按字典顺序连接起来
+        String sign = SignUtil.getMD5(urlParam);//MD5加密形成签名sign，官方文档固定格式
+        orderParams.setSign(sign);//将生成的签名放入
+        String xmlStr = XmlUtil.beanToXml(orderParams);//转为xml
+
+        log.info("微信下单参数转换为xml:{}", xmlStr);
+
+        resultParse.setUrl(FieldConstant.WeChat.CREATE_ORDER_PREFIX_URL);
+        resultParse.setXmlStr(xmlStr);
+        resultParse.setApiDesc("<< 统一下单 >>");
+
+        return resultParse.ResultParse();
+    }
 }

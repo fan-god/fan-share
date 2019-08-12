@@ -1,10 +1,9 @@
 package com.fan.test;
 
+import com.fan.entity.CarInfo;
+import com.fan.entity.User;
 import com.fan.entity.excelmodel.TestExcelModel;
-import com.fan.util.ConstantFan;
-import com.fan.util.ExcelFactory;
-import com.fan.util.QRCodeUtil;
-import com.fan.util.SignUtil;
+import com.fan.util.*;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.RandomUtils;
 
@@ -14,6 +13,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author fan
@@ -81,7 +82,14 @@ public class TestWhitoutProperties {
 //            System.out.print(element + " ");
 //        }
 
-        System.out.println(SignUtil.getSha256("1111"));
+//        System.out.println(SignUtil.getMD5("1111"));
+        CarInfo carInfo = CarInfo.builder().color("red").brandName("奥迪").displacement(2.0).build();
+        String xml = XmlUtil.beanToXml(carInfo, CarInfo.class);
+        System.out.println(xml);
+        Map<String, String> map = XmlUtil.parseXmlToMap(xml);
+        map.forEach((k, v) -> {
+            System.out.printf("%s:%s%n", k, v);
+        });
     }
 
     static void swap(int[] array, int index1, int index2) {

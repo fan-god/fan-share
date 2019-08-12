@@ -27,14 +27,20 @@ public interface ConstantFan {
     String PNG = ".png";
     String JSON = "json";
     String XML = "xml";
-
+    //成功
+    String SUCCESS = "success";
+    //OK
+    String OK = "ok";
+    //失败
+    String FAIL = "fail";
+    String ID = "id";
     /**
      * 签名方式
      */
-    String SIGN_TYPE_SHA1 = "SHA-1";
-    String SIGN_TYPE_SHA256 = "SHA-256";
-    String SIGN_TYPE_MD5 = "MD5";
-    String SIGN_TYPE_AES = "AES";
+    String SHA1 = "SHA-1";
+    String SHA256 = "SHA-256";
+    String MD5 = "MD5";
+    String AES = "AES";
     /**
      * reids对应常量
      */

@@ -42,7 +42,7 @@ public class SignUtil {
             String[] params = {token, timestamp, nonce};
             Arrays.sort(params);
             String content = params[0].concat(params[1]).concat(params[2]);
-            MessageDigest md = MessageDigest.getInstance(ConstantFan.SIGN_TYPE_SHA1);
+            MessageDigest md = MessageDigest.getInstance(ConstantFan.SHA1);
             byte[] bytes = md.digest(content.toString().getBytes());
             checkText = byte2hexLowerCase(bytes);
         } catch (Exception e) {
@@ -95,7 +95,7 @@ public class SignUtil {
     public static String getMD5(String input) {
         String result;
         try {
-            MessageDigest md = MessageDigest.getInstance(ConstantFan.SIGN_TYPE_MD5);
+            MessageDigest md = MessageDigest.getInstance(ConstantFan.MD5);
             byte[] bytes = md.digest(input.getBytes(ConstantFan.CHARSET));
             result = byte2hex(bytes);
         } catch (Exception e) {
@@ -116,9 +116,7 @@ public class SignUtil {
             if (orgin == null) {
                 return result;
             }
-            MessageDigest md = MessageDigest.getInstance(ConstantFan.SIGN_TYPE_MD5);
-            byte[] bytes = md.digest(orgin.toString().getBytes(ConstantFan.CHARSET));
-            result = byte2hex(bytes);
+            result = getMD5(orgin.toString());
         } catch (Exception e) {
             throw new java.lang.RuntimeException("sign error !" + e);
         }
@@ -153,6 +151,14 @@ public class SignUtil {
         return byte2hex(bytes).toLowerCase();
     }
 
+    /**
+     * 暂不知道此方法是干什么用的
+     *
+     * @param bytes
+     * @param m
+     * @param n
+     * @return
+     */
     private static String bufferToHex(byte bytes[], int m, int n) {
         StringBuffer stringbuffer = new StringBuffer(2 * n);
         int k = m + n;
@@ -161,7 +167,6 @@ public class SignUtil {
         }
         return stringbuffer.toString();
     }
-
 
     private static void appendHexPair(byte bt, StringBuffer stringbuffer) {
         char c0 = hexDigits[(bt & 0xf0) >> 4];
@@ -225,7 +230,7 @@ public class SignUtil {
      * @param key
      * @return
      */
-    public static String getSignLowerCase(Map<String, String> params, String key) {
+    public static String getSignFromMap(Map<String, String> params, String key) {
         String sign = null;
         if (params == null || params.isEmpty()) {
             return sign;
@@ -233,19 +238,17 @@ public class SignUtil {
         if (params.containsKey("sign")) {
             params.remove("sign");
         }
-
-        StringBuilder keyValueBuff = new StringBuilder();
+        StringBuilder sb = new StringBuilder();
         for (Map.Entry<String, String> entry : params.entrySet()) {
-            keyValueBuff.append(entry.getKey().trim()).append("=").append(entry.getValue().trim()).append("&");
+            sb.append(entry.getKey().trim()).append("=").append(entry.getValue().trim()).append("&");
         }
-        keyValueBuff.deleteCharAt(keyValueBuff.length() - 1);
+        sb.deleteCharAt(sb.length() - 1);
         if (StringUtils.isNotBlank(key)) {
-            keyValueBuff.append(key);
+            sb.append(key);
         }
-        String keyValueStr = keyValueBuff.toString();
-        sign = getMD5(keyValueStr);
-
-        return sign.toLowerCase();
+        String keyValueStr = sb.toString();
+        sign = getMD5(keyValueStr).toLowerCase();
+        return sign;
     }
 
     /**
@@ -263,20 +266,46 @@ public class SignUtil {
         if (params.containsKey("sign")) {
             params.remove("sign");
         }
-
-        StringBuilder keyValueBuff = new StringBuilder();
+        StringBuilder sb = new StringBuilder();
         for (Map.Entry<String, String> entry : params.entrySet()) {
-            keyValueBuff.append(entry.getValue().trim());
+            sb.append(entry.getValue().trim());
         }
         if (StringUtils.isNotBlank(key)) {
-            keyValueBuff.append(key);
+            sb.append(key);
         }
-        String keyValueStr = keyValueBuff.toString();
-        sign = getMD5(keyValueStr);
-
-        return sign.toLowerCase();
+        String keyValueStr = sb.toString();
+        sign = getMD5(keyValueStr).toLowerCase();
+        return sign;
     }
 
+    /**
+     * 从map创建签名
+     *
+     * @param map
+     * @return
+     */
+    public static String getSignFromMap(SortedMap<String, String> map) {
+        try {
+            StringBuffer sb = new StringBuffer();
+            Set es = map.entrySet();
+            Iterator it = es.iterator();
+            while (it.hasNext()) {
+                Map.Entry entry = (Map.Entry) it.next();
+                String k = (String) entry.getKey();
+                Object v = entry.getValue();
+                if (null != v && !"".equals(v) && !"sign".equals(k) && !"key".equals(k)) {
+                    sb.append(k + "=" + v + "&");
+                }
+            }
+            sb.append("key=" + FieldConstant.WeChat.key);
+            log.info("由MAP生产的字符串:{}", sb.toString());
+            String sign = SignUtil.getMD5(sb.toString());
+            return sign;
+        } catch (Exception e) {
+            log.error("MD5加密失败：{}", e);
+        }
+        return null;
+    }
 
     /**
      * 获取文件SHA256码
@@ -289,7 +318,7 @@ public class SignUtil {
             if (StringUtils.isBlank(shaValue)) {
                 return shaValue;
             }
-            MessageDigest messageDigest = MessageDigest.getInstance(ConstantFan.SIGN_TYPE_SHA256);
+            MessageDigest messageDigest = MessageDigest.getInstance(ConstantFan.SHA256);
             messageDigest.update(shaValue.getBytes(ConstantFan.CHARSET));
             encodeStr = byte2hex(messageDigest.digest());
         } catch (Exception e) {
@@ -340,7 +369,7 @@ public class SignUtil {
             if (null == decrypt || decrypt.length() == 0) {
                 return null;
             }
-            MessageDigest mdTemp = MessageDigest.getInstance(ConstantFan.SIGN_TYPE_SHA1);
+            MessageDigest mdTemp = MessageDigest.getInstance(ConstantFan.SHA1);
             mdTemp.update(decrypt.getBytes(ConstantFan.CHARSET));
             byte[] md = mdTemp.digest();
             int j = md.length;

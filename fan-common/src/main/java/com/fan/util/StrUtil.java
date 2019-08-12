@@ -45,6 +45,6 @@ public class StrUtil {
                 return String.format("%s[%s]%s", message1, params.get(key), message2);
             }
         }
-        return FieldConstant.SUCCESS;
+        return ConstantFan.SUCCESS;
     }
 }

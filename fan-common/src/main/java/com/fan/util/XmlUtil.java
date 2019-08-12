@@ -35,18 +35,24 @@ public class XmlUtil {
     /**
      * 对象转xml
      *
-     * @param obj
      * @return
      * @throws JAXBException
      */
-    public static String beanToXml(Object obj) throws JAXBException {
-        JAXBContext context = JAXBContext.newInstance(obj.getClass());
-        Marshaller marshaller = context.createMarshaller();
-        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-        marshaller.setProperty(Marshaller.JAXB_ENCODING, ConstantFan.CHARSET);
+    public static String beanToXml(Object o){
         StringWriter writer = new StringWriter();
-        marshaller.marshal(obj, writer);
-        return writer.toString();
+        try {
+            JAXBContext context = JAXBContext.newInstance(o.getClass());
+            Marshaller marshaller = context.createMarshaller();
+            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+            marshaller.setProperty(Marshaller.JAXB_ENCODING, ConstantFan.CHARSET);
+            marshaller.marshal(o, writer);
+            return writer.toString();
+        } catch (JAXBException e) {
+            log.error("beanToXml error:{}",e);
+           return null;
+        }finally {
+            IOUtils.closeQuietly(writer);
+        }
     }
 
     public static <T> T xmlToBean(String xml) {
@@ -58,6 +64,7 @@ public class XmlUtil {
             sr = new StringReader(xml);
             t = (T) unmarshaller.unmarshal(sr);
         } catch (Exception e) {
+            log.error("xmlToBean error:{}",e);
             return null;
         } finally {
             sr.close();
@@ -108,7 +115,7 @@ public class XmlUtil {
             doc.getDocumentElement().normalize();
             NodeList nodeList = doc.getDocumentElement().getChildNodes();
             for (int idx = 0; idx < nodeList.getLength(); ++idx) {
-                Node node = (Node) nodeList.item(idx);
+                org.w3c.dom.Node node = nodeList.item(idx);
                 if (node.getNodeType() == Node.ELEMENT_NODE) {
                     org.w3c.dom.Element element = (org.w3c.dom.Element) node;
                     map.put(element.getNodeName(), element.getTextContent());
