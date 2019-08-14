@@ -16,6 +16,7 @@ import java.math.BigInteger;
 import java.security.AlgorithmParameters;
 import java.security.Key;
 import java.security.Security;
+import java.util.Arrays;
 import java.util.Properties;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
@@ -31,8 +32,8 @@ public class AESUtil {
     /**
      * 密钥 abcdefgabcdefg12
      */
-	public static String KEY;
-//    public static String KEY = "abcdefgabcdefg12";
+//	public static String KEY;
+    public static String KEY = "abcdefgabcdefg12";
 
     static {
         if (StringUtils.isBlank(KEY)) {
@@ -48,7 +49,8 @@ public class AESUtil {
     /**
      * 算法
      */
-    private static final String ALGORITHMSTR = "AES/ECB/PKCS5Padding";
+    private static final String PKCS5Padding = "AES/ECB/PKCS5Padding";
+    private static final String PKCS7Padding = "AES/CFB/PKCS7Padding";
 
     public static void main(String[] args) throws Exception {
         String content = "wangfan789";
@@ -67,23 +69,23 @@ public class AESUtil {
     /**
      * aes解密
      *
-     * @param encrypt 内容
+     * @param input 内容
      * @return
      * @throws Exception
      */
-    public static String aesDecrypt(String encrypt) throws Exception {
-        return aesDecrypt(encrypt, KEY);
+    public static String aesDecrypt(String input) throws Exception {
+        return aesDecrypt(input, KEY);
     }
 
     /**
      * aes加密
      *
-     * @param content
+     * @param input
      * @return
      * @throws Exception
      */
-    public static String aesEncrypt(String content) throws Exception {
-        return aesEncrypt(content, KEY);
+    public static String aesEncrypt(String input) throws Exception {
+        return aesEncrypt(input, KEY);
     }
 
     /**
@@ -108,7 +110,7 @@ public class AESUtil {
     public static byte[] aesEncryptToBytes(String content, String encryptKey) throws Exception {
         KeyGenerator kgen = KeyGenerator.getInstance(ConstantFan.AES);
         kgen.init(128);
-        Cipher cipher = Cipher.getInstance(ALGORITHMSTR);
+        Cipher cipher = Cipher.getInstance(PKCS5Padding);
         cipher.init(Cipher.ENCRYPT_MODE, new SecretKeySpec(encryptKey.getBytes(), ConstantFan.AES));
 
         return cipher.doFinal(content.getBytes(ConstantFan.CHARSET));
@@ -139,7 +141,7 @@ public class AESUtil {
         KeyGenerator kgen = KeyGenerator.getInstance(ConstantFan.AES);
         kgen.init(128);
 
-        Cipher cipher = Cipher.getInstance(ALGORITHMSTR);
+        Cipher cipher = Cipher.getInstance(PKCS5Padding);
         cipher.init(Cipher.DECRYPT_MODE, new SecretKeySpec(decryptKey.getBytes(), ConstantFan.AES));
         byte[] decryptBytes = cipher.doFinal(encryptBytes);
 
@@ -163,19 +165,18 @@ public class AESUtil {
     /**
      * 敏感数据对称解密
      *
-     * @param content ——被加密的数据
-     * @param keyByte ——加密密匙
-     * @param ivByte  ——偏移量
+     * @param input ——待加密的数据
+     * @param iv  ——偏移量
      * @return
      */
-    public static byte[] decrypt(byte[] content, byte[] keyByte, byte[] ivByte) throws Exception {
-//        initialize();
-        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS7Padding");
-        Key sKeySpec = new SecretKeySpec(keyByte, ConstantFan.AES);
+    public static String encrypt(String input) throws Exception {
+        initialize();
+        Cipher cipher = Cipher.getInstance(PKCS7Padding);
+        Key sKeySpec = new SecretKeySpec(KEY.getBytes(ConstantFan.CHARSET), ConstantFan.AES);
         // 初始化
-        cipher.init(Cipher.DECRYPT_MODE, sKeySpec, generateIV(ivByte));
-        byte[] result = cipher.doFinal(content);
-        return result;
+        cipher.init(Cipher.ENCRYPT_MODE, sKeySpec, generateIV());
+        byte[] result = cipher.doFinal(input.getBytes(ConstantFan.CHARSET));
+        return new String(result);
     }
 
     /**
@@ -183,16 +184,19 @@ public class AESUtil {
      * @Description 生成iv
      * @Param [iv]
      **/
-    public static AlgorithmParameters generateIV(byte[] iv) throws Exception {
+    private static AlgorithmParameters generateIV() throws Exception {
         AlgorithmParameters params = AlgorithmParameters.getInstance(ConstantFan.AES);
-        params.init(new IvParameterSpec(iv));
+        final byte[] iv = new byte[16];
+        Arrays.fill(iv, (byte) 0x00);
+        IvParameterSpec ivParameterSpec = new IvParameterSpec(iv);
+        params.init(ivParameterSpec);
         return params;
     }
 
     /**
      * 添加算法
      */
-    public static void initialize() {
+    private static void initialize() {
         if (initialized) return;
         Security.addProvider(new BouncyCastleProvider());
         initialized = true;

@@ -9,6 +9,7 @@ import org.apache.commons.lang3.RandomUtils;
 
 import javax.swing.filechooser.FileSystemView;
 import java.io.File;
+import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -23,7 +24,7 @@ import java.util.Set;
  * @description: TODO
  * @date 2019/7/12/001213:59
  */
-public class TestWhitoutProperties {
+public class TestNoProperties {
 
     public static void main(String[] args) throws Exception {
 //        Pattern pattern = Pattern.compile("v([+-]?\\d*\\.\\d*)");
@@ -55,12 +56,8 @@ public class TestWhitoutProperties {
 //        list.add(m3);
 //        excelFactory.getExcelWrite(TestExcelModel.class,list);
 
-        System.out.println(SignUtil.getSHA1("张三李四"));
-        System.out.println(SignUtil.getMD5("张三李四"));
-        System.out.println(SignUtil.getSHA256("张三李四"));
-        System.out.println(SignUtil.getHmacSHA256("张三李四","张三李四"));
-        System.out.println(SignUtil.encodeBase64("张三李四"));
-        System.out.println(SignUtil.decodeBase64("5byg5LiJ5p2O5Zub"));
+        TestNoProperties tnp = new TestNoProperties();
+        tnp.test4();
 
     }
 
@@ -124,5 +121,16 @@ public class TestWhitoutProperties {
         String path = FileSystemView.getFileSystemView().getHomeDirectory() + File.separator + "testQrcode";
         String fileName = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + ".jpg";
         QRCodeUtil.createQRCode(url, path, fileName);
+    }
+
+    private void test4() throws Exception {
+        System.out.println(AESUtil.aesEncrypt("分工表"));
+        System.out.println(AESUtil.encrypt("asdffggg"));
+//        System.out.println(SignUtil.getSHA1("张三李四"));
+//        System.out.println(SignUtil.getMD5("张三李四"));
+//        System.out.println(SignUtil.getSHA256("张三李四"));
+//        System.out.println(SignUtil.getHmacSHA256("张三李四","张三李四"));
+//        System.out.println(SignUtil.encodeBase64("张三李四"));
+//        System.out.println(SignUtil.decodeBase64("5byg5LiJ5p2O5Zub"));
     }
 }

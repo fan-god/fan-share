@@ -298,14 +298,14 @@ public class SignUtil {
      *
      * @return String
      */
-    public static String getSHA256(String value) {
-        String encodeStr = "";
+    public static String getSHA256(String input) {
+        String encodeStr = null;
         try {
-            if (StringUtils.isBlank(value)) {
-                return value;
+            if (StringUtils.isBlank(input)) {
+                return input;
             }
             MessageDigest messageDigest = MessageDigest.getInstance(ConstantFan.SHA256);
-            messageDigest.update(value.getBytes(ConstantFan.CHARSET));
+            messageDigest.update(input.getBytes(ConstantFan.CHARSET));
             encodeStr = byte2hex(messageDigest.digest());
         } catch (Exception e) {
             log.error("getSha256 error:{}", e);
@@ -329,18 +329,18 @@ public class SignUtil {
     /**
      * 生成 HMACSHA256,带秘钥的加密
      *
-     * @param data 待处理数据
+     * @param input 待处理数据
      * @param key  密钥
      * @return 加密结果
      * @throws Exception
      */
-    public static String getHmacSHA256(String data, String key) {
+    public static String getHmacSHA256(String input, String key) {
         StringBuilder sb = new StringBuilder();
         try {
             Mac sha256_HMAC = Mac.getInstance(ConstantFan.HMACSHA256);
             SecretKeySpec secret_key = new SecretKeySpec(key.getBytes(ConstantFan.CHARSET), ConstantFan.HMACSHA256);
             sha256_HMAC.init(secret_key);
-            byte[] array = sha256_HMAC.doFinal(data.getBytes(ConstantFan.CHARSET));
+            byte[] array = sha256_HMAC.doFinal(input.getBytes(ConstantFan.CHARSET));
             for (byte item : array) {
                 sb.append(Integer.toHexString((item & 0xFF) | 0x100).substring(1, 3));
             }
@@ -370,17 +370,17 @@ public class SignUtil {
     /**
      * SHA1签名
      *
-     * @param decrypt
+     * @param input
      * @return
      * @throws DigestException
      */
-    public static String getSHA1(String decrypt) {
+    public static String getSHA1(String input) {
         try {
-            if (null == decrypt || decrypt.length() == 0) {
+            if (null == input || input.length() == 0) {
                 return null;
             }
             MessageDigest mdTemp = MessageDigest.getInstance(ConstantFan.SHA1);
-            mdTemp.update(decrypt.getBytes(ConstantFan.CHARSET));
+            mdTemp.update(input.getBytes(ConstantFan.CHARSET));
             byte[] md = mdTemp.digest();
             int j = md.length;
             char[] buf = new char[j * 2];
