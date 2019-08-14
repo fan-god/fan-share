@@ -100,7 +100,7 @@ public class WXPayReport {
                 sb.append(obj).append(separator);
             }
             try {
-                String sign = SignUtil.getSHA256(sb.toString(), key);
+                String sign = SignUtil.getHmacSHA256(sb.toString(), key);
                 sb.append(sign);
                 return sb.toString();
             } catch (Exception ex) {

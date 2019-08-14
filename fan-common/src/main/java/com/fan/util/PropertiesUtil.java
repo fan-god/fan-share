@@ -10,7 +10,7 @@ import java.util.Properties;
  *
  */
 public class PropertiesUtil {
-	private String propertiesName = "";// 设置配置文件名称
+	private String propertiesName;// 设置配置文件名称
 
 	public PropertiesUtil() {
 

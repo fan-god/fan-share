@@ -43,7 +43,7 @@ public interface ConstantFan {
     String SHA256 = "SHA-256";
     String MD5 = "MD5";
     String AES = "AES";
-    String HMACSHA256 = "HMAC-SHA256";
+    String HMACSHA256 = "HmacSHA256";
     /**
      * reids对应常量
      */

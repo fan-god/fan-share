@@ -61,10 +61,22 @@ public class SignUtil {
      * @return
      * @throws UnsupportedEncodingException
      */
-    public static String getBase64(String input) throws UnsupportedEncodingException {
+    public static String encodeBase64(String input) throws UnsupportedEncodingException {
         byte[] bs = input.getBytes(ConstantFan.CHARSET);
-        String base64Str = new String(Base64.getEncoder().encode(bs), ConstantFan.CHARSET);
-        return base64Str;
+        String str = new String(Base64.getEncoder().encode(bs), ConstantFan.CHARSET);
+        return str;
+    }
+
+    /**
+     * base64签名
+     *
+     * @return
+     * @throws UnsupportedEncodingException
+     */
+    public static String decodeBase64(String input) throws UnsupportedEncodingException {
+        byte[] bs = input.getBytes(ConstantFan.CHARSET);
+        String str = new String(Base64.getDecoder().decode(bs), ConstantFan.CHARSET);
+        return str;
     }
 
     /**
@@ -315,18 +327,18 @@ public class SignUtil {
     }
 
     /**
-     * 生成 HMACSHA256
+     * 生成 HMACSHA256,带秘钥的加密
      *
      * @param data 待处理数据
      * @param key  密钥
      * @return 加密结果
      * @throws Exception
      */
-    public static String getSHA256(String data, String key) {
+    public static String getHmacSHA256(String data, String key) {
         StringBuilder sb = new StringBuilder();
         try {
-            Mac sha256_HMAC = Mac.getInstance("HmacSHA256");
-            SecretKeySpec secret_key = new SecretKeySpec(key.getBytes(ConstantFan.CHARSET), "HmacSHA256");
+            Mac sha256_HMAC = Mac.getInstance(ConstantFan.HMACSHA256);
+            SecretKeySpec secret_key = new SecretKeySpec(key.getBytes(ConstantFan.CHARSET), ConstantFan.HMACSHA256);
             sha256_HMAC.init(secret_key);
             byte[] array = sha256_HMAC.doFinal(data.getBytes(ConstantFan.CHARSET));
             for (byte item : array) {

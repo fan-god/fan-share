@@ -55,6 +55,59 @@ public class TestWhitoutProperties {
 //        list.add(m3);
 //        excelFactory.getExcelWrite(TestExcelModel.class,list);
 
+        System.out.println(SignUtil.getSHA1("张三李四"));
+        System.out.println(SignUtil.getMD5("张三李四"));
+        System.out.println(SignUtil.getSHA256("张三李四"));
+        System.out.println(SignUtil.getHmacSHA256("张三李四","张三李四"));
+        System.out.println(SignUtil.encodeBase64("张三李四"));
+        System.out.println(SignUtil.decodeBase64("5byg5LiJ5p2O5Zub"));
+
+    }
+
+    static void swap(int[] array, int index1, int index2) {
+        int t = array[index1];
+        array[index1] = array[index2];
+        array[index2] = t;
+    }
+
+    private void shuffleAlgorithm(){
+//        洗牌算法
+        int[] arr = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+        int n = arr.length;
+        for (int i = n - 1; i >= 0; i--) {
+            swap(arr, i, RandomUtils.nextInt(0, i));
+        }
+        for (int element : arr) {
+            System.out.print(element + " ");
+        }
+    }
+
+    private void test1(){
+        User user = new User();
+        user.setPhone("ertfyuio");
+        user.setUsername("ghjk");
+        user.setAddress("sdfghjk");
+        user.setPassword("1111111");
+        Map<String, Object> map = DataConvertUtil.beanToMap(user);
+        map.forEach((k, v) -> {
+            System.out.printf("%s:%s%n", k, v);
+        });
+        User u = DataConvertUtil.mapToBean(map, User.class);
+        System.out.println(u);
+
+    }
+
+    private void test2(){
+        CarInfo carInfo = CarInfo.builder().color("red").brandName("奥迪").displacement(2.0).build();
+        String xml = XmlUtil.beanToXml(carInfo, CarInfo.class);
+        System.out.println(xml);
+        Map<String, String> map = XmlUtil.xmlToMap(xml);
+        map.forEach((k, v) -> {
+            System.out.printf("%s:%s%n", k, v);
+        });
+    }
+
+    private void test3() throws Exception {
         // 存放在二维码中的内容
         String text = "http://m16808311q.iask.in/fan-manager-web/api/testing/v1.0/sendEmailBySweepCode";
         // 嵌入二维码的图片路径
@@ -67,46 +120,9 @@ public class TestWhitoutProperties {
         // 打印出解析出的内容
         System.out.println(str);
 
-//        String url = "http://baidu.com";
-//        String path = FileSystemView.getFileSystemView().getHomeDirectory() + File.separator + "testQrcode";
-//        String fileName = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + ".jpg";
-//        QRCodeUtil.createQRCode(url, path, fileName);
-
-        //洗牌算法
-//        int[] arr = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-//        int n = arr.length;
-//        for (int i = n - 1; i >= 0; i--) {
-//            swap(arr, i, RandomUtils.nextInt(0, i));
-//        }
-//        for (int element : arr) {
-//            System.out.print(element + " ");
-//        }
-
-//        CarInfo carInfo = CarInfo.builder().color("red").brandName("奥迪").displacement(2.0).build();
-//        String xml = XmlUtil.beanToXml(carInfo, CarInfo.class);
-//        System.out.println(xml);
-//        Map<String, String> map = XmlUtil.parseXmlToMap(xml);
-//        map.forEach((k, v) -> {
-//            System.out.printf("%s:%s%n", k, v);
-//        });
-
-
-//        User user = new User();
-//        user.setPhone("ertfyuio");
-//        user.setUsername("ghjk");
-//        user.setAddress("sdfghjk");
-//        user.setPassword("1111111");
-//        Map<String, Object> map = DataConvertUtil.beanToMap(user);
-//        map.forEach((k,v)->{
-//            System.out.printf("%s:%s%n", k, v);
-//        });
-//        User u = DataConvertUtil.mapToBean(map, User.class);
-//        System.out.println(u);
-    }
-
-    static void swap(int[] array, int index1, int index2) {
-        int t = array[index1];
-        array[index1] = array[index2];
-        array[index2] = t;
+        String url = "http://baidu.com";
+        String path = FileSystemView.getFileSystemView().getHomeDirectory() + File.separator + "testQrcode";
+        String fileName = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + ".jpg";
+        QRCodeUtil.createQRCode(url, path, fileName);
     }
 }

@@ -208,7 +208,7 @@ public class WeChatUtil {
         if (ConstantFan.MD5.equals(signType)) {
             return SignUtil.getMD5(sb.toString());
         } else if (ConstantFan.HMACSHA256.equals(signType)) {
-            return SignUtil.getSHA256(sb.toString(), key);
+            return SignUtil.getHmacSHA256(sb.toString(), key);
         } else {
             throw new Exception(String.format("Invalid sign_type: %s", signType));
         }

@@ -31,22 +31,16 @@ public class AESUtil {
     /**
      * 密钥 abcdefgabcdefg12
      */
-//	public static String KEY;
-    public static String KEY = "abcdefgabcdefg12";
+	public static String KEY;
+//    public static String KEY = "abcdefgabcdefg12";
 
     static {
-        if (KEY == null) {
-            InputStream is = null;
+        if (StringUtils.isBlank(KEY)) {
             try {
-                is = PropertiesUtil.class.getClassLoader().getResourceAsStream("/config/freemark.properties");
-                Properties p = new Properties();
-                p.load(is);
-                KEY = p.getProperty(FieldConstant.AES_PASS);
-
-            } catch (IOException e) {
+                PropertiesUtil pu = new PropertiesUtil("/config/freemark.properties");
+                KEY = pu.readProperty(FieldConstant.AES_PASS);
+            } catch (Exception e) {
                 e.printStackTrace();
-            } finally {
-                IOUtils.closeQuietly(is);
             }
         }
     }
@@ -104,27 +98,6 @@ public class AESUtil {
     }
 
     /**
-     * base 64 encode
-     *
-     * @param bytes 待编码的byte[]
-     * @return 编码后的base 64 code
-     */
-    public static String base64Encode(byte[] bytes) {
-        return Base64.encodeBase64String(bytes);
-    }
-
-    /**
-     * base 64 decode
-     *
-     * @param base64Code 待解码的base 64 code
-     * @return 解码后的byte[]
-     * @throws Exception
-     */
-    public static byte[] base64Decode(String base64Code) throws Exception {
-        return StringUtils.isEmpty(base64Code) ? null : new BASE64Decoder().decodeBuffer(base64Code);
-    }
-
-    /**
      * AES加密
      *
      * @param content    待加密的内容
@@ -151,7 +124,7 @@ public class AESUtil {
      * @throws Exception
      */
     public static String aesEncrypt(String content, String encryptKey) throws Exception {
-        return base64Encode(aesEncryptToBytes(content, encryptKey));
+        return EncodeUtil.encodeBase64(aesEncryptToBytes(content, encryptKey));
     }
 
     /**
@@ -173,6 +146,20 @@ public class AESUtil {
         return new String(decryptBytes);
     }
 
+    /**
+     * 将base 64 code AES解密
+     *
+     * @param encryptStr 待解密的base 64 code
+     * @param decryptKey 解密密钥
+     * @return 解密后的string
+     * @throws Exception
+     */
+    public static String aesDecrypt(String encryptStr, String decryptKey) throws Exception {
+        return StringUtils.isEmpty(encryptStr) ? null : aesDecryptByBytes(EncodeUtil.decodeBase64(encryptStr), decryptKey);
+    }
+
+
+    ////////////////////////////////////////////////TODO 以下内容为后来加上的还没验证////////////////////////////////////////////////////////////
     /**
      * 敏感数据对称解密
      *
@@ -209,17 +196,5 @@ public class AESUtil {
         if (initialized) return;
         Security.addProvider(new BouncyCastleProvider());
         initialized = true;
-    }
-
-    /**
-     * 将base 64 code AES解密
-     *
-     * @param encryptStr 待解密的base 64 code
-     * @param decryptKey 解密密钥
-     * @return 解密后的string
-     * @throws Exception
-     */
-    public static String aesDecrypt(String encryptStr, String decryptKey) throws Exception {
-        return StringUtils.isEmpty(encryptStr) ? null : aesDecryptByBytes(base64Decode(encryptStr), decryptKey);
     }
 }

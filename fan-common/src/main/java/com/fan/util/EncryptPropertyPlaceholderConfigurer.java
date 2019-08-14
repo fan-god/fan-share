@@ -30,8 +30,7 @@ public class EncryptPropertyPlaceholderConfigurer extends PropertyPlaceholderCon
 				if (p.equalsIgnoreCase(propertyName)) {
 					try {
 						//返回AES解密后的字符串
-//						log.info("密码进行解密 " + EncodeUtil.encodeBase64(SymmetricCryptoUtil.decryptAESWithDefaultKey(EncodeUtil.decodeBase64(propertyValue))));
-						log.info("  密码进行解密 " + AESUtil.aesDecrypt(propertyValue, AESUtil.KEY));
+						log.info("  密码进行解密:{} " , AESUtil.aesDecrypt(propertyValue, AESUtil.KEY));
 //						return EncodeUtil.encodeBase64(SymmetricCryptoUtil.decryptAESWithDefaultKey(EncodeUtil.decodeBase64(propertyValue)));
 						return AESUtil.aesDecrypt(propertyValue, AESUtil.KEY);
 					} catch (Exception e) {
