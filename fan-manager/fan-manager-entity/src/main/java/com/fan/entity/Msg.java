@@ -42,7 +42,7 @@ public class Msg {
         result.setCode(SUCCESS_CODE);
         result.setVersion(1.0);
         result.setMsg("处理成功！");
-        result.setMsgId(SignUtil.SHA1(String.valueOf(System.currentTimeMillis())));
+        result.setMsgId(SignUtil.getSHA1(String.valueOf(System.currentTimeMillis())));
         return result;
     }
 
@@ -52,7 +52,7 @@ public class Msg {
         result.setCode(FAIL_CODE);
         result.setVersion(1.0);
         result.setMsg("处理失败！");
-        result.setMsgId(SignUtil.SHA1(String.valueOf(System.currentTimeMillis())));
+        result.setMsgId(SignUtil.getSHA1(String.valueOf(System.currentTimeMillis())));
         return result;
     }
 

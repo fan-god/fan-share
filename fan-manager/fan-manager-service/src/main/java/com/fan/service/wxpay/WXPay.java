@@ -93,7 +93,7 @@ public class WXPay {
         } else if (ConstantFan.HMACSHA256.equals(this.signType)) {
             reqData.put("sign_type", ConstantFan.HMACSHA256);
         }
-        reqData.put("sign", WXPayUtil.generateSignature(reqData, config.getKey(), this.signType));
+        reqData.put("sign", WeChatUtil.generateSignature(reqData, config.getKey(), this.signType));
         return reqData;
     }
 
@@ -106,7 +106,7 @@ public class WXPay {
      */
     public boolean isResponseSignatureValid(Map<String, String> reqData) throws Exception {
         // 返回数据的签名方式和请求中给定的签名方式是一致的
-        return WXPayUtil.isSignatureValid(reqData, this.config.getKey(), this.signType);
+        return WeChatUtil.isSignatureValid(reqData, this.config.getKey(), this.signType);
     }
 
     /**
@@ -133,7 +133,7 @@ public class WXPay {
                 throw new Exception(String.format("Unsupported sign_type: %s", signTypeInData));
             }
         }
-        return WXPayUtil.isSignatureValid(reqData, this.config.getKey(), signType);
+        return WeChatUtil.isSignatureValid(reqData, this.config.getKey(), signType);
     }
 
 

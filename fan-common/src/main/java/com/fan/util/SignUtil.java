@@ -286,14 +286,14 @@ public class SignUtil {
      *
      * @return String
      */
-    public static String getSHA256(String shaValue) {
+    public static String getSHA256(String value) {
         String encodeStr = "";
         try {
-            if (StringUtils.isBlank(shaValue)) {
-                return shaValue;
+            if (StringUtils.isBlank(value)) {
+                return value;
             }
             MessageDigest messageDigest = MessageDigest.getInstance(ConstantFan.SHA256);
-            messageDigest.update(shaValue.getBytes(ConstantFan.CHARSET));
+            messageDigest.update(value.getBytes(ConstantFan.CHARSET));
             encodeStr = byte2hex(messageDigest.digest());
         } catch (Exception e) {
             log.error("getSha256 error:{}", e);
@@ -344,11 +344,11 @@ public class SignUtil {
      * @param maps
      * @return
      */
-    public static String SHA1(Map<String, Object> maps) {
+    public static String getSHA1(Map<String, Object> maps) {
         //获取信息摘要 - 参数字典排序后字符串
         String decrypt = getOrderByLexicographic(maps);
         try {
-            return SHA1(decrypt);
+            return getSHA1(decrypt);
         } catch (Exception e) {
             log.error("SHA1Util error:", e);
             return null;
@@ -362,7 +362,7 @@ public class SignUtil {
      * @return
      * @throws DigestException
      */
-    public static String SHA1(String decrypt) {
+    public static String getSHA1(String decrypt) {
         try {
             if (null == decrypt || decrypt.length() == 0) {
                 return null;

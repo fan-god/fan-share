@@ -3,7 +3,7 @@ package com.fan.service.wxpay;
 import com.fan.util.ConstantFan;
 import com.fan.util.FieldConstant;
 import com.fan.util.SignUtil;
-import com.fan.util.WXPayUtil;
+import com.fan.util.WeChatUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -194,7 +194,7 @@ public class WXPayReport {
     }
 
     public void report(String uuid, long elapsedTimeMillis, String firstDomain, boolean primaryDomain, int firstConnectTimeoutMillis, int firstReadTimeoutMillis, boolean firstHasDnsError, boolean firstHasConnectTimeout, boolean firstHasReadTimeout) {
-        long currentTimestamp = WXPayUtil.getCurrentTimestamp();
+        long currentTimestamp = WeChatUtil.getCurrentTimestamp();
         ReportInfo reportInfo = new ReportInfo(uuid, currentTimestamp, elapsedTimeMillis, firstDomain, primaryDomain, firstConnectTimeoutMillis, firstReadTimeoutMillis, firstHasDnsError, firstHasConnectTimeout, firstHasReadTimeout);
         String data = reportInfo.toLineString(config.getKey());
         log.info("report {}", data);

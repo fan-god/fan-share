@@ -9,7 +9,7 @@ import org.msgpack.MessagePack;
  * @author fan
  * @title: MsgPckDecode
  * @projectName fan-share
- * @description: 二进制数据编码器, 将对象序列化成二进制的流并编码
+ * @description: 二进制数据编码器, 将对象序列化成二进制的流并编码,与Probuff有类似功能
  * @date 2019/7/17/001715:40
  */
 public class MsgPckEncode extends MessageToByteEncoder<Object> {

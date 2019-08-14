@@ -143,7 +143,7 @@ public class XmlUtil {
     public static String mapToXml(Map<String, String> data) {
         StringWriter writer = new StringWriter();
         try {
-            org.w3c.dom.Document document = WXPayUtil.newDocument();
+            org.w3c.dom.Document document = WeChatUtil.newDocument();
             org.w3c.dom.Element root = document.createElement(ConstantFan.XML);
             document.appendChild(root);
             for (String key : data.keySet()) {

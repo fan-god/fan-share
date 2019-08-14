@@ -12,7 +12,7 @@ import java.util.List;
  * @author fan
  * @title: MsgPckDecode
  * @projectName fan-share
- * @description: 二进制数据解码器, 将二进制的流解码
+ * @description: 二进制数据解码器, 将二进制的流解码,与Probuff有类似功能
  * @date 2019/7/17/001715:40
  */
 public class MsgPckDecode extends MessageToMessageDecoder<ByteBuf> {

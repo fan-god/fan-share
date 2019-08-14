@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * 分页数据类
+ * 分页工具类
  * 
  * @author hk
  */

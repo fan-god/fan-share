@@ -31,12 +31,11 @@ public class DateConvertEditor extends PropertyEditorSupport {
                     text = text.replace(".0", "");
                     setValue(this.datetimeFormat.parse(text));
                 } else {
-                    throw new IllegalArgumentException(
-                            "Could not parse date, date format is error ");
+                    throw new IllegalArgumentException("Could not parse date, date format is error ");
                 }
-            } catch (ParseException ex) {
-                IllegalArgumentException iae = new IllegalArgumentException("Could not parse date: " + ex.getMessage());
-                iae.initCause(ex);
+            } catch (ParseException e) {
+                IllegalArgumentException iae = new IllegalArgumentException("Could not parse date: " + e);
+                iae.initCause(e);
                 throw iae;
             }
         } else {

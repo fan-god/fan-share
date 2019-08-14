@@ -8,10 +8,12 @@ import com.fan.service.ICarInfoService;
 import com.fan.service.IDictionaryService;
 import com.fan.service.ISeckillService;
 import com.fan.service.IUserService;
+import com.fan.service.wxpay.WXPay;
 import com.fan.util.ConstantFan;
 import com.fan.util.DataConvertUtil;
 import com.fan.util.RedisUtil;
 import com.github.pagehelper.PageInfo;
+import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,6 +21,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+
+import java.util.Map;
 
 /**
  * @author:fan
@@ -106,4 +110,16 @@ public class TestData {
             log.error("test4 error:{}", e);
         }
     }
+
+//    @Test
+//    public void test7() {
+//        try {
+//            WXPay wxPay = new WXPay();
+//            Map<String,String> map = Maps.newHashMap();
+//            Map<String, String> resultMap = wxPay.unifiedOrder(map);
+//            System.out.println(resultMap);
+//        } catch (Exception e) {
+//            log.error("test4 error:{}", e);
+//        }
+//    }
 }
