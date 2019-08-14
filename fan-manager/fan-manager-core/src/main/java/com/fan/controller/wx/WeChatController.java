@@ -5,7 +5,7 @@ import com.fan.entity.Msg;
 import com.fan.entity.wx.CreateOrderParams;
 import com.fan.entity.wx.WxBaseMessage;
 import com.fan.remote.wx.WeChatRemote;
-import com.fan.service.wx.IWxBaseService;
+import com.fan.service.wxchat.IWxBaseService;
 import com.fan.util.SignUtil;
 import com.fan.util.SpringContextUtil;
 import com.fan.util.XmlUtil;
@@ -30,7 +30,7 @@ import java.util.Map;
  * @author fan
  * @title: WeChatController
  * @projectName fan-share
- * @description: http://m16808311q.iask.in/fan-manager-web/app/wx/v1.0/entrance
+ * @description: http://m16808311q.iask.in/fan-manager-web/app/wxchat/v1.0/entrance
  * @date
  */
 @Slf4j
@@ -74,7 +74,7 @@ public class WeChatController {
                 response.getOutputStream().print(echostr);
             }
         } catch (Exception e) {
-            log.error("wx entrance error:{}", e);
+            log.error("wxchat entrance error:{}", e);
         }
     }
 
@@ -111,7 +111,7 @@ public class WeChatController {
     public String autoReplyMessage(HttpServletRequest request) {
         try {
 //          获取微信服务器发送的消息，转换成map对象
-            Map<String, String> map = XmlUtil.parseXmlToMap(request);
+            Map<String, String> map = XmlUtil.xmlToMap(request);
             // 获取详细的信息
             // 发送方帐号（open_id）
             String fromUserName = map.get("FromUserName");
@@ -144,7 +144,7 @@ public class WeChatController {
                 }
             }
         } catch (Exception e) {
-            log.error("wx receiveMessage error:{}", e);
+            log.error("wxchat receiveMessage error:{}", e);
         }
         return null;
     }

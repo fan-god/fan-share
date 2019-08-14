@@ -8,10 +8,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.security.DigestException;
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.*;
 import java.util.Map.Entry;
 
@@ -222,35 +225,6 @@ public class SignUtil {
         return sb.toString();
     }
 
-
-    /**
-     * 接口签名
-     *
-     * @param params
-     * @param key
-     * @return
-     */
-    public static String getSignFromMap(Map<String, String> params, String key) {
-        String sign = null;
-        if (params == null || params.isEmpty()) {
-            return sign;
-        }
-        if (params.containsKey("sign")) {
-            params.remove("sign");
-        }
-        StringBuilder sb = new StringBuilder();
-        for (Map.Entry<String, String> entry : params.entrySet()) {
-            sb.append(entry.getKey().trim()).append("=").append(entry.getValue().trim()).append("&");
-        }
-        sb.deleteCharAt(sb.length() - 1);
-        if (StringUtils.isNotBlank(key)) {
-            sb.append(key);
-        }
-        String keyValueStr = sb.toString();
-        sign = getMD5(keyValueStr).toLowerCase();
-        return sign;
-    }
-
     /**
      * 接口签名
      *
@@ -312,7 +286,7 @@ public class SignUtil {
      *
      * @return String
      */
-    public static String getSha256(String shaValue) {
+    public static String getSHA256(String shaValue) {
         String encodeStr = "";
         try {
             if (StringUtils.isBlank(shaValue)) {
@@ -332,12 +306,36 @@ public class SignUtil {
      *
      * @return String
      */
-    public static String getSha256ToLowerCase(String shaValue) {
-        String encodeStr = getSha256(shaValue);
+    public static String getSHA256LowerCase(String shaValue) {
+        String encodeStr = getSHA256(shaValue);
         if (StringUtils.isNotBlank(encodeStr)) {
             encodeStr = encodeStr.toLowerCase();
         }
         return encodeStr;
+    }
+
+    /**
+     * 生成 HMACSHA256
+     *
+     * @param data 待处理数据
+     * @param key  密钥
+     * @return 加密结果
+     * @throws Exception
+     */
+    public static String getSHA256(String data, String key) {
+        StringBuilder sb = new StringBuilder();
+        try {
+            Mac sha256_HMAC = Mac.getInstance("HmacSHA256");
+            SecretKeySpec secret_key = new SecretKeySpec(key.getBytes(ConstantFan.CHARSET), "HmacSHA256");
+            sha256_HMAC.init(secret_key);
+            byte[] array = sha256_HMAC.doFinal(data.getBytes(ConstantFan.CHARSET));
+            for (byte item : array) {
+                sb.append(Integer.toHexString((item & 0xFF) | 0x100).substring(1, 3));
+            }
+        } catch (Exception e) {
+            log.error("getSHA256 error:{}", e);
+        }
+        return sb.toString().toUpperCase();
     }
 
     /**

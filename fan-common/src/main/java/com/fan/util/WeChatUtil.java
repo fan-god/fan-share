@@ -1,11 +1,12 @@
 package com.fan.util;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.*;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
 
 /**
  * @author fan
@@ -51,11 +52,50 @@ public class WeChatUtil {
         Iterator<String> it = keys.iterator();
         while (it.hasNext()) {
             String key = it.next();
-            sb.append(character + key + "=" + map.get(key));
+            sb.append(character.concat(key).concat("=").concat(map.get(key)));
         }
         sb.append(character).append("key=192006250b4c09247ec02edce69f6a2d");
         return sb.toString();
     }
 
+    /**
+     * 接口签名
+     *
+     * @param params
+     * @param key
+     * @return
+     */
+    public static String getSignFromMap(TreeMap<String, String> params, String key) {
+        String sign = null;
+        if (params == null || params.isEmpty()) {
+            return sign;
+        }
+        if (params.containsKey("sign")) {
+            params.remove("sign");
+        }
+        StringBuilder sb = new StringBuilder();
+        for (Map.Entry<String, String> entry : params.entrySet()) {
+            sb.append(entry.getKey().trim()).append("=").append(entry.getValue().trim()).append("&");
+        }
+        sb.deleteCharAt(sb.length() - 1);
+        if (StringUtils.isNotBlank(key)) {
+            sb.append("&key=").append(key);
+        }
+        String keyValueStr = sb.toString();
+        System.out.println(keyValueStr);
+        sign = SignUtil.getMD5(keyValueStr);
+        return sign;
+    }
 
+    /**
+     * 接口签名
+     *
+     * @param o
+     * @param key
+     * @return
+     */
+    public static String getSignFromMap(Object o, String key) {
+        TreeMap<String, String> tree = DataConvertUtil.beanToTreeMap(o);
+        return getSignFromMap(tree, key);
+    }
 }

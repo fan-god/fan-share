@@ -34,7 +34,7 @@ public class TestingController {
                     .subject(subject)
                     .message(message)
                     .toMailAddr(toMailAddr)
-                    .fromPwd("yxywweqflgsgijbd")
+                    .fromPwd("esumiavrldyoifhh")
                     .attachmentFile(attachmentFile)
                     .hostName("smtp.qq.com")
                     .smtpPort(25)

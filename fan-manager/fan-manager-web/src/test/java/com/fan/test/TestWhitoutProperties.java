@@ -55,17 +55,17 @@ public class TestWhitoutProperties {
 //        list.add(m3);
 //        excelFactory.getExcelWrite(TestExcelModel.class,list);
 
-//        // 存放在二维码中的内容
-//        String text = "http://m16808311q.iask.in:47429/fan-manager-web/api/testing/v1.0/sendEmailBySweepCode";
-//        // 嵌入二维码的图片路径
-//        String imgPath = "D:\\fan-share/美女.png";
+        // 存放在二维码中的内容
+        String text = "http://m16808311q.iask.in/fan-manager-web/api/testing/v1.0/sendEmailBySweepCode";
+        // 嵌入二维码的图片路径
+        String imgPath = "D:\\fan-share/美女2.jpg";
 //
-//        //生成二维码
-//        QRCodeUtil.createQRCode(text, imgPath, "测试", true);
-//        // 解析二维码
-//        String str = QRCodeUtil.decode("测试");
-//        // 打印出解析出的内容
-//        System.out.println(str);
+        //生成二维码
+        QRCodeUtil.createQRCode(text, imgPath, "测试", true);
+        // 解析二维码
+        String str = QRCodeUtil.decode("测试");
+        // 打印出解析出的内容
+        System.out.println(str);
 
 //        String url = "http://baidu.com";
 //        String path = FileSystemView.getFileSystemView().getHomeDirectory() + File.separator + "testQrcode";
@@ -81,9 +81,7 @@ public class TestWhitoutProperties {
 //        for (int element : arr) {
 //            System.out.print(element + " ");
 //        }
-        StringBuffer sb = new StringBuffer("qvftgybikm");
-        sb.deleteCharAt(sb.length()-2);
-        System.out.println(sb.toString());
+
 //        CarInfo carInfo = CarInfo.builder().color("red").brandName("奥迪").displacement(2.0).build();
 //        String xml = XmlUtil.beanToXml(carInfo, CarInfo.class);
 //        System.out.println(xml);
@@ -91,17 +89,19 @@ public class TestWhitoutProperties {
 //        map.forEach((k, v) -> {
 //            System.out.printf("%s:%s%n", k, v);
 //        });
-        User user = new User();
-        user.setPhone("ertfyuio");
-        user.setUsername("ghjk");
-        user.setAddress("sdfghjk");
-        user.setPassword("1111111");
-        Map<String, Object> map = DataConvertUtil.beanToMap(user);
-        map.forEach((k,v)->{
-            System.out.printf("%s:%s%n", k, v);
-        });
-        User u = DataConvertUtil.mapToBean(map, User.class);
-        System.out.println(u);
+
+
+//        User user = new User();
+//        user.setPhone("ertfyuio");
+//        user.setUsername("ghjk");
+//        user.setAddress("sdfghjk");
+//        user.setPassword("1111111");
+//        Map<String, Object> map = DataConvertUtil.beanToMap(user);
+//        map.forEach((k,v)->{
+//            System.out.printf("%s:%s%n", k, v);
+//        });
+//        User u = DataConvertUtil.mapToBean(map, User.class);
+//        System.out.println(u);
     }
 
     static void swap(int[] array, int index1, int index2) {

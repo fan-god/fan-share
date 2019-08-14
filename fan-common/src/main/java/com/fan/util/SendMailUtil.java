@@ -418,12 +418,12 @@ public class SendMailUtil {
         String subject = "测试邮件";
         String message = "测试邮件<br/><a href='http://www.google.cn'>童俊是傻逼</a><br/>";
         try {
-            File attachmentFile = new File("D:/emailWork/美女.png");
+            File attachmentFile = new File("D:/fan-share/美女2.jpg");
             SendMail sendMail = new SendMail.Builder("1129984165@qq.com")
                     .subject(subject)
                     .message(message)
                     .toMailAddr(toMailAddr)
-                    .fromPwd("yxywweqflgsgijbd")
+                    .fromPwd("esumiavrldyoifhh")
                     .attachmentFile(attachmentFile)
                     .hostName("smtp.qq.com")
                     .smtpPort(25)

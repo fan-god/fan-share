@@ -29,10 +29,12 @@ public interface ConstantFan {
     String XML = "xml";
     //成功
     String SUCCESS = "success";
-    //OK
-    String OK = "ok";
     //失败
     String FAIL = "fail";
+    //OK
+    String OK = "ok";
+    String YES = "yes";
+    String NO = "no";
     String ID = "id";
     /**
      * 签名方式
@@ -41,6 +43,7 @@ public interface ConstantFan {
     String SHA256 = "SHA-256";
     String MD5 = "MD5";
     String AES = "AES";
+    String HMACSHA256 = "HMAC-SHA256";
     /**
      * reids对应常量
      */

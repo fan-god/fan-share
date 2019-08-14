@@ -3,16 +3,16 @@ package com.fan.util;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 
+import java.security.SecureRandom;
 import java.util.Map;
-import java.util.Random;
 @Slf4j
 public class StrUtil {
     public static String getRandomStr(int len) throws Exception {
         if (len > 0) {
-            String baseStr = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            String baseStr = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
             StringBuffer sb = new StringBuffer("");
             for (int i = 0; i < len; i++) {
-                char c = baseStr.charAt(new Random().nextInt(baseStr.length()));
+                char c = baseStr.charAt(new SecureRandom().nextInt(baseStr.length()));
                 sb.append(c);
             }
             return sb.toString();

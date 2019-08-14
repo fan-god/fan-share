@@ -1,9 +1,9 @@
-package com.fan.service.wx.impl;
+package com.fan.service.wxchat.impl;
 
 import com.fan.entity.wx.ImageMessage;
 import com.fan.entity.wx.MediaId;
 import com.fan.entity.wx.WxBaseMessage;
-import com.fan.service.wx.IWxBaseService;
+import com.fan.service.wxchat.IWxBaseService;
 import com.fan.util.ConstantFan;
 import com.fan.util.XmlUtil;
 import com.google.common.collect.Lists;
@@ -30,8 +30,8 @@ public class WxImageService implements IWxBaseService{
         images.add(new MediaId(fields[0]));
         imageMessage.setImage(images);
         String respMsg = XmlUtil.beanToXml(imageMessage, ImageMessage.class);
-        respMsg = respMsg.replace("<com.fan.entity.wx.MediaId>", ConstantFan.EMPTY_STR);
-        respMsg = respMsg.replace("</com.fan.entity.wx.MediaId>",ConstantFan.EMPTY_STR);
+        respMsg = respMsg.replace("<com.fan.entity.wxchat.MediaId>", ConstantFan.EMPTY_STR);
+        respMsg = respMsg.replace("</com.fan.entity.wxchat.MediaId>",ConstantFan.EMPTY_STR);
         return respMsg;
     }
 }

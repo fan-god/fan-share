@@ -1,9 +1,9 @@
-package com.fan.service.wx.impl;
+package com.fan.service.wxchat.impl;
 
 import com.fan.entity.wx.MediaId;
 import com.fan.entity.wx.VoiceMessage;
 import com.fan.entity.wx.WxBaseMessage;
-import com.fan.service.wx.IWxBaseService;
+import com.fan.service.wxchat.IWxBaseService;
 import com.fan.util.ConstantFan;
 import com.fan.util.XmlUtil;
 import com.google.common.collect.Lists;
@@ -29,8 +29,8 @@ public class WxVoiceMessage implements IWxBaseService{
         voices.add(new MediaId(fields[0]));
         voiceMessage.setVoice(voices);
         String respMsg = XmlUtil.beanToXml(voiceMessage, VoiceMessage.class);
-        respMsg = respMsg.replace("<com.fan.entity.wx.MediaId>", ConstantFan.EMPTY_STR);
-        respMsg = respMsg.replace("</com.fan.entity.wx.MediaId>",ConstantFan.EMPTY_STR);
+        respMsg = respMsg.replace("<com.fan.entity.wxchat.MediaId>", ConstantFan.EMPTY_STR);
+        respMsg = respMsg.replace("</com.fan.entity.wxchat.MediaId>",ConstantFan.EMPTY_STR);
         return respMsg;
     }
 }

@@ -1,4 +1,4 @@
-package com.fan.service.wx;
+package com.fan.service.wxchat;
 
 import com.fan.entity.wx.WxBaseMessage;
 

@@ -106,6 +106,7 @@ public class WeChatRemote extends WeChatResultParseAbstract {
         String urlParam = WeChatUtil.concatOrderParams(orderParams);//参数按字典顺序连接起来
         System.out.println(urlParam);
         String sign = SignUtil.getMD5(urlParam);//MD5加密形成签名sign，官方文档固定格式
+//        String sign = WeChatUtil.getSignFromMap(orderParams,"192006250b4c09247ec02edce69f6a2d");//MD5加密形成签名sign，官方文档固定格式
         orderParams.setSign(sign);//将生成的签名放入
         String xmlStr = XmlUtil.beanToXml(orderParams, CreateOrderParams.class);//转为xml
         xmlStr = xmlStr.replaceAll("__","_");

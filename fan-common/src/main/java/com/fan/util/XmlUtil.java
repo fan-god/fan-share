@@ -17,10 +17,16 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -38,7 +44,7 @@ public class XmlUtil {
      * @return
      * @throws JAXBException
      */
-    public static String beanToXml(Object o){
+    public static String beanToXml(Object o) {
         StringWriter writer = new StringWriter();
         try {
             JAXBContext context = JAXBContext.newInstance(o.getClass());
@@ -48,9 +54,9 @@ public class XmlUtil {
             marshaller.marshal(o, writer);
             return writer.toString();
         } catch (JAXBException e) {
-            log.error("beanToXml error:{}",e);
-           return null;
-        }finally {
+            log.error("beanToXml error:{}", e);
+            return null;
+        } finally {
             IOUtils.closeQuietly(writer);
         }
     }
@@ -64,7 +70,7 @@ public class XmlUtil {
             sr = new StringReader(xml);
             t = (T) unmarshaller.unmarshal(sr);
         } catch (Exception e) {
-            log.error("xmlToBean error:{}",e);
+            log.error("xmlToBean error:{}", e);
             return null;
         } finally {
             sr.close();
@@ -78,7 +84,7 @@ public class XmlUtil {
      * @param request
      * @return
      */
-    public static Map<String, String> parseXmlToMap(HttpServletRequest request) {
+    public static Map<String, String> xmlToMap(HttpServletRequest request) {
         InputStream ins = null;
         Map<String, String> map = Maps.newHashMap();
         try {
@@ -104,7 +110,7 @@ public class XmlUtil {
      * @param xml
      * @return
      */
-    public static Map<String, String> parseXmlToMap(String xml) {
+    public static Map<String, String> xmlToMap(String xml) {
         Map<String, String> map = Maps.newHashMap();
         try {
             DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
@@ -126,6 +132,48 @@ public class XmlUtil {
         }
         return map;
     }
+
+    /**
+     * 将Map转换为XML格式的字符串
+     *
+     * @param data Map类型数据
+     * @return XML格式的字符串
+     * @throws Exception
+     */
+    public static String mapToXml(Map<String, String> data) {
+        StringWriter writer = new StringWriter();
+        try {
+            org.w3c.dom.Document document = WXPayUtil.newDocument();
+            org.w3c.dom.Element root = document.createElement(ConstantFan.XML);
+            document.appendChild(root);
+            for (String key : data.keySet()) {
+                String value = data.get(key);
+                if (value == null) {
+                    value = "";
+                }
+                value = value.trim();
+                org.w3c.dom.Element filed = document.createElement(key);
+                filed.appendChild(document.createTextNode(value));
+                root.appendChild(filed);
+            }
+            TransformerFactory tf = TransformerFactory.newInstance();
+            Transformer transformer = tf.newTransformer();
+            DOMSource source = new DOMSource(document);
+            transformer.setOutputProperty(OutputKeys.ENCODING, ConstantFan.CHARSET);
+            transformer.setOutputProperty(OutputKeys.INDENT, ConstantFan.YES);
+            StreamResult result = new StreamResult(writer);
+            transformer.transform(source, result);
+            //TODO replaceAll("\n|\r", "");
+            String output = writer.getBuffer().toString();
+            return output;
+        } catch (Exception e) {
+            log.error("mapToXml error:{}", e);
+            return null;
+        } finally {
+            IOUtils.closeQuietly(writer);
+        }
+    }
+
 
     /**
      * 将消息转换成xml格式的字符串

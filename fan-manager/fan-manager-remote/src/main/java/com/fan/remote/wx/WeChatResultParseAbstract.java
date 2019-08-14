@@ -63,7 +63,7 @@ public abstract class WeChatResultParseAbstract {
             }
             String respBody = resp.getBody();
             log.info("respBody:{}", respBody);
-            Map<String, String> map = XmlUtil.parseXmlToMap(respBody);
+            Map<String, String> map = XmlUtil.xmlToMap(respBody);
             if (ConstantFan.SUCCESS.equals(map.get("return_code"))) {
                 if (ConstantFan.SUCCESS.equals(map.get("result_code"))) {
                     msg = onSuccess(map);

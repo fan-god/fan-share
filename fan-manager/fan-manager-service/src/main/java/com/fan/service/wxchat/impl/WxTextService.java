@@ -1,8 +1,8 @@
-package com.fan.service.wx.impl;
+package com.fan.service.wxchat.impl;
 
 import com.fan.entity.wx.TextMessage;
 import com.fan.entity.wx.WxBaseMessage;
-import com.fan.service.wx.IWxBaseService;
+import com.fan.service.wxchat.IWxBaseService;
 import com.fan.util.XmlUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -26,12 +26,14 @@ public class WxTextService implements IWxBaseService {
         }else{
             if ("童俊".equals(content)) {
                 resultContent = "童俊是傻逼";
-            } else if ("美女".equalsIgnoreCase(content)) {
+            } else if ("美女".equals(content)) {
                 resultContent = "<a href='https://image.baidu.com/search/index?tn=baiduimage&ct=201326592&lm=-1&cl=2&ie=gb18030&word=%C3%C0%C5%AE%CD%BC%C6%AC&fr=ala&ala=1&alatpl=adress&pos=0&hs=2&xthttps=111111'>美女</a>";
-            } else if ("俊儿".equals(content) || "JAVA".equals(content)) {
+            } else if ("俊儿".equals(content)) {
                 resultContent = "童俊草尼玛";
-            } else if ("tongjun".equals(content) || "javascript".equals(content)) {
+            } else if ("tongjun".equalsIgnoreCase(content)) {
                 resultContent = "童俊是狗";
+            }else if ("俊".equals(content)) {
+                resultContent = "童俊NMSL";
             } else {
                 resultContent = "发尼玛的什么鸡儿玩意：" + content;
             }
