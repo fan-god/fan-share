@@ -29,8 +29,8 @@ public class WxVoiceMessage implements IWxBaseService{
         voices.add(new MediaId(fields[0]));
         voiceMessage.setVoice(voices);
         String respMsg = XmlUtil.beanToXml(voiceMessage, VoiceMessage.class);
-        respMsg = respMsg.replace("<com.fan.entity.wxchat.MediaId>", ConstantFan.EMPTY_STR);
-        respMsg = respMsg.replace("</com.fan.entity.wxchat.MediaId>",ConstantFan.EMPTY_STR);
+        respMsg = respMsg.replace("<com.fan.entity.wx.MediaId>", ConstantFan.EMPTY_STR);
+        respMsg = respMsg.replace("</com.fan.entity.wx.MediaId>",ConstantFan.EMPTY_STR);
         return respMsg;
     }
 }

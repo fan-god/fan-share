@@ -6,6 +6,7 @@ import com.fan.entity.wx.CreateOrderParams;
 import com.fan.entity.wx.WxBaseMessage;
 import com.fan.remote.wx.WeChatRemote;
 import com.fan.service.wxchat.IWxBaseService;
+import com.fan.util.FieldConstant;
 import com.fan.util.SignUtil;
 import com.fan.util.SpringContextUtil;
 import com.fan.util.XmlUtil;
@@ -135,11 +136,11 @@ public class WeChatController {
             IWxBaseService wxBaseService = SpringContextUtil.getBean(serviceName);
             if (null != wxBaseMessage) {
                 switch (msgType) {
-                    case "text":
+                    case FieldConstant.WeChat.MESSAGE_TYPE_TEXT:
                         return wxBaseService.exec(wxBaseMessage, content);
-                    case "image":
+                    case FieldConstant.WeChat.MESSAGE_TYPE_IMAGE:
                         return wxBaseService.exec(wxBaseMessage, mediaId);
-                    case "voice":
+                    case FieldConstant.WeChat.MESSAGE_TYPE_VOICE:
                         return wxBaseService.exec(wxBaseMessage, mediaId);
                 }
             }

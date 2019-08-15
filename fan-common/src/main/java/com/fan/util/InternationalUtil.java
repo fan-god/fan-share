@@ -23,10 +23,11 @@ public class InternationalUtil {
     /**
      * 从国际化资源配置文件中根据key获取value  方法一
      * TODO 暂时不用
+     *
      * @param key
      * @return
      */
-    public static String getMessageNoUse(String key) {
+    public static String getMessageOld(String key) {
         try {
             Locale currentLocale = RequestContextUtils.getLocale(HttpCilentUtil.getRequest());
             ResourceBundle bundle = ResourceBundle.getBundle(LangConstant.BASENAME, currentLocale);
@@ -64,15 +65,14 @@ public class InternationalUtil {
     /**
      * 加载缓存
      * TODO 暂时不用
+     *
      * @return
      */
-    private static void initMap(ResourceBundle bundle, Map<String, String> map) {
+    private static void initMap(final ResourceBundle bundle, final Map<String, String> map) {
         try {
             if (map.isEmpty()) {
                 Set<String> keys = bundle.keySet();
-                for (String key : keys) {
-                    map.put(key, bundle.getString(key));
-                }
+                keys.forEach(key -> map.put(key, bundle.getString(key)));
             }
         } catch (Exception e) {
             log.error("InternationalUtil initMap error{}:", e);

@@ -84,48 +84,6 @@ public interface ConstantFan {
 
 
     /**
-     * 默认删除90以前的信息
-     */
-    int DELETE_SIMCARD_DAY_AMOUNT = -90;
-    String DELETE_SIMCARD_DAY_AMOUNT_KEY = "delete.simcard.day.amount.key";
-
-    /**
-     * 是否记录日志
-     */
-    Boolean LOG_WRITE = true;
-    String LOG_WRITE_KEY = "log.write.key";
-
-    /**
-     * 刷新所有
-     */
-    int REFRESH_ALL_SIMCARD = 0;
-    String REFRESH_ALL_SIMCARD_KEY = "refresh.all.simcard";
-
-    /**
-     * 刷新开始时间
-     */
-    int REFRESH_SIMCARD_START_HOUR = 7;
-    String REFRESH_SIMCARD_START_HOUR_KEY = "refresh.simcard.start.hour";
-
-    /**
-     * 刷新结束时间
-     */
-    int REFRESH_SIMCARD_END_HOUR = 22;
-    String REFRESH_SIMCARD_END_HOUR_KEY = "refresh.simcard.end.hour";
-
-    /**
-     * 刷新分页查询，一页大小
-     */
-    int REFRESH_SIMCARD_PAGE_SIZE = 200;
-    String REFRESH_SIMCARD_PAGE_SIZE_KEY = "refresh.simcard.page.size";
-
-    /**
-     * 逗号分隔符
-     */
-    String SEPARATOR_DOUHAO = ",";
-
-
-    /**
      * --------------------日期格式常量--------------------
      */
     String DATE_PATTERN_8 = "yyyyMMdd";
@@ -137,15 +95,6 @@ public interface ConstantFan {
     /**
      * --------------------日期格式常量--------------------
      */
-
-
-    String USER_TYPE_ADMIN = "0";
-    String USER_TYPE_DEV = "1";
-    String USER_TYPE_IOT = "2";
-    String USER_TYPE_DEVANDIOT = "3";
-
-
-    String USER_TYPE_ADMIN_NAME = "管理员";
 
     /*************************API******************************/
     String APINAME = "apiName";
@@ -161,7 +110,7 @@ public interface ConstantFan {
     /******************************对外接口版本控制验证版本正则表达式***********************************/
     String VERSION_PREFIX_PATTERN = "v([+-]?\\d*\\.\\d*)";
 
-    /***************************************netty***************************************/
+    /***************************************Netty***************************************/
     //ping和pong类型的数据
     byte PING = 1;
     byte PONG = 2;

@@ -115,6 +115,10 @@ public interface FieldConstant {
 
         String SEND_TEMPLATE_MSG_URL = "https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send";
 
+        String MESSAGE_TYPE_TEXT = "text";
+        String MESSAGE_TYPE_IMAGE = "image";
+        String MESSAGE_TYPE_VOICE = "voice";
+
     }
 
     /*************************************wxpay**********************************/

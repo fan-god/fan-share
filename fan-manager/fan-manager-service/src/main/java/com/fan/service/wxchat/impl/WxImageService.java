@@ -30,8 +30,8 @@ public class WxImageService implements IWxBaseService{
         images.add(new MediaId(fields[0]));
         imageMessage.setImage(images);
         String respMsg = XmlUtil.beanToXml(imageMessage, ImageMessage.class);
-        respMsg = respMsg.replace("<com.fan.entity.wxchat.MediaId>", ConstantFan.EMPTY_STR);
-        respMsg = respMsg.replace("</com.fan.entity.wxchat.MediaId>",ConstantFan.EMPTY_STR);
+        respMsg = respMsg.replace("<com.fan.entity.wx.MediaId>", ConstantFan.EMPTY_STR);
+        respMsg = respMsg.replace("</com.fan.entity.wx.MediaId>",ConstantFan.EMPTY_STR);
         return respMsg;
     }
 }
