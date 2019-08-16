@@ -111,14 +111,21 @@ public interface FieldConstant {
          * 二维码url
          */
         String QRCODE_URL = "https://api.weixin.qq.com/wxa/getwxacodeunlimit";
-
+        /**
+         * 上传素材地址
+         */
+        String UPLOAD_MATERIAL_URL = "https://api.weixin.qq.com/cgi-bin/material/add_news";
 
         String SEND_TEMPLATE_MSG_URL = "https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send";
 
         String MESSAGE_TYPE_TEXT = "text";
         String MESSAGE_TYPE_IMAGE = "image";
         String MESSAGE_TYPE_VOICE = "voice";
-
+        String MESSAGE_TYPE_VIDEO = "video";
+        String MESSAGE_TYPE_SHORTVIDEO = "shortvideo";
+        String MESSAGE_TYPE_LOCATION = "location";
+        String MESSAGE_TYPE_LINK = "link";
+        String MESSAGE_TYPE_MUSIC = "music";
     }
 
     /*************************************wxpay**********************************/

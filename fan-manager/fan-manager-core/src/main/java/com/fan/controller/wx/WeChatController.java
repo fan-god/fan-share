@@ -53,7 +53,7 @@ public class WeChatController {
         WX_SERVICE_MAP.put(WxBaseMessage.MessageType.voice.name(), "wxVoiceMessage");
         WX_SERVICE_MAP.put(WxBaseMessage.MessageType.video.name(), "");
         WX_SERVICE_MAP.put(WxBaseMessage.MessageType.shortvideo.name(), "");
-        WX_SERVICE_MAP.put(WxBaseMessage.MessageType.location.name(), "");
+        WX_SERVICE_MAP.put(WxBaseMessage.MessageType.location.name(), "wxLocationService");
         WX_SERVICE_MAP.put(WxBaseMessage.MessageType.link.name(), "");
     }
 
@@ -130,7 +130,12 @@ public class WeChatController {
 
             //定义回复消息对象微信消息的基类 WxBaseMessage
             //set属性值的时候，注意：ToUserName 和 FromUserName的值要反过来!
-            WxBaseMessage wxBaseMessage = WxBaseMessage.builder().FromUserName(toUserName).ToUserName(fromUserName).MsgType(msgType).MsgId(Long.parseLong(msgId)).CreateTime(System.currentTimeMillis()).build();
+            WxBaseMessage wxBaseMessage = WxBaseMessage.builder().FromUserName(toUserName).ToUserName(fromUserName).MsgId(Long.parseLong(msgId)).CreateTime(System.currentTimeMillis()).build();
+            if(StringUtils.equals(msgType,FieldConstant.WeChat.MESSAGE_TYPE_LOCATION)){
+                wxBaseMessage.setMsgType(FieldConstant.WeChat.MESSAGE_TYPE_MUSIC);
+            }else{
+                wxBaseMessage.setMsgType(msgType);
+            }
             //找到对应的服务
             String serviceName = WX_SERVICE_MAP.get(msgType);
             IWxBaseService wxBaseService = SpringContextUtil.getBean(serviceName);
@@ -142,10 +147,12 @@ public class WeChatController {
                         return wxBaseService.exec(wxBaseMessage, mediaId);
                     case FieldConstant.WeChat.MESSAGE_TYPE_VOICE:
                         return wxBaseService.exec(wxBaseMessage, mediaId);
+                    case FieldConstant.WeChat.MESSAGE_TYPE_LOCATION:
+                        return wxBaseService.exec(wxBaseMessage);
                 }
             }
         } catch (Exception e) {
-            log.error("wxchat receiveMessage error:{}", e);
+            log.error("wechat receiveMessage error:{}", e);
         }
         return null;
     }
