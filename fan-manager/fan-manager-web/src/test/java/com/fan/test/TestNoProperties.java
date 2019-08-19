@@ -4,6 +4,8 @@ import com.fan.entity.CarInfo;
 import com.fan.entity.User;
 import com.fan.entity.excelmodel.TestExcelModel;
 import com.fan.util.*;
+import com.geccocrawler.gecco.GeccoEngine;
+import com.geccocrawler.gecco.request.HttpGetRequest;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.RandomUtils;
 
@@ -57,8 +59,8 @@ public class TestNoProperties {
 //        excelFactory.getExcelWrite(TestExcelModel.class,list);
 
         TestNoProperties tnp = new TestNoProperties();
-        tnp.test4();
-
+//        tnp.test4();
+        tnp.test5();
     }
 
     static void swap(int[] array, int index1, int index2) {
@@ -132,5 +134,30 @@ public class TestNoProperties {
 //        System.out.println(SignUtil.getHmacSHA256("张三李四","张三李四"));
 //        System.out.println(SignUtil.encodeBase64("张三李四"));
 //        System.out.println(SignUtil.decodeBase64("5byg5LiJ5p2O5Zub"));
+    }
+
+    /**
+     * 爬虫测试
+     */
+    public void test5(){
+        try {
+            HttpGetRequest startUrl = new HttpGetRequest(ConstantFan.SPIDER_TARGET_URL);
+            startUrl.setCharset("GBK");
+            GeccoEngine.create()
+                    //工程的包路径
+                    .classpath("com.fan")
+                    //开始抓取的页面地址
+                    .start(startUrl)
+                    //开启几个爬虫线程
+                    .thread(10)
+                    //单个爬虫每次抓取完一个请求后的间隔时间
+                    .interval(1000)
+                    //使用pc端userAgent
+                    .mobile(false)
+                    //开始运行
+                    .run();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 }

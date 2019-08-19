@@ -36,6 +36,10 @@ public interface ConstantFan {
     String YES = "yes";
     String NO = "no";
     String ID = "id";
+    String REQUEST_METHOD_POST = "POST";
+    String REQUEST_METHOD_GET = "GET";
+    String REQUEST_METHOD_INPUT = "INPUT";
+    String REQUEST_METHOD_PUT = "PUT";
     /**
      * 签名方式
      */
@@ -132,4 +136,7 @@ public interface ConstantFan {
     /*****************************登录******************************/
     String USER_SESSION = "userSession";
 
+    /*****************************爬虫*********************************/
+//    String SPIDER_TARGET_URL = "https://pic.sogou.com/pics?query=%C3%C0%C5%AE&w=05002100&p=&_asf=pic.sogou.com&_ast=1566201763&sc=index&oq=sugg_history_word&ri=0&sourceid=sugg&sut=1161&sst0=1566201762867";
+    String SPIDER_TARGET_URL = "http://www.netbian.com/meinv/index_201.htm";
 }

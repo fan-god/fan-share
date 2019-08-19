@@ -75,7 +75,10 @@
         <spring.data.mongodb.version>1.7.2.RELEASE</spring.data.mongodb.version>
         <spring.data.commons.core>2.1.9.RELEASE</spring.data.commons.core>
         <easyexcel.version>1.0.2</easyexcel.version>
+        <!--二维码生成工具-->
         <google.zxing>3.3.0</google.zxing>
+        <!--抓包工具-->
+        <gecco.version>1.0.8</gecco.version>
     </properties>
 
     <dependencyManagement>
@@ -497,6 +500,12 @@
                 <groupId>com.google.zxing</groupId>
                 <artifactId>core</artifactId>
                 <version>${google.zxing}</version>
+            </dependency>
+            <!--gecco抓包工具-->
+            <dependency>
+                <groupId>com.geccocrawler</groupId>
+                <artifactId>gecco</artifactId>
+                <version>${gecco.version}</version>
             </dependency>
 
         </dependencies>

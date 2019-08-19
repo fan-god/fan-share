@@ -3,7 +3,7 @@ package com.fan.util;
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.io.IOUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -13,7 +13,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 import java.io.File;
-import java.io.IOException;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.net.URLEncoder;
 import java.util.List;
 import java.util.UUID;
@@ -176,6 +180,38 @@ public class OperateFileUtil {
         // 当文件夹不存在时，mkdirs会自动创建多层目录，区别于mkdir．(mkdir如果父目录不存在则会抛出异常)
         if (!file.exists() && !file.isDirectory()) {
             file.mkdirs();
+        }
+    }
+
+    /**
+     * 从网上下载文件
+     */
+    public static final int DEF_CONN_TIMEOUT = 30000;
+    public static final int DEF_READ_TIMEOUT = 30000;
+    public static String userAgent = "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/29.0.1547.66 Safari/537.36";
+
+    public static void downLoadFileFromLine(String lineUrl, String savePath){
+        InputStream is = null;
+        FileOutputStream fos = null;
+        try {
+            URL url = new URL(lineUrl);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod(ConstantFan.REQUEST_METHOD_GET);
+            conn.setRequestProperty("User-agent", userAgent);
+            conn.setUseCaches(false);
+            conn.setConnectTimeout(DEF_CONN_TIMEOUT);
+            conn.setReadTimeout(DEF_READ_TIMEOUT);
+            conn.setInstanceFollowRedirects(false);
+            conn.connect();
+            is = conn.getInputStream();//连接得到输入流内容
+            OperateFileUtil.checkFilePath(savePath);
+            fos = new FileOutputStream(new File(savePath, lineUrl.substring(lineUrl.lastIndexOf("/") + 1)));//获取网址中的图片名
+            IOUtils.write(IOUtils.toByteArray(is), fos);
+        } catch (Exception e) {
+            log.error("downLoadFileFromLine error:{}", e);
+        }finally {
+            IOUtils.closeQuietly(fos);
+            IOUtils.closeQuietly(is);
         }
     }
 }

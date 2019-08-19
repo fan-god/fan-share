@@ -350,6 +350,13 @@
             <groupId>org.mongodb</groupId>
             <artifactId>mongo-java-driver</artifactId>
         </dependency>
+
+        <!--gecco抓包工具-->
+        <dependency>
+            <groupId>com.geccocrawler</groupId>
+            <artifactId>gecco</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>
