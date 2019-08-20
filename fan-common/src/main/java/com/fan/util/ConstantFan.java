@@ -137,6 +137,7 @@ public interface ConstantFan {
     String USER_SESSION = "userSession";
 
     /*****************************爬虫*********************************/
-//    String SPIDER_TARGET_URL = "https://pic.sogou.com/pics?query=%C3%C0%C5%AE&w=05002100&p=&_asf=pic.sogou.com&_ast=1566201763&sc=index&oq=sugg_history_word&ri=0&sourceid=sugg&sut=1161&sst0=1566201762867";
-    String SPIDER_TARGET_URL = "http://www.netbian.com/meinv/index_201.htm";
+    String SPIDER_TARGET_URL = "https://www.missfresh.cn/";
+//    String SPIDER_TARGET_URL = "http://www.netbian.com/meinv/index_201.htm";
+//    String SPIDER_TARGET_URL = "https://tom712.com";
 }

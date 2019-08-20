@@ -36,7 +36,7 @@ public class WallpaperPipelines implements Pipeline<Wallpaper> {
 //                HttpRequest currRequest = wallpaper.getRequest();
 //                SchedulerContext.into(currRequest.subRequest(imageUlr));
 
-                OperateFileUtil.downLoadFileFromLine(imageUrl,"D:\\fan-share");
+                OperateFileUtil.downLoadFileFromLine(imageUrl,"D:/fan-share");
             }
         }
     }

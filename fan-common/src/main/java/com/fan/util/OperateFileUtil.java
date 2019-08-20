@@ -98,8 +98,8 @@ public class OperateFileUtil {
         for (String arg : args) {
             sb.append(arg).append(File.separator);
         }
-        String s = sb.toString();
-        return s.substring(0, s.lastIndexOf(File.separator));
+        sb.deleteCharAt(sb.length());
+        return sb.toString();
     }
 
     /**
@@ -110,8 +110,7 @@ public class OperateFileUtil {
      */
     public static void deleteFile(String path) {
         try {
-            File file = new File(path);
-            FileUtils.forceDelete(file);
+            FileUtils.forceDelete(new File(path));
         } catch (Exception e) {
             log.error("FileUploadUtil deleteFile error:", e);
         }
@@ -158,7 +157,7 @@ public class OperateFileUtil {
         try {
             for (MultipartFile file : files) {
                 String filename = file.getOriginalFilename();
-                String fileSuffixName = filename.substring(filename.lastIndexOf(".") + 1, filename.length());
+                String fileSuffixName = filename.substring(filename.lastIndexOf(".") + 1);
                 if (!fileTypes.contains(fileSuffixName.toLowerCase())) {
                     return false;
                 }
