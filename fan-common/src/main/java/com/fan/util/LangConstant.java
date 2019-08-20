@@ -19,18 +19,13 @@ public interface LangConstant {
     /***********************公共配置**************************/
     enum Common {
         //分页没传页面显示页数
-        error_pageSize("error_pageSize"),
+        error_pageSize,
         //参数非空
-        no_empty("no_empty"),
-        request_param("request_param");
-        String key;
+        no_empty,
+        request_param;
+    }
 
-        Common(String key) {
-            this.key = key;
-        }
-
-        public String getKey() {
-            return key;
-        }
+    enum MsgData{
+        handling_failure,handling_success,login_out
     }
 }

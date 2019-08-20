@@ -1,5 +1,7 @@
 package com.fan.entity;
 
+import com.fan.util.InternationalUtil;
+import com.fan.util.LangConstant;
 import com.fan.util.SignUtil;
 
 import java.util.HashMap;
@@ -60,7 +62,7 @@ public class Msg {
     public static Msg loginFail() {
         Msg result = new Msg();
         result.setCode(LOGIN_CODE);
-        result.setMsg("登录已失效，请重新登录");
+        result.setMsg(InternationalUtil.getMessage(LangConstant.MsgData.login_out.name()));
         return result;
     }
 
