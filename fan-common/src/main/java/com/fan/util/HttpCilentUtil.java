@@ -442,8 +442,9 @@ public class HttpCilentUtil {
      * @param str
      */
     public static void printOut(HttpServletResponse response, String str) {
-        PrintWriter out = null;
+        Writer out = null;
         try {
+            response.setCharacterEncoding(ConstantFan.CHARSET);
             out = response.getWriter();
             out.append(str);
         } catch (IOException e) {

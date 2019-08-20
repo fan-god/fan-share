@@ -38,7 +38,7 @@ import java.util.Map;
 @ApiVersion
 @Api(description = "微信API操作")
 @RestController
-@RequestMapping("/app/wx/{version}")
+@RequestMapping("/api/wx/{version}")
 public class WeChatController {
     @Value("${wx.token}")
     private String token;
@@ -81,7 +81,6 @@ public class WeChatController {
 
     @GetMapping("/getWxAccess_token")
     public Msg getWxAccess_token() {
-
         try {
             String wxAccess_token = weChatRemote.getWxAccess_token();
             return Msg.success().setDatas(wxAccess_token);

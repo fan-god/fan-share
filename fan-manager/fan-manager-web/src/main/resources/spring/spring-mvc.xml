@@ -20,16 +20,20 @@
         <property name="locations" value="classpath:config/*.properties" />
         <property name="fileEncoding" value="UTF-8"/>
     </bean>
-<!--
-    <mvc:annotation-driven conversion-service="conversionService" validator="validator"/>
--->
-    <!--<mvc:interceptors>
-        &lt;!&ndash;国际化配置自定义语言拦截器&ndash;&gt;
-        &lt;!&ndash;<mvc:interceptor>
-            <mvc:mapping path="/**"/>
-            <bean class="com.fan.interceptors.LanguageInterceptor"/>
-        </mvc:interceptor>&ndash;&gt;
 
+    <!--国际化配置自定义语言拦截器-->
+    <mvc:interceptors>
+        <bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+            <property name="paramName" value="language" />
+        </bean>
+    </mvc:interceptors>
+    <!-- 基于request实现资源国际化 -->
+    <bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver"/>
+    <!--
+        <mvc:annotation-driven conversion-service="conversionService" validator="validator"/>
+    -->
+
+    <!--<mvc:interceptors>
         <mvc:interceptor>
             <mvc:mapping path="/**"/>
             <mvc:exclude-mapping path="/app/user/*/login"/>
@@ -72,7 +76,7 @@
         <property name="validationMessageSource" ref="messageSource"/>
     </bean>
     <!-- 第二步,国际化配置 -->
-    <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
         <property name="basename" value="config.message"/>
         <property name="defaultEncoding" value="UTF-8"/>
         <property name="cacheSeconds" value="3600"/>

@@ -33,22 +33,6 @@ public class StrUtil {
     }
 
     /**
-     * 批量校验参数
-     *
-     * @param params
-     */
-    public static String checkParams(Map<String, String> params) {
-        for (String key : params.keySet()) {
-            if (StringUtils.isBlank(key)) {
-                String message1 = InternationalUtil.getMessage(LangConstant.Common.request_param.getKey());
-                String message2 = InternationalUtil.getMessage(LangConstant.Common.no_empty.getKey());
-                return String.format("%s[%s]%s", message1, params.get(key), message2);
-            }
-        }
-        return ConstantFan.SUCCESS;
-    }
-
-    /**
      * 获取字段方法名称
      *
      * @param fieldName

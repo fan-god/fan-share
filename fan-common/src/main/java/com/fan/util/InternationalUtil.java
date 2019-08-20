@@ -2,8 +2,13 @@ package com.fan.util;
 
 import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import java.util.*;
 
 /**
@@ -12,12 +17,25 @@ import java.util.*;
  * 国际化配置工具类
  */
 @Slf4j
+@Component
 public class InternationalUtil {
+    @Resource
+    private ResourceBundleMessageSource messageSource;
+
     //缓存
     private static Map<String, String> zh_CN_map = Maps.newHashMap();
     private static Map<String, String> en_US_map = Maps.newHashMap();
     private static Map<String, String> ja_JP_map = Maps.newHashMap();
     private static Map<String, String> zh_HK_map = Maps.newHashMap();
+
+
+    private static InternationalUtil internationalUtil;
+
+    @PostConstruct
+    public void init() {
+        internationalUtil = this;
+        internationalUtil.messageSource = this.messageSource;
+    }
 
 
     /**
@@ -86,8 +104,14 @@ public class InternationalUtil {
      * @return
      */
     public static String getMessage(String key) {
-        Locale currentLocale = RequestContextUtils.getLocale(HttpCilentUtil.getRequest());
-        ResourceBundle bundle = ResourceBundle.getBundle(LangConstant.BASENAME, currentLocale);
-        return bundle.getString(key);
+        try {
+            if(StringUtils.isNotBlank(key)){
+                Locale currentLocale = RequestContextUtils.getLocale(HttpCilentUtil.getRequest());
+                return internationalUtil.messageSource.getMessage(key, null, currentLocale);
+            }
+        } catch (Exception e) {
+            log.error("InternationalUtil error:{}", e);
+        }
+        return null;
     }
 }
