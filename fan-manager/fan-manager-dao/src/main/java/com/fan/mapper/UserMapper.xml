@@ -241,7 +241,7 @@
         </trim>
     </select>
     <select id="login" resultType="java.lang.Integer" parameterType="com.fan.entity.User">
-        SELECT 1 FROM usre WHERE username = #{username,jdbcType=VARCHAR} AND password = #{password,jdbcType=VARCHAR}
+        SELECT 1 FROM user WHERE username = #{username,jdbcType=VARCHAR} AND password = #{password,jdbcType=VARCHAR}
     </select>
 
     <sql id="Base_query_criteria">

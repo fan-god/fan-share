@@ -4,10 +4,7 @@ import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,7 +13,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.List;
@@ -195,7 +191,7 @@ public class OperateFileUtil {
         try {
             URL url = new URL(lineUrl);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod(ConstantFan.REQUEST_METHOD_GET);
+            conn.setRequestMethod(HttpMethod.GET.name());
             conn.setRequestProperty("User-agent", userAgent);
             conn.setUseCaches(false);
             conn.setConnectTimeout(DEF_CONN_TIMEOUT);

@@ -36,10 +36,7 @@ public interface ConstantFan {
     String YES = "yes";
     String NO = "no";
     String ID = "id";
-    String REQUEST_METHOD_POST = "POST";
-    String REQUEST_METHOD_GET = "GET";
-    String REQUEST_METHOD_INPUT = "INPUT";
-    String REQUEST_METHOD_PUT = "PUT";
+
     /**
      * 签名方式
      */

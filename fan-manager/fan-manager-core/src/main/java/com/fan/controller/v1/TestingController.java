@@ -3,6 +3,7 @@ package com.fan.controller.v1;
 import com.fan.annotation.ApiVersion;
 import com.fan.entity.Msg;
 import com.fan.util.InternationalUtil;
+import com.fan.util.RedisUtil;
 import com.fan.util.SendMailUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,9 @@ import java.io.File;
 @Slf4j
 @ApiVersion
 public class TestingController {
+
+    @Autowired
+    private RedisUtil redis;
 
     @GetMapping("/sendEmailBySweepCode")
     public Msg sendEmailBySweepCode() {
@@ -55,5 +59,18 @@ public class TestingController {
     public Msg test2(String key) {
         String message = InternationalUtil.getMessage(key);
         return Msg.success().setDatas(message);
+    }
+
+    @GetMapping("/test3")
+    public Msg test3() {
+        try {
+            if(redis.addValue("qazxsw","你有弄窘况",10)){
+                System.out.println(123);
+            }
+            return Msg.success();
+        } catch (Exception e) {
+            log.error("SeckillController error:{}",e);
+        }
+        return Msg.fail();
     }
 }

@@ -8,6 +8,7 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Locale;
 
 /**
  * @author fan
@@ -35,6 +36,9 @@ public class LanguageInterceptor extends LocaleChangeInterceptor {
 
                 this.logger.debug("Ignoring invalid locale value [" + newLocale + "]: " + var7.getMessage());
             }
+        }else {
+            LocaleResolver localeResolver = RequestContextUtils.getLocaleResolver(request);
+            localeResolver.setLocale(request, response, Locale.getDefault());
         }
 
         return true;
