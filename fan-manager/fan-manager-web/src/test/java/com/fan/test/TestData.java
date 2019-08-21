@@ -2,12 +2,10 @@ package com.fan.test;
 
 import com.fan.entity.CarInfo;
 import com.fan.entity.User;
+import com.fan.entity.api.IPWhitelist;
 import com.fan.remote.sms.SendSms;
 import com.fan.remote.wx.WeChatRemote;
-import com.fan.service.ICarInfoService;
-import com.fan.service.IDictionaryService;
-import com.fan.service.ISeckillService;
-import com.fan.service.IUserService;
+import com.fan.service.*;
 import com.fan.service.wxpay.WXPay;
 import com.fan.util.ConstantFan;
 import com.fan.util.DataConvertUtil;
@@ -50,6 +48,8 @@ public class TestData {
     private IDictionaryService dictionaryService;
     @Autowired
     private WeChatRemote weChatRemote;
+    @Autowired
+    private IPWhitelistService ipWhitelistService;
 
     @Test
     public void test1() {
@@ -122,4 +122,15 @@ public class TestData {
 //            log.error("test4 error:{}", e);
 //        }
 //    }
+
+    @Test
+    public void test8() {
+        try {
+            IPWhitelist ipWhitelist = IPWhitelist.builder().ip("127.0.0.1").remarks("本机ip地址").username("wangfan").userId("1").build();
+            ipWhitelistService.add(ipWhitelist);
+        } catch (Exception e) {
+            log.error("{}", e);
+        }
+    }
+
 }

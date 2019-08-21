@@ -1,4 +1,4 @@
-package com.fan.controller.v1;
+package com.fan.controller.v1.web;
 
 import com.fan.annotation.ApiVersion;
 import com.fan.entity.Msg;
@@ -27,7 +27,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 @ApiVersion
 @RestController
-@RequestMapping("/api/user/{version}")
+@RequestMapping("/web/user/{version}")
 @Slf4j
 @Api(description = "用户管理")
 public class UserController_v1p0 {

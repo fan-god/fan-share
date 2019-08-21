@@ -30,7 +30,7 @@ public class TestNoProperties {
 
     public static void main(String[] args) throws Exception {
 //        Pattern pattern = Pattern.compile("v([+-]?\\d*\\.\\d*)");
-//        Matcher matcher = pattern.matcher("fan-manager-web/api/user/v1.0/listPageAll");
+//        Matcher matcher = pattern.matcher("fan-manager-web/web/user/v1.0/listPageAll");
 //        System.out.println(matcher.find());
 //        String group1 = matcher.group(0);
 //        String group2 = matcher.group(1);
@@ -108,7 +108,7 @@ public class TestNoProperties {
 
     private void test3() throws Exception {
         // 存放在二维码中的内容
-        String text = "http://m16808311q.iask.in/fan-manager-web/api/testing/v1.0/sendEmailBySweepCode";
+        String text = "http://m16808311q.iask.in/fan-manager-web/web/testing/v1.0/sendEmailBySweepCode";
         // 嵌入二维码的图片路径
         String imgPath = "D:\\fan-share/美女2.jpg";
 //

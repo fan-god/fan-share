@@ -23,6 +23,8 @@ public class GeneralBean implements Serializable {
     private Boolean isDelete; // 是否删除(默认为：false)
     private Date createTime; // 创建时间
     private Date updateTime; // 创建时间
+    private String creator;
+    private String modifier;
 
     public GeneralBean() {
         this.createTime = new Date();//创建时间
@@ -83,11 +85,31 @@ public class GeneralBean implements Serializable {
         this.createTime = createTime;
     }
 
-    @Override
-    public String toString() {
-        return "GeneralBean [  isDelete=" + isDelete
-                + ", createTime=" + createTime + "]";
+    public String getCreator() {
+        return creator;
     }
 
+    public void setCreator(String creator) {
+        this.creator = creator;
+    }
 
+    public String getModifier() {
+        return modifier;
+    }
+
+    public void setModifier(String modifier) {
+        this.modifier = modifier;
+    }
+
+    @Override
+    public String toString() {
+        return "GeneralBean{" +
+                "id='" + id + '\'' +
+                ", isDelete=" + isDelete +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                ", creator='" + creator + '\'' +
+                ", modifier='" + modifier + '\'' +
+                '}';
+    }
 }

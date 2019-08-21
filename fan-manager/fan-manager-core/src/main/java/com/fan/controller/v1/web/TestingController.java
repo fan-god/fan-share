@@ -1,4 +1,4 @@
-package com.fan.controller.v1;
+package com.fan.controller.v1.web;
 
 import com.fan.annotation.ApiVersion;
 import com.fan.entity.Msg;
@@ -21,7 +21,7 @@ import java.io.File;
  * @date 2019/7/26/002614:21
  */
 @RestController
-@RequestMapping("/api/testing/{version}")
+@RequestMapping("/web/testing/{version}")
 @Slf4j
 @ApiVersion
 public class TestingController {

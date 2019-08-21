@@ -28,4 +28,8 @@ public interface LangConstant {
     enum MsgData{
         handling_failure,handling_success,login_out
     }
+
+    enum ApiData{
+        ip_not_on_whitelist
+    }
 }

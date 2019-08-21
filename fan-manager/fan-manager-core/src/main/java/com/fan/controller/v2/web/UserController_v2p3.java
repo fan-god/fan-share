@@ -1,4 +1,4 @@
-package com.fan.controller.v2;
+package com.fan.controller.v2.web;
 
 import com.fan.annotation.ApiVersion;
 import com.fan.entity.Msg;
@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @ApiVersion(2.3)
 @RestController
-@RequestMapping("/api/user/{version}")
+@RequestMapping("/web/user/{version}")
 @Slf4j
 @Api(description = "用户管理")
 public class UserController_v2p3 {
