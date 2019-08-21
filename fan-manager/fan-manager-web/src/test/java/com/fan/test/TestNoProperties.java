@@ -30,7 +30,7 @@ public class TestNoProperties {
 
     public static void main(String[] args) throws Exception {
 //        Pattern pattern = Pattern.compile("v([+-]?\\d*\\.\\d*)");
-//        Matcher matcher = pattern.matcher("fan-manager-web/app/user/v1.0/listPageAll");
+//        Matcher matcher = pattern.matcher("fan-manager-web/api/user/v1.0/listPageAll");
 //        System.out.println(matcher.find());
 //        String group1 = matcher.group(0);
 //        String group2 = matcher.group(1);

@@ -27,7 +27,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 @ApiVersion
 @RestController
-@RequestMapping("/app/user/{version}")
+@RequestMapping("/api/user/{version}")
 @Slf4j
 @Api(description = "用户管理")
 public class UserController_v1p0 {

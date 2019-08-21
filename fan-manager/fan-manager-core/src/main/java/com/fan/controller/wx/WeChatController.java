@@ -31,7 +31,7 @@ import java.util.Map;
  * @author fan
  * @title: WeChatController
  * @projectName fan-share
- * @description: http://m16808311q.iask.in/fan-manager-web/app/wxchat/v1.0/entrance
+ * @description: http://m16808311q.iask.in/fan-manager-web/api/wxchat/v1.0/entrance
  * @date
  */
 @Slf4j

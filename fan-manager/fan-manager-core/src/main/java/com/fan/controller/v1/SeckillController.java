@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @PROJECT_NAME:fansys
  */
 @RestController
-@RequestMapping("/app/seckill")
+@RequestMapping("/api/seckill")
 @Slf4j
 public class SeckillController {
     @Autowired
