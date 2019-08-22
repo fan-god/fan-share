@@ -11,5 +11,5 @@ import java.lang.annotation.*;
 @Target(ElementType.METHOD)
 public @interface ApiPassport {
     //true表示拦截，false表示通行
-    boolean apiValidate() default false;
+    boolean apiValidate() default true;
 }

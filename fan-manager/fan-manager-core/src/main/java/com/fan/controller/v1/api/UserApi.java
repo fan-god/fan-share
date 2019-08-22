@@ -27,7 +27,7 @@ public class UserApi {
     @Autowired
     private IUserService userService;
 
-    @ApiPassport(apiValidate = true)
+    @ApiPassport
     @PostMapping("/listPageAll")
     public Msg listPageAll(Integer pageNo, Integer pageSize, User user) {
         try {
