@@ -31,14 +31,14 @@ import java.util.Map;
  * @author fan
  * @title: WeChatController
  * @projectName fan-share
- * @description: http://m16808311q.iask.in/fan-manager-web/web/wx/v1.0/entrance
+ * @description: http://m16808311q.iask.in/fan-manager-web/wx/wxService/v1.0/entrance
  * @date
  */
 @Slf4j
 @ApiVersion
 @Api(description = "微信API操作")
 @RestController
-@RequestMapping("/web/wx/{version}")
+@RequestMapping("/wx/wxService/{version}")
 public class WeChatController {
     @Value("${wx.token}")
     private String token;
