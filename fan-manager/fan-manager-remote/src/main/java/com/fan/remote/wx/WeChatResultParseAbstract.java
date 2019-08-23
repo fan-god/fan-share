@@ -1,6 +1,6 @@
 package com.fan.remote.wx;
 
-import com.fan.entity.Msg;
+import com.fan.entity.ResponseMsg;
 import com.fan.util.ConstantFan;
 import com.fan.util.XmlUtil;
 import lombok.Data;
@@ -52,14 +52,14 @@ public abstract class WeChatResultParseAbstract {
     public WeChatResultParseAbstract() {
     }
 
-    public Msg resultParse() {
-        Msg msg;
+    public ResponseMsg resultParse() {
+        ResponseMsg msg;
         try {
             RestTemplate template = new RestTemplate();
             template.getMessageConverters().set(1, new StringHttpMessageConverter(StandardCharsets.UTF_8));
             ResponseEntity<String> resp = template.postForEntity(url, xmlStr, String.class);
             if (resp == null || resp.getStatusCode() != HttpStatus.OK) {
-                return Msg.fail().setMsg("连接通信失败");
+                return ResponseMsg.fail().setMsg("连接通信失败");
             }
             String respBody = resp.getBody();
             log.info("respBody:{}", respBody);
@@ -76,7 +76,7 @@ public abstract class WeChatResultParseAbstract {
             return msg;
         } catch (Exception e) {
             log.error("xml解析异常:", e);
-            return Msg.fail();
+            return ResponseMsg.fail();
         }
     }
 
@@ -87,7 +87,7 @@ public abstract class WeChatResultParseAbstract {
      * @param resultMap
      * @return
      */
-    protected abstract Msg onSuccess(Map<String, String> resultMap);
+    protected abstract ResponseMsg onSuccess(Map<String, String> resultMap);
 
 
     /**
@@ -96,7 +96,7 @@ public abstract class WeChatResultParseAbstract {
      * @param resultMap
      * @return
      */
-    protected abstract Msg onFail(Map<String, String> resultMap);
+    protected abstract ResponseMsg onFail(Map<String, String> resultMap);
 
 
     /**
@@ -105,5 +105,5 @@ public abstract class WeChatResultParseAbstract {
      * @param resultMap
      * @return
      */
-    protected abstract Msg onLinkFail(Map<String, String> resultMap);
+    protected abstract ResponseMsg onLinkFail(Map<String, String> resultMap);
 }

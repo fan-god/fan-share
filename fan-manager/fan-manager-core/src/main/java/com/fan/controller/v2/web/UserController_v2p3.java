@@ -1,7 +1,7 @@
 package com.fan.controller.v2.web;
 
 import com.fan.annotation.ApiVersion;
-import com.fan.entity.Msg;
+import com.fan.entity.ResponseMsg;
 import com.fan.entity.User;
 import com.fan.service.IUserService;
 import com.github.pagehelper.PageInfo;
@@ -31,14 +31,14 @@ public class UserController_v2p3 {
 
     @PostMapping("/listPageAll")
     @ApiOperation(value = "查询用户",notes = "分页查询用户")
-    public Msg listPageAll(Integer pageNo, Integer pageSize, User user) {
+    public ResponseMsg listPageAll(Integer pageNo, Integer pageSize, User user) {
         try {
             PageInfo<User> pageInfo = userService.listPageAll(pageNo, pageSize, user);
-            return Msg.success().setVersion(2.3).setDatas(pageInfo);
+            return ResponseMsg.success().setVersion(2.3).setDatas(pageInfo);
         } catch (Exception e) {
             log.error("UserController error:{}", e);
         }
-        return Msg.fail();
+        return ResponseMsg.fail();
     }
 
 }

@@ -1,7 +1,7 @@
 package com.fan.controller.v1.wx;
 
 import com.fan.annotation.ApiVersion;
-import com.fan.entity.Msg;
+import com.fan.entity.ResponseMsg;
 import com.fan.entity.wx.CreateOrderParams;
 import com.fan.entity.wx.WxBaseMessage;
 import com.fan.remote.wx.WeChatRemote;
@@ -80,24 +80,24 @@ public class WeChatController {
     }
 
     @GetMapping("/getWxAccess_token")
-    public Msg getWxAccess_token() {
+    public ResponseMsg getWxAccess_token() {
         try {
             String wxAccess_token = weChatRemote.getWxAccess_token();
-            return Msg.success().setDatas(wxAccess_token);
+            return ResponseMsg.success().setDatas(wxAccess_token);
         } catch (Exception e) {
             log.error("getWxAccess_token error:{}", e);
-            return Msg.fail();
+            return ResponseMsg.fail();
         }
     }
 
     @GetMapping("/showWxQrcode")
-    public Msg showWxQrcode() {
+    public ResponseMsg showWxQrcode() {
         try {
             weChatRemote.showWxQrcode();
-            return Msg.success();
+            return ResponseMsg.success();
         } catch (Exception e) {
             log.error("showWxQrcode error:{}", e);
-            return Msg.fail();
+            return ResponseMsg.fail();
         }
     }
 
@@ -158,25 +158,25 @@ public class WeChatController {
 
     @PostMapping("/pay")
     @ApiOperation("微信下单")
-    public Msg pay(CreateOrderParams createOrderParams) {
+    public ResponseMsg pay(CreateOrderParams createOrderParams) {
         try {
-            Msg msg = weChatRemote.pay(createOrderParams);
+            ResponseMsg msg = weChatRemote.pay(createOrderParams);
             return msg;
         } catch (Exception e) {
             log.error("getWxAccess_token error:{}", e);
-            return Msg.fail();
+            return ResponseMsg.fail();
         }
     }
 
     @PostMapping("/payBack")
     @ApiOperation("微信下单回调")
-    public Msg payBack() {
+    public ResponseMsg payBack() {
         try {
             System.out.println(".........payBack.....coming.......");
-            return Msg.success();
+            return ResponseMsg.success();
         } catch (Exception e) {
             log.error("getWxAccess_token error:{}", e);
-            return Msg.fail();
+            return ResponseMsg.fail();
         }
     }
 }

@@ -8,59 +8,34 @@ import com.geccocrawler.gecco.GeccoEngine;
 import com.geccocrawler.gecco.request.HttpGetRequest;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.RandomUtils;
+import org.apache.commons.lang3.time.DateUtils;
 
 import javax.swing.filechooser.FileSystemView;
 import java.io.File;
-import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author fan
  * @title: TestWhitoutProperties
  * @projectName fan-share
- * @description: TODO
+ * @description: 测试专类
  * @date 2019/7/12/001213:59
  */
 public class TestNoProperties {
 
     public static void main(String[] args) throws Exception {
-//        Pattern pattern = Pattern.compile("v([+-]?\\d*\\.\\d*)");
-//        Matcher matcher = pattern.matcher("fan-manager-web/web/user/v1.0/listPageAll");
-//        System.out.println(matcher.find());
-//        String group1 = matcher.group(0);
-//        String group2 = matcher.group(1);
-//        System.out.println(group1);
-//        System.out.println(group2);
-
-//        Integer age = 0;
-//        Date birthDate = DateUtils.parseDate("1991-07-01","yyyy-MM-dd");
-//        if (null != birthDate) {
-//            Calendar calendar = Calendar.getInstance();
-//            calendar.setTime(birthDate);
-//            Calendar calendarNow = Calendar.getInstance();
-//            calendarNow.setTime(new Date());
-//            age = calendarNow.get(Calendar.YEAR) - calendar.get(Calendar.YEAR);
-//        }
-//        System.out.println(age);
-
-//        ExcelFactory excelFactory = new ExcelFactory();
-//        List<TestExcelModel> list = Lists.newArrayList();
-//        TestExcelModel m1 = TestExcelModel.builder().age(13).email("ctv@bnj.com").name("ftgvyubh").build();
-//        TestExcelModel m2 = TestExcelModel.builder().age(11).email("dwfevgrtgbhn@163.com").name("qaqzzxswx").build();
-//        TestExcelModel m3 = TestExcelModel.builder().age(23).email("1129985465@qq.com").name("wf").build();
-//        list.add(m1);
-//        list.add(m2);
-//        list.add(m3);
-//        excelFactory.getExcelWrite(TestExcelModel.class,list);
-
         TestNoProperties tnp = new TestNoProperties();
+//        tnp.test0();
 //        tnp.test4();
-        tnp.test5();
+//        tnp.test5();
+        tnp.test6("1993-10-10");
     }
 
     static void swap(int[] array, int index1, int index2) {
@@ -69,7 +44,7 @@ public class TestNoProperties {
         array[index2] = t;
     }
 
-    private void shuffleAlgorithm(){
+    private void shuffleAlgorithm() {
 //        洗牌算法
         int[] arr = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
         int n = arr.length;
@@ -81,7 +56,19 @@ public class TestNoProperties {
         }
     }
 
-    private void test1(){
+    private void test0() {
+        ExcelFactory excelFactory = new ExcelFactory();
+        List<TestExcelModel> list = Lists.newArrayList();
+        TestExcelModel m1 = TestExcelModel.builder().age(13).email("ctv@bnj.com").name("ftgvyubh").build();
+        TestExcelModel m2 = TestExcelModel.builder().age(11).email("dwfevgrtgbhn@163.com").name("qaqzzxswx").build();
+        TestExcelModel m3 = TestExcelModel.builder().age(23).email("1129985465@qq.com").name("wf").build();
+        list.add(m1);
+        list.add(m2);
+        list.add(m3);
+        excelFactory.getExcelWrite(TestExcelModel.class, list);
+    }
+
+    private void test1() {
         User user = new User();
         user.setPhone("ertfyuio");
         user.setUsername("ghjk");
@@ -96,7 +83,7 @@ public class TestNoProperties {
 
     }
 
-    private void test2(){
+    private void test2() {
         CarInfo carInfo = CarInfo.builder().color("red").brandName("奥迪").displacement(2.0).build();
         String xml = XmlUtil.beanToXml(carInfo, CarInfo.class);
         System.out.println(xml);
@@ -139,7 +126,7 @@ public class TestNoProperties {
     /**
      * 爬虫测试
      */
-    public void test5(){
+    public void test5() {
         try {
             HttpGetRequest startUrl = new HttpGetRequest(ConstantFan.SPIDER_TARGET_URL);
             startUrl.setCharset("GBK");
@@ -159,5 +146,33 @@ public class TestNoProperties {
         } catch (Exception e) {
             System.out.println(e);
         }
+    }
+
+    /**
+     * 根据出生日期算出年龄
+     * @param birthDateStr
+     * @throws ParseException
+     */
+    private void test6(String birthDateStr) throws ParseException {
+        Integer age = 0;
+        Date birthDate = DateUtils.parseDate(birthDateStr,ConstantFan.DATE_PATTERN_10);
+        if (null != birthDate) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(birthDate);
+            Calendar calendarNow = Calendar.getInstance();
+            calendarNow.setTime(new Date());
+            age = calendarNow.get(Calendar.YEAR) - calendar.get(Calendar.YEAR);
+        }
+        System.out.println(age);
+    }
+
+    private void test7(){
+        Pattern pattern = Pattern.compile("v([+-]?\\d*\\.\\d*)");
+        Matcher matcher = pattern.matcher("fan-manager-web/web/user/v1.0/listPageAll");
+        System.out.println(matcher.find());
+        String group1 = matcher.group(0);
+        String group2 = matcher.group(1);
+        System.out.println(group1);
+        System.out.println(group2);
     }
 }

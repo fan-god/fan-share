@@ -1,7 +1,7 @@
 package com.fan.interceptors;
 
 import com.fan.annotation.ApiPassport;
-import com.fan.entity.Msg;
+import com.fan.entity.ResponseMsg;
 import com.fan.service.IPWhitelistService;
 import com.fan.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +9,6 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.interceptor.Interceptor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -34,7 +33,7 @@ public class ApiInterceptor implements HandlerInterceptor {
             else {
                 //IP白名单校验
                 String ip = HttpCilentUtil.getIpAddr(request);
-                Msg msg = Msg.fail();
+                ResponseMsg msg = ResponseMsg.fail();
                 if (ipWhitelistService.isOnIPWhitelist(ip)) {
                     return true;
                 } else {

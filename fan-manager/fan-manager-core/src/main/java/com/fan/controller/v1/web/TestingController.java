@@ -1,7 +1,7 @@
 package com.fan.controller.v1.web;
 
 import com.fan.annotation.ApiVersion;
-import com.fan.entity.Msg;
+import com.fan.entity.ResponseMsg;
 import com.fan.util.InternationalUtil;
 import com.fan.util.RedisUtil;
 import com.fan.util.SendMailUtil;
@@ -30,7 +30,7 @@ public class TestingController {
     private RedisUtil redis;
 
     @GetMapping("/sendEmailBySweepCode")
-    public Msg sendEmailBySweepCode() {
+    public ResponseMsg sendEmailBySweepCode() {
         String[] toMailAddr = new String[]{"495220742@qq.com", "chuanpu@vip.qq.com", "18627054863@163.com"};
         String subject = "测试邮件";
         String message = "测试邮件<br/><a href='http://m16808311q.iask.in:47429/fan-manager-web/api/testing/v1.0/sendEmailBySweepCode'>童俊是傻逼</a><br/>";
@@ -48,29 +48,29 @@ public class TestingController {
             System.out.println(sendMail);
             String result = SendMailUtil.sendCommonMail(sendMail);
             log.info(result);
-            return Msg.success();
+            return ResponseMsg.success();
         } catch (Exception e) {
             log.error("sendEmailBySweepCode error:{}", e);
-            return Msg.fail();
+            return ResponseMsg.fail();
         }
     }
 
     @GetMapping("/test2")
-    public Msg test2(String key) {
+    public ResponseMsg test2(String key) {
         String message = InternationalUtil.getMessage(key);
-        return Msg.success().setDatas(message);
+        return ResponseMsg.success().setDatas(message);
     }
 
     @GetMapping("/test3")
-    public Msg test3() {
+    public ResponseMsg test3() {
         try {
             if(redis.addValue("qazxsw","你有弄窘况",10)){
                 System.out.println(123);
             }
-            return Msg.success();
+            return ResponseMsg.success();
         } catch (Exception e) {
             log.error("SeckillController error:{}",e);
         }
-        return Msg.fail();
+        return ResponseMsg.fail();
     }
 }

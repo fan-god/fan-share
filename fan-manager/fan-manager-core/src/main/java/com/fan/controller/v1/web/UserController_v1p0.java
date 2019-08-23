@@ -1,7 +1,7 @@
 package com.fan.controller.v1.web;
 
 import com.fan.annotation.ApiVersion;
-import com.fan.entity.Msg;
+import com.fan.entity.ResponseMsg;
 import com.fan.entity.User;
 import com.fan.service.IUserService;
 import com.fan.util.ConstantFan;
@@ -36,18 +36,18 @@ public class UserController_v1p0 {
 
     @PostMapping("/listPageAll")
     @ApiOperation(value = "查询用户", notes = "分页查询用户")
-    public Msg listPageAll(Integer pageNo, Integer pageSize, User user) {
+    public ResponseMsg listPageAll(Integer pageNo, Integer pageSize, User user) {
         try {
             PageInfo<User> pageInfo = userService.listPageAll(pageNo, pageSize, user);
-            return Msg.success().setDatas(pageInfo);
+            return ResponseMsg.success().setDatas(pageInfo);
         } catch (Exception e) {
             log.error("UserController error:{}", e);
         }
-        return Msg.fail();
+        return ResponseMsg.fail();
     }
 
     @PostMapping("/login")
-    public Msg login(HttpServletRequest request, User user) {
+    public ResponseMsg login(HttpServletRequest request, User user) {
         try {
             String username = user.getUsername();
             String password = user.getPassword();
@@ -55,15 +55,15 @@ public class UserController_v1p0 {
                 if(userService.login(user)){
                     String s = DataConvertUtil.beanToString(user, ConstantFan.JSON);
                     request.getSession().setAttribute(ConstantFan.USER_SESSION, s);
-                    return Msg.success();
+                    return ResponseMsg.success();
                 }else {
-                    return Msg.fail().setMsg("账号或密码错误");
+                    return ResponseMsg.fail().setMsg("账号或密码错误");
                 }
             }
-            return Msg.fail().setMsg("账号或密码为空");
+            return ResponseMsg.fail().setMsg("账号或密码为空");
         } catch (Exception e) {
             log.error("login error{}", e);
-            return Msg.fail();
+            return ResponseMsg.fail();
         }
     }
 }

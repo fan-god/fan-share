@@ -14,7 +14,7 @@ import java.util.Map;
  * @Description:该类作为通用的返回类使用，进行统一的包装
  * @date 2018年7月10日
  */
-public class Msg {
+public class ResponseMsg {
 
     //成功操作码
     public static final Integer SUCCESS_CODE = 200;
@@ -39,8 +39,8 @@ public class Msg {
     private String msgId;
 
     //成功信息
-    public static Msg success() {
-        Msg result = new Msg();
+    public static ResponseMsg success() {
+        ResponseMsg result = new ResponseMsg();
         result.setCode(SUCCESS_CODE);
         result.setVersion(1.0);
         result.setMsg("处理成功！");
@@ -49,8 +49,8 @@ public class Msg {
     }
 
     //失败信息
-    public static Msg fail() {
-        Msg result = new Msg();
+    public static ResponseMsg fail() {
+        ResponseMsg result = new ResponseMsg();
         result.setCode(FAIL_CODE);
         result.setVersion(1.0);
         result.setMsg("处理失败！");
@@ -59,14 +59,14 @@ public class Msg {
     }
 
     //失败信息
-    public static Msg loginFail() {
-        Msg result = new Msg();
+    public static ResponseMsg loginFail() {
+        ResponseMsg result = new ResponseMsg();
         result.setCode(LOGIN_CODE);
         result.setMsg(InternationalUtil.getMessage(LangConstant.MsgData.login_out.name()));
         return result;
     }
 
-    public Msg add(String key, Object value) {
+    public ResponseMsg add(String key, Object value) {
         this.getExtend().put(key, value);
         return this;
     }
@@ -75,7 +75,7 @@ public class Msg {
         return code;
     }
 
-    public Msg setCode(int code) {
+    public ResponseMsg setCode(int code) {
         this.code = code;
         return this;
     }
@@ -84,7 +84,7 @@ public class Msg {
         return msg;
     }
 
-    public Msg setMsg(String msg) {
+    public ResponseMsg setMsg(String msg) {
         this.msg = msg;
         return this;
     }
@@ -101,7 +101,7 @@ public class Msg {
         return datas;
     }
 
-    public Msg setDatas(Object datas) {
+    public ResponseMsg setDatas(Object datas) {
         this.datas = datas;
         return this;
     }
@@ -110,7 +110,7 @@ public class Msg {
         return version;
     }
 
-    public Msg setVersion(Double version) {
+    public ResponseMsg setVersion(Double version) {
         this.version = version;
         return this;
     }
@@ -126,7 +126,7 @@ public class Msg {
      * @param msg
      * @param extend
      */
-    public Msg(int code, String msg, Map<String, Object> extend, Double version) {
+    public ResponseMsg(int code, String msg, Map<String, Object> extend, Double version) {
         super();
         this.code = code;
         this.msg = msg;
@@ -137,7 +137,7 @@ public class Msg {
     /**
      * Creates a new instance of Msg.
      */
-    public Msg() {
+    public ResponseMsg() {
         super();
         // TODO Auto-generated constructor stub
     }

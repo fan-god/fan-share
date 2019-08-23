@@ -1,6 +1,6 @@
 package com.fan.interceptors;
 
-import com.fan.entity.Msg;
+import com.fan.entity.ResponseMsg;
 import com.fan.entity.User;
 import com.fan.util.ConstantFan;
 import com.fan.util.DataConvertUtil;
@@ -27,13 +27,13 @@ public class LoginInterceptor implements HandlerInterceptor {
             Object userObj = request.getSession().getAttribute(ConstantFan.USER_SESSION);
 //            User user = DataConvertUtil.stringToBean(User.class, userObj.toString(), ConstantFan.JSON);
             if (null == userObj) {
-                HttpCilentUtil.printOut(response, DataConvertUtil.beanToString(Msg.loginFail(), ConstantFan.JSON));
+                HttpCilentUtil.printOut(response, DataConvertUtil.beanToString(ResponseMsg.loginFail(), ConstantFan.JSON));
                 return false;
             }
             return true;
         } catch (Exception e) {
             log.error("{}", e);
-            HttpCilentUtil.printOut(response, DataConvertUtil.beanToString(Msg.fail(), ConstantFan.JSON));
+            HttpCilentUtil.printOut(response, DataConvertUtil.beanToString(ResponseMsg.fail(), ConstantFan.JSON));
             return false;
         }
     }

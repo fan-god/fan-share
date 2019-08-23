@@ -25,7 +25,7 @@ import java.util.Map;
 /**
  * @author:fan
  * @Date:2018/9/28.
- * @Description:
+ * @Description:测试专用类
  * @PACKAGE_NAME:com.fan.test.testdata
  * @PROJECT_NAME:fansys
  */

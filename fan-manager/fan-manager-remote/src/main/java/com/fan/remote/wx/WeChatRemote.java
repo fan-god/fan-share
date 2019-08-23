@@ -2,7 +2,7 @@ package com.fan.remote.wx;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.fan.entity.Msg;
+import com.fan.entity.ResponseMsg;
 import com.fan.entity.wx.CreateOrderParams;
 import com.fan.util.*;
 import com.google.common.collect.Maps;
@@ -101,7 +101,7 @@ public class WeChatRemote extends WeChatResultParseAbstract {
      * @param orderParams
      * @return
      */
-    public Msg pay(CreateOrderParams orderParams) {
+    public ResponseMsg pay(CreateOrderParams orderParams) {
         //解析参数
         String urlParam = WeChatUtil.concatOrderParams(orderParams);//参数按字典顺序连接起来
         System.out.println(urlParam);
@@ -120,17 +120,17 @@ public class WeChatRemote extends WeChatResultParseAbstract {
     }
 
     @Override
-    protected Msg onSuccess(Map<String, String> resultMap) {
+    protected ResponseMsg onSuccess(Map<String, String> resultMap) {
         return null;
     }
 
     @Override
-    protected Msg onFail(Map<String, String> resultMap) {
+    protected ResponseMsg onFail(Map<String, String> resultMap) {
         return null;
     }
 
     @Override
-    protected Msg onLinkFail(Map<String, String> resultMap) {
+    protected ResponseMsg onLinkFail(Map<String, String> resultMap) {
         return null;
     }
 }
