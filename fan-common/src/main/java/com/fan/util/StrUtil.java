@@ -1,10 +1,8 @@
 package com.fan.util;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 
 import java.security.SecureRandom;
-import java.util.Map;
 @Slf4j
 public class StrUtil {
     public static String getRandomStr(int len) throws Exception {

@@ -18,20 +18,14 @@ import java.util.List;
 @Slf4j
 public class DateConverter implements Converter<String, Date> {
 
-    private String pattern;
-
-    public void setPattern(String pattern) {
-        this.pattern = pattern;
-    }
-
     @Override
     public Date convert(String source) {
         try {
-            SimpleDateFormat dateFormat = new SimpleDateFormat(pattern);
+            SimpleDateFormat dateFormat = new SimpleDateFormat(ConstantFan.DATE_PATTERN_19);
             dateFormat.setLenient(false);
             return dateFormat.parse(source);
         } catch (ParseException e) {
-
+            log.error("{}", e);
         }
         return null;
     }

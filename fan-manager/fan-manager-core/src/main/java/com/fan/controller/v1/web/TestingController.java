@@ -1,18 +1,19 @@
 package com.fan.controller.v1.web;
 
+import com.alibaba.fastjson.JSONObject;
 import com.fan.annotation.ApiVersion;
 import com.fan.entity.ResponseMsg;
+import com.fan.util.DateConvertEditor;
 import com.fan.util.InternationalUtil;
 import com.fan.util.RedisUtil;
 import com.fan.util.SendMailUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.File;
 import java.util.Date;
+import java.util.Map;
 
 /**
  * @author fan
@@ -78,7 +79,18 @@ public class TestingController {
     @GetMapping("/test4")
     public ResponseMsg test4(Date birthday) {
         try {
-            System.out.println(birthday );
+            System.out.println(DateConvertEditor.getDateTime(birthday));
+            return ResponseMsg.success();
+        } catch (Exception e) {
+            log.error("SeckillController error:{}",e);
+        }
+        return ResponseMsg.fail();
+    }
+
+    @PostMapping("/test5")
+    public ResponseMsg test5(@RequestBody JSONObject json) {
+        try {
+            System.out.println(json);
             return ResponseMsg.success();
         } catch (Exception e) {
             log.error("SeckillController error:{}",e);
