@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.File;
+import java.util.Date;
 
 /**
  * @author fan
@@ -67,6 +68,17 @@ public class TestingController {
             if(redis.addValue("qazxsw","你有弄窘况",10)){
                 System.out.println(123);
             }
+            return ResponseMsg.success();
+        } catch (Exception e) {
+            log.error("SeckillController error:{}",e);
+        }
+        return ResponseMsg.fail();
+    }
+
+    @GetMapping("/test4")
+    public ResponseMsg test4(Date birthday) {
+        try {
+            System.out.println(birthday );
             return ResponseMsg.success();
         } catch (Exception e) {
             log.error("SeckillController error:{}",e);

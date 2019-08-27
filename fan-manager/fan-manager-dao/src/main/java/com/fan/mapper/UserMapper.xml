@@ -243,7 +243,9 @@
     <select id="login" resultType="java.lang.Integer" parameterType="com.fan.entity.User">
         SELECT 1 FROM user WHERE username = #{username,jdbcType=VARCHAR} AND password = #{password,jdbcType=VARCHAR}
     </select>
-
+    <select id="isExist" resultType="java.lang.Integer" parameterType="com.fan.entity.User">
+        SELECT 1 FROM user WHERE username = #{username,jdbcType=VARCHAR}
+    </select>
     <sql id="Base_query_criteria">
         <if test="username!=null">
            AND username = #{username}

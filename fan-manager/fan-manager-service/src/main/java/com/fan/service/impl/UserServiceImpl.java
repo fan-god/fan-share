@@ -2,6 +2,7 @@ package com.fan.service.impl;
 
 
 import com.fan.dao.UserMapper;
+import com.fan.entity.ResponseMsg;
 import com.fan.entity.User;
 import com.fan.service.IUserService;
 import com.github.pagehelper.PageInfo;
@@ -33,42 +34,20 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements IUserServi
     }
 
     @Override
-    public int deleteByPrimaryKey(Long userid) {
-        return 0;
+    public ResponseMsg register(User user) {
+        String username = user.getUsername();
+        if (null == userMapper.isExist(username)) {
+            if (userMapper.insertSelective(user) > 0) {
+                return ResponseMsg.success();
+            }
+        } else {
+            return ResponseMsg.fail().setMsg("用户已存在");
+        }
+        return ResponseMsg.fail();
     }
 
     @Override
-    public int insert(User user) {
-        return userMapper.insert(user);
-    }
-
-    @Override
-    public int insertSelective(User user) {
-        return 0;
-    }
-
-    @Override
-    public User selectByPrimaryKey(Long id) {
-        return null;
-    }
-
-    @Override
-    public int updateByPrimaryKeySelective(User user) {
-        return 0;
-    }
-
-    @Override
-    public int updateByPrimaryKey(User user) {
-        return 0;
-    }
-
-    @Override
-    public List<User> listAll(User user) {
-        return null;
-    }
-
-    @Override
-    public Integer isExist(String uniqueField) {
-        return null;
+    public Integer insert(User user) {
+        return userMapper.insertSelective(user);
     }
 }

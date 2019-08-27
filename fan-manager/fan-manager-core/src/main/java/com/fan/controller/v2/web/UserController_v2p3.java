@@ -29,16 +29,16 @@ public class UserController_v2p3 {
     @Autowired
     private IUserService userService;
 
-    @PostMapping("/listPageAll")
-    @ApiOperation(value = "查询用户",notes = "分页查询用户")
-    public ResponseMsg listPageAll(Integer pageNo, Integer pageSize, User user) {
-        try {
-            PageInfo<User> pageInfo = userService.listPageAll(pageNo, pageSize, user);
-            return ResponseMsg.success().setVersion(2.3).setDatas(pageInfo);
-        } catch (Exception e) {
-            log.error("UserController error:{}", e);
-        }
-        return ResponseMsg.fail();
-    }
+//    @PostMapping("/listPageAll")
+//    @ApiOperation(value = "查询用户",notes = "分页查询用户")
+//    public ResponseMsg listPageAll(Integer pageNo, Integer pageSize, User user) {
+//        try {
+//            PageInfo<User> pageInfo = userService.listPageAll(pageNo, pageSize, user);
+//            return ResponseMsg.success().setVersion(2.3).setDatas(pageInfo);
+//        } catch (Exception e) {
+//            log.error("UserController error:{}", e);
+//        }
+//        return ResponseMsg.fail();
+//    }
 
 }

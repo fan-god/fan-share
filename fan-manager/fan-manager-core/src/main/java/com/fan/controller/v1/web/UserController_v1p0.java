@@ -12,6 +12,9 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -65,5 +68,20 @@ public class UserController_v1p0 {
             log.error("login error{}", e);
             return ResponseMsg.fail();
         }
+    }
+
+    @PostMapping("/register")
+    public ResponseMsg register(@Validated User user, BindingResult bindingResult){
+        try {
+            if(bindingResult.hasErrors()){
+                for (FieldError fieldError : bindingResult.getFieldErrors()) {
+                    return ResponseMsg.fail().setMsg(fieldError.getDefaultMessage());
+                }
+            }
+            return userService.register(user);
+        } catch (Exception e) {
+            log.error("register error:{}", e);
+        }
+        return ResponseMsg.fail();
     }
 }
