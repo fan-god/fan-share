@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.NotNull;
 import java.io.File;
 import java.util.Date;
 import java.util.Map;
@@ -58,20 +59,27 @@ public class TestingController {
     }
 
     @GetMapping("/test2")
-    public ResponseMsg test2(String key) {
-        String message = InternationalUtil.getMessage(key);
-        return ResponseMsg.success().setDatas(message);
+    public ResponseMsg test2(@NotNull String key) {
+
+        try {
+            String message = InternationalUtil.getMessage(key);
+            return ResponseMsg.success().setDatas(message);
+        } catch (Exception e) {
+            log.error("{}", e);
+        }
+        return ResponseMsg.fail();
+
     }
 
     @GetMapping("/test3")
     public ResponseMsg test3() {
         try {
-            if(redis.addValue("qazxsw","你有弄窘况",10)){
+            if (redis.addValue("qazxsw", "你有弄窘况", 10)) {
                 System.out.println(123);
             }
             return ResponseMsg.success();
         } catch (Exception e) {
-            log.error("SeckillController error:{}",e);
+            log.error("SeckillController error:{}", e);
         }
         return ResponseMsg.fail();
     }
@@ -82,7 +90,7 @@ public class TestingController {
             System.out.println(DateConvertEditor.getDateTime(birthday));
             return ResponseMsg.success();
         } catch (Exception e) {
-            log.error("SeckillController error:{}",e);
+            log.error("SeckillController error:{}", e);
         }
         return ResponseMsg.fail();
     }
@@ -93,7 +101,7 @@ public class TestingController {
             System.out.println(json);
             return ResponseMsg.success();
         } catch (Exception e) {
-            log.error("SeckillController error:{}",e);
+            log.error("SeckillController error:{}", e);
         }
         return ResponseMsg.fail();
     }
