@@ -35,7 +35,8 @@ public class TestNoProperties {
 //        tnp.test0();
 //        tnp.test4();
 //        tnp.test5();
-        tnp.test6("1993-10-10");
+//        tnp.test6("1993-10-10");
+        tnp.test8();
     }
 
     static void swap(int[] array, int index1, int index2) {
@@ -174,5 +175,15 @@ public class TestNoProperties {
         String group2 = matcher.group(1);
         System.out.println(group1);
         System.out.println(group2);
+    }
+
+    /** 测试 id生成器*/
+    public void test8() {
+        IdWorkerUtil idWorker = new IdWorkerUtil(0, 0);
+        for (int i = 0; i < 1000; i++) {
+            long id = idWorker.nextId();
+            System.out.println(Long.toBinaryString(id));
+            System.out.println(id);
+        }
     }
 }
