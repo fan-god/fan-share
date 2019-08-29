@@ -172,11 +172,11 @@ public interface FieldConstant {
 
     /*******************************阿里短信服务***************************************/
     interface AliSms{
-        String AccessKeyId = "LTAIWKVscW74nlui";
-        String AccessKeySecret = "QvM6uWwjtPpBExr09GsVSDgg4YFnGd";
+        String AccessKeyId = "";
+        String AccessKeySecret = "";
         String Action = "SendSms";
-        String SignName1 = "Anvenus";
-        String SignName2 = "安福星";
+        String SignName1 = "";
+        String SignName2 = "";
         String RegionId = "default";
         String VERSION = "2017-05-25";
         String DOMAIN = "dysmsapi.aliyuncs.com";
