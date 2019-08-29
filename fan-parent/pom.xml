@@ -79,6 +79,7 @@
         <google.zxing>3.3.0</google.zxing>
         <!--抓包工具-->
         <gecco.version>1.0.8</gecco.version>
+        <aliyun.java.sdk.core.version>4.0.3</aliyun.java.sdk.core.version>
     </properties>
 
     <dependencyManagement>
@@ -507,7 +508,12 @@
                 <artifactId>gecco</artifactId>
                 <version>${gecco.version}</version>
             </dependency>
-
+            <!--阿里短信服务-->
+            <dependency>
+                <groupId>com.aliyun</groupId>
+                <artifactId>aliyun-java-sdk-core</artifactId>
+                <version>${aliyun.java.sdk.core.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

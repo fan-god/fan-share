@@ -356,7 +356,11 @@
             <groupId>com.geccocrawler</groupId>
             <artifactId>gecco</artifactId>
         </dependency>
-
+        <!--阿里短信服务-->
+        <dependency>
+            <groupId>com.aliyun</groupId>
+            <artifactId>aliyun-java-sdk-core</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

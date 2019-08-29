@@ -72,11 +72,15 @@ public class TestData {
 
     @Test
     public void test3() {
-        String s_sms = sendSms.sendTplSms("18627054863", "@1@=Zhang_Chuan_Pu");
+//        String s_sms = sendSms.sendTplSms("18627054863", "@1@=Zhang_Chuan_Pu");
 //        String s_report = sendSmsUtil.queryReport();
 //        String s_balance = sendSmsUtil.getBalance();
 //        String s_mo = sendSmsUtil.queryMo();
-        System.out.printf("================>%s", s_sms);
+//        System.out.printf("================>%s", s_sms);
+
+        Map<String,String> params = Maps.newHashMap();
+        params.put("PhoneNumbers","18627054863");
+        sendSms.sendSms(params);
     }
 
     @Test

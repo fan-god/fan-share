@@ -169,4 +169,16 @@ public interface FieldConstant {
         String SANDBOX_SHORTURL_URL_SUFFIX = "/sandboxnew/tools/shorturl";
         String SANDBOX_AUTHCODETOOPENID_URL_SUFFIX = "/sandboxnew/tools/authcodetoopenid";
     }
+
+    /*******************************阿里短信服务***************************************/
+    interface AliSms{
+        String AccessKeyId = "LTAIWKVscW74nlui";
+        String AccessKeySecret = "QvM6uWwjtPpBExr09GsVSDgg4YFnGd";
+        String Action = "SendSms";
+        String SignName1 = "Anvenus";
+        String SignName2 = "安福星";
+        String RegionId = "default";
+        String VERSION = "2017-05-25";
+        String DOMAIN = "dysmsapi.aliyuncs.com";
+    }
 }
