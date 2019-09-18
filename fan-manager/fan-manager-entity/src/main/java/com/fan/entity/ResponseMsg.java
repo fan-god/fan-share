@@ -110,6 +110,10 @@ public class ResponseMsg {
         return version;
     }
 
+    public String getMsgId() {
+        return msgId;
+    }
+
     public ResponseMsg setVersion(Double version) {
         this.version = version;
         return this;
@@ -126,12 +130,13 @@ public class ResponseMsg {
      * @param msg
      * @param extend
      */
-    public ResponseMsg(int code, String msg, Map<String, Object> extend, Double version) {
-        super();
+    public ResponseMsg(int code, String msg, Map<String, Object> extend, Object datas, Double version, String msgId) {
         this.code = code;
         this.msg = msg;
         this.extend = extend;
+        this.datas = datas;
         this.version = version;
+        this.msgId = msgId;
     }
 
     /**
@@ -144,12 +149,13 @@ public class ResponseMsg {
 
     @Override
     public String toString() {
-        return "Msg{" +
+        return "ResponseMsg{" +
                 "code=" + code +
                 ", msg='" + msg + '\'' +
                 ", extend=" + extend +
                 ", datas=" + datas +
                 ", version=" + version +
+                ", msgId='" + msgId + '\'' +
                 '}';
     }
 }

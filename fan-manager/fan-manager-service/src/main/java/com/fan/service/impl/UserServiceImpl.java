@@ -8,7 +8,6 @@ import com.fan.service.IUserService;
 import com.fan.util.SpringContextUtil;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -52,5 +51,10 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements IUserServi
     @Override
     public Integer insert(User user) {
         return userMapper.insertSelective(user);
+    }
+
+    @Override
+    public User getUserByName(String username) {
+        return userMapper.getUserByName(username);
     }
 }

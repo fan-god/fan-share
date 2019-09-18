@@ -8,6 +8,7 @@ import com.fan.service.IUserService;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/user/{version}")
 @Slf4j
 @ApiVersion
-public class UserApi {
+public class UserApiController {
     @Autowired
     private IUserService userService;
 
@@ -35,6 +36,21 @@ public class UserApi {
             return ResponseMsg.success().setDatas(pageInfo);
         } catch (Exception e) {
             log.error("UserController error:{}", e);
+        }
+        return ResponseMsg.fail();
+    }
+
+    @ApiPassport
+    @GetMapping("/getUserByName")
+    public ResponseMsg getUserByName(String username) {
+        try {
+            User user = userService.getUserByName(username);
+            ResponseMsg a = ResponseMsg.success();
+            ResponseMsg b = a.setDatas(user);
+            System.out.println(b);
+            return b;
+        } catch (Exception e) {
+            log.error("{}", e);
         }
         return ResponseMsg.fail();
     }

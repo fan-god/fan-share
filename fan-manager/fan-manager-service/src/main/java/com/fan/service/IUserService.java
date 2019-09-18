@@ -19,4 +19,6 @@ public interface IUserService{
     ResponseMsg register(User user);
 
     Integer insert(User user);
+
+    User getUserByName(String username);
 }

@@ -14,10 +14,7 @@ import javax.swing.filechooser.FileSystemView;
 import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -36,7 +33,10 @@ public class TestNoProperties {
 //        tnp.test4();
 //        tnp.test5();
 //        tnp.test6("1993-10-10");
-        tnp.test8();
+//        System.out.println(new Double(10/100+10/100));
+//        tnp.test8();
+//        tnp.test9();
+        tnp.test10();
     }
 
     static void swap(int[] array, int index1, int index2) {
@@ -185,5 +185,60 @@ public class TestNoProperties {
             System.out.println(Long.toBinaryString(id));
             System.out.println(id);
         }
+    }
+
+    //测试分页
+    public void test9() {
+        List<String> rows = Lists.newArrayList();
+        rows.add("q");
+        rows.add("w");
+        rows.add("e");
+        rows.add("r");
+        rows.add("t");
+        rows.add("y");
+        rows.add("u");
+        rows.add("f");
+        rows.add("d");
+        rows.add("e");
+        rows.add("sx");
+        rows.add("cfr");
+        rows.add("qa");
+        rows.add("we");
+        rows.add("azxs");
+        int rowSize = rows.size();
+        int group;//一共有多少个线程
+        int pageSize = 4;//一个线程处理100条
+        if (rowSize % pageSize == 0) {
+            group = rowSize / pageSize;
+        } else {
+            group = rowSize / pageSize + 1;
+        }
+        for (int i = 1; i <= group; i++) {
+            int start = (i - 1) * pageSize;
+            int end = pageSize * i;
+            if(end >= rowSize){
+                end = rowSize;
+            }
+            List<String> newList = rows.subList(start, end);
+            System.out.println(newList);
+        }
+    }
+
+    //测试分页
+    public void test10() {
+        List<Integer> rows = Lists.newArrayList();
+        rows.add(234);
+        rows.add(123);
+        rows.add(24);
+        rows.add(124);
+        rows.add(5467);
+        rows.add(2345);
+        rows.add(68);
+        rows.add(4658);
+        rows.add(765);
+        rows.add(null);
+        rows.add(888888888);
+        rows.add(456567);
+        System.out.println(Collections.max(rows));
     }
 }

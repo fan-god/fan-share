@@ -27,7 +27,7 @@
             <property name="paramName" value="language"/>
         </bean>
     </mvc:interceptors>
-    <!-- 基于request实现资源国际化 -->
+    <!-- 基于Session实现资源国际化 -->
     <bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver"/>
 
 
@@ -64,7 +64,7 @@
     </bean>
 
     <!--注册mvc注释驱动，此配置会造成，当使用完全相同mvc映射地址会导致项目启动报错.如果不启动此配置则无法使用转换器,且在JSR303校验时无法使用国家化配置-->
-    <mvc:annotation-driven conversion-service="conversionService" validator="validator"/>
+    <!--<mvc:annotation-driven conversion-service="conversionService" validator="validator"/>-->
 
     <!-- 1.注册ConversionService 自定义的转换器-->
     <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">

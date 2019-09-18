@@ -23,4 +23,7 @@ public interface UserMapper extends BaseMapper<User>{
     int updateByPrimaryKey(User record);
 
     Integer login(User record);
+
+
+    User getUserByName(String username);
 }
