@@ -30,7 +30,7 @@ public class ResponseMsg {
     //提示信息
     private String msg;
     //用户返回给浏览器的数据
-    private Map<String, Object> extend = new HashMap<String, Object>();
+    private Map<String, Object> extend = new HashMap<>();
     //返回数据
     private Object datas;
     //接口版本
