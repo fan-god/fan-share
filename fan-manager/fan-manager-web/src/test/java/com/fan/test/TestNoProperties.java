@@ -36,7 +36,8 @@ public class TestNoProperties {
 //        System.out.println(new Double(10/100+10/100));
 //        tnp.test8();
 //        tnp.test9();
-        tnp.test10();
+//        tnp.test10();
+        tnp.test11();
     }
 
     static void swap(int[] array, int index1, int index2) {
@@ -240,5 +241,12 @@ public class TestNoProperties {
         rows.add(888888888);
         rows.add(456567);
         System.out.println(Collections.max(rows));
+    }
+
+    public void test11() {
+        String time = org.apache.http.client.utils.DateUtils.formatDate(new Date(), ConstantFan.DATE_PATTERN_19);
+        System.out.println(time);
+        String time2 = new SimpleDateFormat(ConstantFan.DATE_PATTERN_19).format(new Date());
+        System.out.println(time2);
     }
 }

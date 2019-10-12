@@ -5,6 +5,7 @@ import com.fan.service.IUserService;
 import com.fan.util.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomUtils;
+import org.apache.http.client.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -39,5 +40,6 @@ public class ServerJob {
     }
 
     public void method2() {
+        System.out.printf("@@@@@@@@@@@@@%s%n", DateConvertEditor.getDateTime());
     }
 }

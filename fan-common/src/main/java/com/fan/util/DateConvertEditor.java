@@ -97,14 +97,4 @@ public class DateConvertEditor extends PropertyEditorSupport {
         }
     }
 
-    /**
-     * 获取当前日期推前日期的时间戳
-     *
-     * @param dayOfNum
-     * @return
-     */
-    public static Long getDayOfLong(Integer dayOfNum) {
-        Long i = IntegerUtils.toUnsigned(ConstantFan.BASE_DAY_0F_LONG * dayOfNum);
-        return System.currentTimeMillis() - i;
-    }
 }

@@ -1,6 +1,7 @@
 package com.fan.util;
 
 import com.google.common.collect.Lists;
+import com.mchange.lang.IntegerUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.convert.converter.Converter;
 
@@ -89,7 +90,7 @@ public class DateConverter implements Converter<String, Date> {
      * @return
      */
     public static List<Date> getDaysAgoInterval(Integer dayOfNum) {
-        Date dBegin = new Date(DateConvertEditor.getDayOfLong(dayOfNum));
+        Date dBegin = new Date(getDayOfLong(dayOfNum));
         Date dEnd = new Date();
         return findDates(dBegin, dEnd);
     }
@@ -105,7 +106,7 @@ public class DateConverter implements Converter<String, Date> {
     }
 
     public static Date getDayOfNumAgo(Integer dayOfNum) {
-        return new Date(DateConvertEditor.getDayOfLong(dayOfNum));
+        return new Date(getDayOfLong(dayOfNum));
     }
 
     public static Date getDate(String source) {
@@ -134,4 +135,14 @@ public class DateConverter implements Converter<String, Date> {
         return sdf;
     }
 
+    /**
+     * 获取当前日期推前日期的时间戳
+     *
+     * @param dayOfNum
+     * @return
+     */
+    private static Long getDayOfLong(Integer dayOfNum) {
+        Long i = IntegerUtils.toUnsigned(ConstantFan.BASE_DAY_0F_LONG * dayOfNum);
+        return System.currentTimeMillis() - i;
+    }
 }

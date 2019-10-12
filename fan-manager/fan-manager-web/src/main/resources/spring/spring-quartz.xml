@@ -1,46 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-	<!-- 1.托管任务job -->
-	<bean class="com.fan.timetask.ServerJob" id="ServJob" />
-	
-	<!-- 2.托管任务列表 -->
-	<bean class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean" id="jobDetail">
-		<!-- 设置任务job -->
-		<property name="targetObject" ref="ServJob" />
-		<!-- 实际执行方法 -->
-		<property name="targetMethod" value="method" />
-		<!-- 是否允许任务并发执行。当值为false时，表示必须等到前一个线程处理完毕后才再启一个新的线程 -->  
-        <property name="concurrent" value="false"/>  
-	</bean>
-	<bean class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean" id="jobDetail2">
-		<!-- 设置任务job -->
-		<property name="targetObject" ref="ServJob" />
-		<!-- 实际执行方法 -->
-		<property name="targetMethod" value="method2" />
-	</bean>
+    <!-- 1.托管任务job -->
+    <bean class="com.fan.timetask.ServerJob" id="ServJob"/>
 
-	<!-- 3.定义触发器 -->
-	<bean class="org.springframework.scheduling.quartz.CronTriggerFactoryBean" id="cronTriggerFactoryBean">
-		<!-- 触发器任务列表 -->
-		<property name="jobDetail" ref="jobDetail" />
-		<!-- 触发时间 -->
-		<property name="cronExpression" value="0 30 8 * * ?" />
-	</bean>
-	<bean class="org.springframework.scheduling.quartz.CronTriggerFactoryBean" id="cronTriggerFactoryBean2">
-		<!-- 触发器任务列表 -->
-		<property name="jobDetail" ref="jobDetail2" />
-		<!-- 触发时间 -->
-		<property name="cronExpression" value="0 30 8 * * ?" />
-	</bean>
+    <!-- 2.托管任务列表 -->
+    <bean class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean" id="jobDetail">
+        <!-- 设置任务job -->
+        <property name="targetObject" ref="ServJob"/>
+        <!-- 实际执行方法 -->
+        <property name="targetMethod" value="method"/>
+        <!-- 是否允许任务并发执行。当值为false时，表示必须等到前一个线程处理完毕后才再启一个新的线程 -->
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean" id="jobDetail2">
+        <!-- 设置任务job -->
+        <property name="targetObject" ref="ServJob"/>
+        <!-- 实际执行方法 -->
+        <property name="targetMethod" value="method2"/>
+    </bean>
 
-	<!-- 4.调度 -->
-	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean" id="schedulerFactoryBean">
-		<property name="triggers">
-			<list>
-				<ref bean="cronTriggerFactoryBean" />
-				<ref bean="cronTriggerFactoryBean2" />
-			</list>
-		</property>
-	</bean>
+    <!-- 3.定义触发器 -->
+    <bean class="org.springframework.scheduling.quartz.CronTriggerFactoryBean" id="cronTriggerFactoryBean">
+        <!-- 触发器任务列表 -->
+        <property name="jobDetail" ref="jobDetail"/>
+        <!-- 触发时间 -->
+        <property name="cronExpression" value="0 30 8 * * ?"/>
+    </bean>
+    <bean class="org.springframework.scheduling.quartz.CronTriggerFactoryBean" id="cronTriggerFactoryBean2">
+        <!-- 触发器任务列表 -->
+        <property name="jobDetail" ref="jobDetail2"/>
+        <!-- 触发时间 -->
+        <property name="cronExpression" value="0/5 * * * * ? "/>
+    </bean>
+
+    <!-- 4.调度 -->
+    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean" id="schedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <ref bean="cronTriggerFactoryBean"/>
+                <ref bean="cronTriggerFactoryBean2"/>
+            </list>
+        </property>
+    </bean>
 </beans>
