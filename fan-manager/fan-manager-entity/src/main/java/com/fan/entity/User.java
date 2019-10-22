@@ -42,5 +42,7 @@ public class User extends BaseEntity {
     private String gwf4;
 
     private String gwf5;
+    @ApiModelProperty("角色")
+    private String role;
 
 }

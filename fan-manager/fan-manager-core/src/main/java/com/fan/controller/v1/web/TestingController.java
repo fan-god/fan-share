@@ -11,8 +11,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.NotNull;
 import java.io.File;
+import java.net.InetAddress;
 import java.util.Date;
 import java.util.Map;
 
@@ -102,6 +104,21 @@ public class TestingController {
             return ResponseMsg.success();
         } catch (Exception e) {
             log.error("SeckillController error:{}", e);
+        }
+        return ResponseMsg.fail();
+    }
+
+    /**
+     * 测试nginx
+     * @return
+     */
+    @PostMapping("/test6")
+    public ResponseMsg test6(HttpServletRequest request) {
+        try {
+            String msg = String.format("come from port:%s", request.getLocalPort());
+            return ResponseMsg.success().setMsg(msg);
+        } catch (Exception e) {
+            log.error("test nginx error:{}", e);
         }
         return ResponseMsg.fail();
     }

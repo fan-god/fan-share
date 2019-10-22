@@ -40,6 +40,6 @@ public class ServerJob {
     }
 
     public void method2() {
-        System.out.printf("@@@@@@@@@@@@@%s%n", DateConvertEditor.getDateTime());
+//        System.out.printf("@@@@@@@@@@@@@%s%n", DateConvertEditor.getDateTime());
     }
 }

@@ -80,6 +80,7 @@
         <!--抓包工具-->
         <gecco.version>1.0.8</gecco.version>
         <aliyun.java.sdk.core.version>4.0.3</aliyun.java.sdk.core.version>
+        <shiro.version>1.2.4</shiro.version>
     </properties>
 
     <dependencyManagement>
@@ -513,6 +514,28 @@
                 <groupId>com.aliyun</groupId>
                 <artifactId>aliyun-java-sdk-core</artifactId>
                 <version>${aliyun.java.sdk.core.version}</version>
+            </dependency>
+
+            <!--Apache Shiro所需的jar包 -->
+            <dependency>
+                <groupId>org.apache.shiro</groupId>
+                <artifactId>shiro-spring</artifactId>
+                <version>${shiro.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.shiro</groupId>
+                <artifactId>shiro-ehcache</artifactId>
+                <version>${shiro.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.shiro</groupId>
+                <artifactId>shiro-cas</artifactId>
+                <version>${shiro.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.shiro</groupId>
+                <artifactId>shiro-web</artifactId>
+                <version>${shiro.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
