@@ -21,4 +21,6 @@ public interface IUserService{
     Integer insert(User user);
 
     User getUserByName(String username);
+
+    String getRoleByName(String username);
 }

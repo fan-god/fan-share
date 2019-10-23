@@ -11,6 +11,11 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -20,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author fan
@@ -49,21 +55,36 @@ public class UserController_v1p0 {
         return ResponseMsg.fail();
     }
 
+    /**
+     * 登录
+     *
+     * @param user
+     * @return
+     */
     @PostMapping("/login")
-    public ResponseMsg login(HttpServletRequest request, User user) {
+    public ResponseMsg login(User user, HttpServletResponse response) {
         try {
             String username = user.getUsername();
             String password = user.getPassword();
             if (StringUtils.isNoneBlank(username, password)) {
-                if(userService.login(user)){
-                    String s = DataConvertUtil.beanToString(user, ConstantFan.JSON);
-                    request.getSession().setAttribute(ConstantFan.USER_SESSION, s);
-                    return ResponseMsg.success();
-                }else {
-                    return ResponseMsg.fail().setMsg("账号或密码错误");
+                if (isReLogin()) {
+                    response.sendRedirect("/fan-manager-web/loginSuccess.jsp");
+                    return ResponseMsg.success(); // 如果已经登陆，无需重新登录
                 }
+//                if (userService.login(user)) {
+//                    String s = DataConvertUtil.beanToString(user, ConstantFan.JSON);
+//                    request.getSession().setAttribute(ConstantFan.USER_SESSION, s);
+//                    return ResponseMsg.success();
+//                } else {
+//                    return ResponseMsg.fail().setMsg("账号或密码错误");
+//                }
+                response.sendRedirect("/fan-manager-web/loginSuccess.jsp");
+                // 调用shiro的登陆验证
+                return shiroLogin(user);
             }
+            response.sendRedirect("/fan-manager-web/error.jsp");
             return ResponseMsg.fail().setMsg("账号或密码为空");
+
         } catch (Exception e) {
             log.error("login error{}", e);
             return ResponseMsg.fail();
@@ -71,9 +92,9 @@ public class UserController_v1p0 {
     }
 
     @PostMapping("/register")
-    public ResponseMsg register(@Validated User user, BindingResult bindingResult){
+    public ResponseMsg register(@Validated User user, BindingResult bindingResult) {
         try {
-            if(bindingResult.hasErrors()){
+            if (bindingResult.hasErrors()) {
                 for (FieldError fieldError : bindingResult.getFieldErrors()) {
                     return ResponseMsg.fail().setMsg(fieldError.getDefaultMessage());
                 }
@@ -81,6 +102,56 @@ public class UserController_v1p0 {
             return userService.register(user);
         } catch (Exception e) {
             log.error("register error:{}", e);
+        }
+        return ResponseMsg.fail();
+    }
+
+    private ResponseMsg shiroLogin(User user) {
+        // 组装token，包括客户公司名称、简称、客户编号、用户名称；密码
+        UsernamePasswordToken token = new UsernamePasswordToken(user.getUsername(), user.getPassword().toCharArray(), null);
+        token.setRememberMe(true);
+
+        // shiro登陆验证
+        try {
+            SecurityUtils.getSubject().login(token);
+        } catch (UnknownAccountException e) {
+            return ResponseMsg.fail().setMsg("用户不存在或者密码错误！");
+        } catch (IncorrectCredentialsException e) {
+            return ResponseMsg.fail().setMsg("用户不存在或者密码错误！");
+        } catch (Exception e) {
+            return ResponseMsg.fail();
+        }
+        return ResponseMsg.success();
+    }
+
+    /**
+     * 查看是否重复登录
+     *
+     * @return
+     */
+    private boolean isReLogin() {
+        Subject us = SecurityUtils.getSubject();
+        if (us.isAuthenticated()) {
+            return true; // 参数未改变，无需重新登录，默认为已经登录成功
+        }
+        return false; // 需要重新登陆
+    }
+
+    /**
+     * 退出登录
+     *
+     * @return
+     */
+    @PostMapping("/logout")
+    public ResponseMsg logout() {
+        Subject subject = SecurityUtils.getSubject();
+        if (subject != null) {
+            try {
+                subject.logout();
+                return ResponseMsg.success();
+            } catch (Exception e) {
+                log.error("{}", e);
+            }
         }
         return ResponseMsg.fail();
     }

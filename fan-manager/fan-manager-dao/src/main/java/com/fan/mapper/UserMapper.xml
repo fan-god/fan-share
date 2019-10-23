@@ -267,4 +267,7 @@
     <select id="getUserByName" resultMap="BaseResultMap" parameterType="String">
         SELECT <include refid="Base_Column_List"/> FROM User WHERE username = #{username}
     </select>
+    <select id="getRoleByName" resultType="String" parameterType="String">
+        SELECT role FROM User WHERE username = #{username}
+    </select>
 </mapper>

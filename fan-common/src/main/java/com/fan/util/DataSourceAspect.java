@@ -33,7 +33,7 @@ public class DataSourceAspect {
             if (clazz.isAnnotationPresent(DataSource.class)) {
                 DataSource source = clazz.getAnnotation(DataSource.class);
                 String value = source.value();
-                log.info("使用数据库:{}", value);
+//                log.info("使用数据库:{}", value);
                 DbContextHolder.setDataSource(value);
             }
 //			方法注解可以覆盖类型注解

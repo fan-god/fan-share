@@ -27,8 +27,9 @@
     <!-- 配置缓存管理器 -->
     <bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
         <!-- 指定 ehcache 的配置文件 -->
-        <property name="cacheManagerConfigFile" value="classpath:ehcache-shiro.xml"/>
+        <property name="cacheManagerConfigFile" value="classpath:spring/ehcache-shiro.xml"/>
     </bean>
+
     <!-- 配置进行授权和认证的 Realm -->
     <bean id="myRealm" class="com.fan.service.shiro.ShiroDbRealm">
         <property name="userService" ref="userService"/>
@@ -39,9 +40,9 @@
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
         <property name="cacheManager" ref="cacheManager"/>
         <property name="realm" ref="myRealm"/>
-        <property name="sessionMode" value="native">
-        </property>
+        <property name="sessionMode" value="native"/>
     </bean>
+
     <!-- 配置 Bean 后置处理器: 会自动的调用和 Spring 整合后各个组件的生命周期方法. -->
     <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
 </beans>

@@ -2,6 +2,7 @@ package com.fan.service.shiro;
 
 import com.fan.entity.User;
 import com.fan.service.IUserService;
+import com.fan.util.ConstantFan;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -21,7 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class ShiroDbRealm  extends AuthorizingRealm {
     @Autowired
     private IUserService userService;
-    public static final String SESSION_USER_KEY = "gray";
+    public static final String SESSION_USER_KEY = ConstantFan.USER_SESSION;
 
     /**
      * 授权查询回调函数, 进行鉴权但缓存中无用户的授权信息时调用,负责在应用程序中决定用户的访问控制的方法
@@ -56,10 +57,16 @@ public class ShiroDbRealm  extends AuthorizingRealm {
         return new SimpleAuthenticationInfo(principal, user.getPassword(), realmName);
     }
 
+    /**
+     *
+     * @param authcToken
+     * @return
+     */
     private User tokenToUser(UsernamePasswordToken authcToken) {
         User user = new User();
         user.setUsername(authcToken.getUsername());
         user.setPassword(String.valueOf(authcToken.getPassword()));
+        user.setRole(userService.getRoleByName(authcToken.getUsername()));
         return user;
     }
 

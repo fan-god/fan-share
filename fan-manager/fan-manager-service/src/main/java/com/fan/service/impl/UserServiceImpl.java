@@ -57,4 +57,9 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements IUserServi
     public User getUserByName(String username) {
         return userMapper.getUserByName(username);
     }
+
+    @Override
+    public String getRoleByName(String username) {
+        return userMapper.getRoleByName(username);
+    }
 }

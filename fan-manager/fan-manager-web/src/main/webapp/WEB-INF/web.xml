@@ -18,8 +18,8 @@
         <param-value>classpath:spring/spring-*.xml</param-value>
     </context-param>
 
-    <!-- 解决post乱码 -->
     <filter>
+        <description>解决post乱码</description>
         <filter-name>CharacterEncodingFilter</filter-name>
         <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
         <init-param>
@@ -34,6 +34,7 @@
 
     <!--session共享-->
     <filter>
+        <description>session共享</description>
         <filter-name>springSessionRepositoryFilter</filter-name>
         <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
     </filter>
@@ -41,6 +42,21 @@
         <filter-name>springSessionRepositoryFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
+
+    <filter>
+        <description>shiro 权限拦截</description>
+        <filter-name>shiroFilter</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+        <init-param>
+            <param-name>targetFilterLifecycle</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>shiroFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
     <!--springmvc前端控制器-->
     <servlet>
         <servlet-name>dispatcherServlet</servlet-name>
@@ -52,17 +68,19 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>dispatcherServlet</servlet-name>
-        <url-pattern>/*</url-pattern>
+        <url-pattern>/</url-pattern>
     </servlet-mapping>
-    <servlet>
+
+    <!--netty拦截地址-->
+   <!-- <servlet>
         <servlet-name>event-netty-server</servlet-name>
         <servlet-class>com.fan.service.netty.server.NettyServer</servlet-class>
         <load-on-startup>5</load-on-startup>
     </servlet>
     <servlet-mapping>
         <servlet-name>event-netty-server</servlet-name>
-        <url-pattern>/</url-pattern>
-    </servlet-mapping>
+        <url-pattern>/*</url-pattern>
+    </servlet-mapping>-->
 
     <servlet-mapping>
         <servlet-name>dispatcherServlet</servlet-name>
@@ -75,8 +93,8 @@
         <url-pattern>/images/*</url-pattern>
     </servlet-mapping>
     <!--当系统出现404错误，跳转到页面nopage.html -->
-   <!-- <error-page>
-        <error-code>404</error-code>
-        <location>/index.jsp</location>
-    </error-page>-->
+    <!-- <error-page>
+         <error-code>404</error-code>
+         <location>/index.jsp</location>
+     </error-page>-->
 </web-app>

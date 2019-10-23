@@ -38,19 +38,19 @@
             <bean id="apiInterceptor" class="com.fan.interceptors.ApiInterceptor"/>
         </mvc:interceptor>
 
-        <mvc:interceptor>
-            <!--登录拦截器-->
+       <!-- <mvc:interceptor>
+            &lt;!&ndash;登录拦截器&ndash;&gt;
             <mvc:mapping path="/**"/>
             <mvc:exclude-mapping path="/web/user/*/register"/>
             <mvc:exclude-mapping path="/web/user/*/login"/>
-            <mvc:exclude-mapping path="/api/**"/><!--对外接口-->
-            <mvc:exclude-mapping path="/wx/**"/><!--微信接口-->
-            <mvc:exclude-mapping path="/swagger-resources/**"/><!-- swagger静态资源-->
-            <mvc:exclude-mapping path="/webjars/**"/><!-- swagger静态资源-->
-            <mvc:exclude-mapping path="/v2/**"/><!-- swagger静态资源-->
-            <mvc:exclude-mapping path="/swagger-ui.html/**"/><!-- swagger静态资源-->
+            <mvc:exclude-mapping path="/api/**"/>&lt;!&ndash;对外接口&ndash;&gt;
+            <mvc:exclude-mapping path="/wx/**"/>&lt;!&ndash;微信接口&ndash;&gt;
+            <mvc:exclude-mapping path="/swagger-resources/**"/>&lt;!&ndash; swagger静态资源&ndash;&gt;
+            <mvc:exclude-mapping path="/webjars/**"/>&lt;!&ndash; swagger静态资源&ndash;&gt;
+            <mvc:exclude-mapping path="/v2/**"/>&lt;!&ndash; swagger静态资源&ndash;&gt;
+            <mvc:exclude-mapping path="/swagger-ui.html/**"/>&lt;!&ndash; swagger静态资源&ndash;&gt;
             <bean class="com.fan.interceptors.LoginInterceptor"/>
-        </mvc:interceptor>
+        </mvc:interceptor>-->
     </mvc:interceptors>
 
     <!-- 配置视图解析器 -->

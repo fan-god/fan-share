@@ -24,6 +24,7 @@ public interface UserMapper extends BaseMapper<User>{
 
     Integer login(User record);
 
-
     User getUserByName(String username);
+
+    String getRoleByName(String username);
 }
