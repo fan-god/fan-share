@@ -9,20 +9,24 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <%
+        String path = request.getContextPath();
+        String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
+    %>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Title</title>
 </head>
 <body>
-<shiro:principal/>
+Welcome！<shiro:principal/>
 <br/>
 <shiro:hasAnyRoles name="user">
-    <a href="/user.jsp">User Page</a>
+    <a href="<%=basePath%>user.jsp">User Page</a>
 </shiro:hasAnyRoles>
 <br/>
 <shiro:hasAnyRoles name="admin">
-    <a href="/admin.jsp">Admin Page</a>
+    <a href="<%=basePath%>admin.jsp">Admin Page</a>
 </shiro:hasAnyRoles>
 <br/>
-<a href="../test/logout">Logout</a>
+<a href="<%=basePath%>web/user/v1.0/logout">Logout</a>
 </body>
 </html>

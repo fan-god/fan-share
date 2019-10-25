@@ -30,6 +30,9 @@
         </javaClientGenerator>  
         
 <!--         要生成那些表(更改tableName和domainObjectName就可以)   -->
+<!--
     	<table tableName="user" domainObjectName="User" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />
-    </context>  
+-->
+    	<table tableName="role" domainObjectName="Role" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />
+    </context>
 </generatorConfiguration>  
