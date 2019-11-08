@@ -24,7 +24,7 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements IUserServi
     }
 
     @Override
-    public PageInfo<User> listPageAll(int pageNo, int pageSize, User user) {
+    public PageInfo<User> listPageAll(Integer pageNo, Integer pageSize, User user) {
         return listPageAll(pageNo, pageSize, user, userMapper);
     }
 

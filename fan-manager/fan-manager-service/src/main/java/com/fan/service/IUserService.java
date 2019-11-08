@@ -12,7 +12,7 @@ public interface IUserService{
 
     int AddGwf1(Map<String, Object> map);
 
-   PageInfo<User> listPageAll(int pageNo, int pageSize, User user);
+   PageInfo<User> listPageAll(Integer pageNo, Integer pageSize, User user);
 
     Boolean login(User user);
 

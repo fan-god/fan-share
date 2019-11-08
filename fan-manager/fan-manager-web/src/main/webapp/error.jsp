@@ -11,7 +11,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h1>上传失败</h1>
+<h1>处理失败</h1>
 <h1>${错误信息 }</h1>
 </body>
 </html>

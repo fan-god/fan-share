@@ -81,6 +81,7 @@
         <gecco.version>1.0.8</gecco.version>
         <aliyun.java.sdk.core.version>4.0.3</aliyun.java.sdk.core.version>
         <shiro.version>1.2.4</shiro.version>
+        <cors.version>2.5</cors.version>
     </properties>
 
     <dependencyManagement>
@@ -492,11 +493,11 @@
                 <version>${easyexcel.version}</version>
             </dependency>
             <!-- mp 依赖 -->
-           <!-- <dependency>
-                <groupId>com.baomidou</groupId>
-                <artifactId>mybatis-plus</artifactId>
-                <version>${mybatis.plus.version}</version>
-            </dependency>-->
+            <!-- <dependency>
+                 <groupId>com.baomidou</groupId>
+                 <artifactId>mybatis-plus</artifactId>
+                 <version>${mybatis.plus.version}</version>
+             </dependency>-->
             <!--二维码-->
             <dependency>
                 <groupId>com.google.zxing</groupId>
@@ -536,6 +537,13 @@
                 <groupId>org.apache.shiro</groupId>
                 <artifactId>shiro-web</artifactId>
                 <version>${shiro.version}</version>
+            </dependency>
+
+            <!--CORS跨域过滤器依赖-->
+            <dependency>
+                <groupId>com.thetransactioncompany</groupId>
+                <artifactId>cors-filter</artifactId>
+                <version>${cors.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

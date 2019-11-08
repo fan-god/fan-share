@@ -41,6 +41,20 @@ public class LanguageInterceptor extends LocaleChangeInterceptor {
             localeResolver.setLocale(request, response, Locale.getDefault());
         }
 
+        /**
+         * 解决跨域问题
+         */
+//        response.setHeader("Access-Control-Allow-Origin", "http://127.0.0.1:8081");
+//        response.setHeader("Access-Control-Allow-Headers", "Content-Type,Content-Length, Authorization, Accept,X-Requested-With");
+//        response.setHeader("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
+//        response.setHeader("X-Powered-By","Jetty");
+//
+//        String method= request.getMethod();
+//        if (method.equals("OPTIONS")){
+//            response.setStatus(200);
+//            return false;
+//        }
+//        System.out.println(method);
         return true;
     }
 

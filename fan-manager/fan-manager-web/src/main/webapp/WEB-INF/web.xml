@@ -57,6 +57,16 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
+    <!--跨域-->
+    <filter>
+        <filter-name>corsFilter</filter-name>
+        <filter-class>com.thetransactioncompany.cors.CORSFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>corsFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
     <!--springmvc前端控制器-->
     <servlet>
         <servlet-name>dispatcherServlet</servlet-name>
@@ -72,15 +82,15 @@
     </servlet-mapping>
 
     <!--netty拦截地址-->
-   <!-- <servlet>
-        <servlet-name>event-netty-server</servlet-name>
-        <servlet-class>com.fan.service.netty.server.NettyServer</servlet-class>
-        <load-on-startup>5</load-on-startup>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>event-netty-server</servlet-name>
-        <url-pattern>/*</url-pattern>
-    </servlet-mapping>-->
+    <!-- <servlet>
+         <servlet-name>event-netty-server</servlet-name>
+         <servlet-class>com.fan.service.netty.server.NettyServer</servlet-class>
+         <load-on-startup>5</load-on-startup>
+     </servlet>
+     <servlet-mapping>
+         <servlet-name>event-netty-server</servlet-name>
+         <url-pattern>/*</url-pattern>
+     </servlet-mapping>-->
 
     <servlet-mapping>
         <servlet-name>dispatcherServlet</servlet-name>

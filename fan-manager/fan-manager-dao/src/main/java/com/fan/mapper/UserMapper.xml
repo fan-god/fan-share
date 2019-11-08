@@ -19,10 +19,11 @@
         <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
         <result column="creator" property="creator" jdbcType="VARCHAR"/>
         <result column="modifier" property="modifier" jdbcType="VARCHAR"/>
+        <result column="email" property="email" jdbcType="VARCHAR"/>
     </resultMap>
     <sql id="Base_Column_List">
     id, username, password, sex, phone, address, stat, remark, gwf1, gwf2, gwf3, gwf4, 
-    gwf5, create_date, update_date, creator, modifier
+    gwf5, create_date, update_date, creator, modifier, email
   </sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
         select
@@ -40,13 +41,13 @@
       stat, remark, gwf1, 
       gwf2, gwf3, gwf4, gwf5, 
       create_date, update_date, creator, 
-      modifier)
+      modifier,email)
     values (#{id,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
       #{sex,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
       #{stat,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, #{gwf1,jdbcType=VARCHAR}, 
       #{gwf2,jdbcType=VARCHAR}, #{gwf3,jdbcType=VARCHAR}, #{gwf4,jdbcType=VARCHAR}, #{gwf5,jdbcType=VARCHAR}, 
       #{createDate,jdbcType=TIMESTAMP}, #{updateDate,jdbcType=TIMESTAMP}, #{creator,jdbcType=VARCHAR}, 
-      #{modifier,jdbcType=VARCHAR})
+      #{modifier,jdbcType=VARCHAR},#{email,jdbcType=VARCHAR})
   </insert>
     <insert id="insertSelective" parameterType="com.fan.entity.User">
         insert into user
@@ -102,6 +103,9 @@
             <if test="modifier != null">
                 modifier,
             </if>
+            <if test="email != null">
+                email,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -154,6 +158,9 @@
             </if>
             <if test="modifier != null">
                 #{modifier,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                #{email,jdbcType=VARCHAR},
             </if>
         </trim>
     </insert>
@@ -208,6 +215,9 @@
             <if test="modifier != null">
                 modifier = #{modifier,jdbcType=VARCHAR},
             </if>
+            <if test="email != null">
+                modifier = #{email,jdbcType=VARCHAR},
+            </if>
         </set>
         where id = #{id,jdbcType=BIGINT}
     </update>
@@ -229,6 +239,7 @@
       update_date = #{updateDate,jdbcType=TIMESTAMP},
       creator = #{creator,jdbcType=VARCHAR},
       modifier = #{modifier,jdbcType=VARCHAR}
+      email = #{email,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
 
@@ -246,26 +257,32 @@
     <select id="isExist" resultType="java.lang.Integer" parameterType="com.fan.entity.User">
         SELECT 1 FROM user WHERE username = #{username,jdbcType=VARCHAR}
     </select>
+
     <sql id="Base_query_criteria">
-        <if test="username!=null">
-           AND username = #{username}
+        <if test="username!=null and username!=''">
+            AND username LIKE CONCAT('%',#{username,jdbcType=VARCHAR},'%')
         </if>
         <if test="password!=null">
             AND password = #{password}
         </if>
         <if test="sex!=null">
-            AND  sex = #{sex}
+            AND sex = #{sex}
         </if>
-        <if test="phone!=null">
-            AND  phone = #{phone}
+        <if test="phone!=null and phone!=''">
+            AND phone = #{phone}
         </if>
         <if test="address!=null">
-            AND  address = #{address}
+            AND address = #{address}
+        </if>
+        <if test="email!=null and email!=''">
+            AND email = #{email}
         </if>
     </sql>
 
     <select id="getUserByName" resultMap="BaseResultMap" parameterType="String">
-        SELECT <include refid="Base_Column_List"/> FROM User WHERE username = #{username}
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM User WHERE username = #{username}
     </select>
     <select id="getRoleByName" resultType="String" parameterType="String">
         SELECT b.role_en_name FROM user a LEFT JOIN role b ON a.role_id=b.role_id WHERE a.username=#{username}

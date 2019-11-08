@@ -16,8 +16,14 @@ import java.util.List;
  */
 public abstract class BaseServiceImpl<T extends BaseEntity> {
 
-    protected PageInfo<T> listPageAll(int pageNo, int pageSize, T t, BaseMapper baseMapper) {
-        PageHelper.startPage(pageNo,pageSize);
+    protected PageInfo<T> listPageAll(Integer pageNo, Integer pageSize, T t, BaseMapper baseMapper) {
+        if (null == pageNo) {
+            pageNo = 1;
+        }
+        if (null == pageSize) {
+            pageSize = 10;
+        }
+        PageHelper.startPage(pageNo, pageSize);
         List<T> list = baseMapper.listAll(t);
         PageInfo<T> pageInfo = new PageInfo<>(list);
         return pageInfo;

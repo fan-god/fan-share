@@ -20,10 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -67,7 +64,7 @@ public class UserController_v1p0 {
         try {
             String username = user.getUsername();
             String password = user.getPassword();
-//            if (StringUtils.isNoneBlank(username, password)) {
+            if (StringUtils.isNoneBlank(username, password)) {
 //                if (isReLogin()) {
 //                    response.sendRedirect("/fan-manager-web/loginSuccess.jsp");
 //                    return ResponseMsg.success(); // 如果已经登陆，无需重新登录
@@ -82,9 +79,9 @@ public class UserController_v1p0 {
 //                response.sendRedirect("/fan-manager-web/loginSuccess.jsp");
 //                // 调用shiro的登陆验证
 //                return shiroLogin(user);
-//            }
+            }
 //            response.sendRedirect("/fan-manager-web/error.jsp");
-//            return ResponseMsg.fail().setMsg("账号或密码为空");
+            return ResponseMsg.fail().setMsg("账号或密码为空");
 
         } catch (Exception e) {
             log.error("login error{}", e);
