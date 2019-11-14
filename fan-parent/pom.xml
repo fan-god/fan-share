@@ -62,7 +62,7 @@
         <spring.session.data.redis>1.2.1.RELEASE</spring.session.data.redis>
         <spring.redis.version>1.6.1.RELEASE</spring.redis.version>
 
-        <fasterxml.version>2.5.4</fasterxml.version>
+        <fasterxml.version>2.10.1</fasterxml.version>
         <!--公用工具-->
         <commons.lang3.version>3.3.2</commons.lang3.version>
         <commons.beanutils>1.7.0</commons.beanutils>
