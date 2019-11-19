@@ -53,6 +53,43 @@ public class UserController_v1p0 {
         return ResponseMsg.fail();
     }
 
+    @PostMapping("/updateUser")
+    public ResponseMsg updateUser(User user) {
+        try {
+            Integer count = userService.updateUser(user);
+            if (count > 0) {
+                return ResponseMsg.success();
+            }
+        } catch (Exception e) {
+            log.error("UserController error:{}", e);
+        }
+        return ResponseMsg.fail();
+    }
+
+    @GetMapping("/deleteUser")
+    public ResponseMsg deleteUser(Long id) {
+        try {
+            Integer count = userService.deleteUserById(id);
+            if (count > 0) {
+                return ResponseMsg.success();
+            }
+        } catch (Exception e) {
+            log.error("UserController error:{}", e);
+        }
+        return ResponseMsg.fail();
+    }
+
+    @PostMapping("/queryUserById")
+    public ResponseMsg queryUserById(Long id) {
+        try {
+            User user = userService.queryUserById(id);
+            return ResponseMsg.success().setDatas(user);
+        } catch (Exception e) {
+            log.error("{}", e);
+        }
+        return ResponseMsg.fail();
+    }
+
     /**
      * 登录
      *
@@ -60,7 +97,7 @@ public class UserController_v1p0 {
      * @return
      */
     @PostMapping("/login")
-    public ResponseMsg login(User user, HttpServletResponse response,HttpServletRequest request) {
+    public ResponseMsg login(User user, HttpServletResponse response, HttpServletRequest request) {
         try {
             String username = user.getUsername();
             String password = user.getPassword();

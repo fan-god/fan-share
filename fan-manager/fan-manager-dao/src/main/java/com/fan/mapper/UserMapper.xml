@@ -277,6 +277,7 @@
         <if test="email!=null and email!=''">
             AND email = #{email}
         </if>
+        AND stat=0
     </sql>
 
     <select id="getUserByName" resultMap="BaseResultMap" parameterType="String">
@@ -287,4 +288,7 @@
     <select id="getRoleByName" resultType="String" parameterType="String">
         SELECT b.role_en_name FROM user a LEFT JOIN role b ON a.role_id=b.role_id WHERE a.username=#{username}
     </select>
+    <update id="deleteUserById" parameterType="Long">
+        UPDATE user SET stat = 1 WHERE id = #{id,jdbcType=BIGINT}
+    </update>
 </mapper>

@@ -29,6 +29,11 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements IUserServi
     }
 
     @Override
+    public User queryUserById(Long id) {
+        return userMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
     public Boolean login(User user) {
         return null != userMapper.login(user);
     }
@@ -61,5 +66,15 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements IUserServi
     @Override
     public String getRoleByName(String username) {
         return userMapper.getRoleByName(username);
+    }
+
+    @Override
+    public Integer updateUser(User user) {
+        return userMapper.updateByPrimaryKeySelective(user);
+    }
+
+    @Override
+    public Integer deleteUserById(Long id) {
+        return userMapper.deleteUserById(id);
     }
 }

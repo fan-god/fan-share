@@ -27,4 +27,6 @@ public interface UserMapper extends BaseMapper<User>{
     User getUserByName(String username);
 
     String getRoleByName(String username);
+
+    Integer deleteUserById(Long id);
 }
