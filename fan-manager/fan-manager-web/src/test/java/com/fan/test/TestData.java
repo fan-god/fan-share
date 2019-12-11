@@ -6,6 +6,7 @@ import com.fan.entity.api.IPWhitelist;
 import com.fan.remote.sms.SendSms;
 import com.fan.remote.wx.WeChatRemote;
 import com.fan.service.*;
+import com.fan.service.netty.server.NettyServer;
 import com.fan.service.wxpay.WXPay;
 import com.fan.util.ConstantFan;
 import com.fan.util.DataConvertUtil;
@@ -50,6 +51,8 @@ public class TestData {
     private WeChatRemote weChatRemote;
     @Autowired
     private IPWhitelistService ipWhitelistService;
+    @Autowired
+    private NettyServer nettyServer;
 
     @Test
     public void test1() {
@@ -132,6 +135,15 @@ public class TestData {
         try {
             IPWhitelist ipWhitelist = IPWhitelist.builder().ip("127.0.0.1").remarks("本机ip地址").username("wangfan").userId("1").build();
             ipWhitelistService.add(ipWhitelist);
+        } catch (Exception e) {
+            log.error("{}", e);
+        }
+    }
+
+    @Test
+    public void test9() {
+        try {
+            nettyServer.nettyServerStart();
         } catch (Exception e) {
             log.error("{}", e);
         }

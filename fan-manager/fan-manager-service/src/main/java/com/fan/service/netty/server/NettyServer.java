@@ -13,6 +13,7 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import io.netty.handler.timeout.IdleStateHandler;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -27,6 +28,7 @@ import java.util.concurrent.FutureTask;
  * @date 2019/7/17/001714:28
  */
 @Slf4j
+@Component
 public class NettyServer extends HttpServlet {
     private static final String NETTY_CONFIG_FILE_NAME = "config/netty.properties";
     private static final String NETTY_PORT_KEY_NAME = "netty.server.port";

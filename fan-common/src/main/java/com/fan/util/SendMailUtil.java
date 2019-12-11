@@ -161,20 +161,17 @@ public class SendMailUtil {
         return result;
     }
 
-    public static String getHtmlText(String templatePath, Map<String, Object> map, String ftlFilePath) throws Exception {
-        Template template = null;
-        String htmlText = "";
+    public static String getHtmlText(String templatePath, Map<String, Object> map, String ftlFilePath){
+        String htmlText = null;
         try {
-            Configuration freeMarkerConfig = null;
-            freeMarkerConfig = new Configuration();
+            Configuration freeMarkerConfig = new Configuration();
             freeMarkerConfig.setDirectoryForTemplateLoading(new File(ftlFilePath));
             // 获取模板
-            template = freeMarkerConfig.getTemplate(getFileName(templatePath), new Locale("Zh_cn"), ConstantFan.CHARSET);
+            Template template = freeMarkerConfig.getTemplate(getFileName(templatePath), new Locale("Zh_cn"), ConstantFan.CHARSET);
             // 模板内容转换为string
             htmlText = FreeMarkerTemplateUtils.processTemplateIntoString(template, map);
         } catch (Exception e) {
             logger.error("send email fail,{}", e);
-            throw e;
         }
         return htmlText;
     }
@@ -241,7 +238,7 @@ public class SendMailUtil {
         if (realPath.endsWith("!"))
             realPath = realPath.substring(0, realPath.lastIndexOf("/"));
         /*------------------------------------------------------------
-		 ClassLoader的getResource方法使用了utf-8对路径信息进行了编码，当路径 
+         ClassLoader的getResource方法使用了utf-8对路径信息进行了编码，当路径 
 		  中存在中文和空格时，他会对这些字符进行转换，这样，得到的往往不是我们想要 
 		  的真实路径，在此，调用了URLDecoder的decode方法进行解码，以便得到原始的 
 		  中文及空格路径 
@@ -414,7 +411,7 @@ public class SendMailUtil {
 
 
     public static void main(String[] args) {
-        String[] toMailAddr = new String[]{"495220742@qq.com","chuanpu@vip.qq.com"};
+        String[] toMailAddr = new String[]{"495220742@qq.com", "chuanpu@vip.qq.com"};
         String subject = "测试邮件";
         String message = "测试邮件<br/><a href='http://www.google.cn'>童俊是傻逼</a><br/>";
         try {
@@ -423,7 +420,7 @@ public class SendMailUtil {
                     .subject(subject)
                     .message(message)
                     .toMailAddr(toMailAddr)
-                    .fromPwd("esumiavrldyoifhh")
+                    .fromPwd("xjopoqyoxpioifia")
                     .attachmentFile(attachmentFile)
                     .hostName("smtp.qq.com")
                     .smtpPort(25)

@@ -21,10 +21,10 @@ public class NettyServerHandler extends Middleware {
     protected void handlerData(ChannelHandlerContext ctx, Object msg) {
         NettyModel model = (NettyModel) msg;
         System.out.println("server 接收数据 ： " + model.toString());
-        model.setType(ConstantFan.CUSTOMER);
-        model.setBody("---------------");
-        ctx.channel().writeAndFlush(model);
-        System.out.println("server 发送数据： " + model.toString());
+//        model.setType(ConstantFan.CUSTOMER);
+//        model.setBody("---------------");
+//        ctx.channel().writeAndFlush(model);
+//        System.out.println("server 发送数据： " + model.toString());
     }
 
     @Override
@@ -34,11 +34,13 @@ public class NettyServerHandler extends Middleware {
         ctx.close();
     }
 
+    //纪律错误信息
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
         System.err.println(name + "exception:" + cause.toString());
     }
 
+    //消息回复
     @Override
     protected void messageReceived(ChannelHandlerContext channelHandlerContext, Object o) throws Exception {
 

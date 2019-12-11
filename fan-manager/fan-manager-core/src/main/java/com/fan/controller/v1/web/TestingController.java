@@ -14,9 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.NotNull;
 import java.io.File;
-import java.net.InetAddress;
 import java.util.Date;
-import java.util.Map;
 
 /**
  * @author fan
@@ -45,7 +43,7 @@ public class TestingController {
                     .subject(subject)
                     .message(message)
                     .toMailAddr(toMailAddr)
-                    .fromPwd("esumiavrldyoifhh")
+                    .fromPwd("xjopoqyoxpioifia")
                     .attachmentFile(attachmentFile)
                     .hostName("smtp.qq.com")
                     .smtpPort(25)
