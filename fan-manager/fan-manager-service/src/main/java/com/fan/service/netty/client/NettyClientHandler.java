@@ -2,7 +2,6 @@ package com.fan.service.netty.client;
 
 import com.fan.entity.NettyModel;
 import com.fan.service.netty.Middleware;
-import com.fan.util.ConstantFan;
 import io.netty.channel.ChannelHandlerContext;
 
 /**
