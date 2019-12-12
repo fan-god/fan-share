@@ -40,9 +40,4 @@ public class NettyServerHandler extends Middleware {
         System.err.println(name + "exception:" + cause.toString());
     }
 
-    //消息回复
-    @Override
-    protected void messageReceived(ChannelHandlerContext channelHandlerContext, Object o) throws Exception {
-
-    }
 }

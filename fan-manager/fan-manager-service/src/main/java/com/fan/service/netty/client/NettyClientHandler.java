@@ -42,9 +42,5 @@ public class NettyClientHandler extends Middleware {
             throws Exception {
         System.out.println(name + "exception :" + cause.toString());
     }
-
-    @Override
-    protected void messageReceived(ChannelHandlerContext channelHandlerContext, Object o) throws Exception {
-    }
 }
 

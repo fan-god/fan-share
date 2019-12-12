@@ -11,6 +11,9 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
+import io.netty.handler.codec.http.HttpObjectAggregator;
+import io.netty.handler.codec.http.HttpServerCodec;
+import io.netty.handler.stream.ChunkedWriteHandler;
 import io.netty.handler.timeout.IdleStateHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -51,6 +54,13 @@ public class NettyServer extends HttpServlet {
                             pipeline.addLast(new IdleStateHandler(10, 0, 0));
                             pipeline.addLast("msgpack decoder", new MsgPckDecode());
                             pipeline.addLast("msgpack encoder", new MsgPckEncode());
+                            //用于Http请求的编码或者解码
+                            pipeline.addLast("http-codec", new HttpServerCodec());
+                            //把Http消息组成完整地HTTP消息
+                            pipeline.addLast("aggregator", new HttpObjectAggregator(65536));
+                            //向客户端发送HTML5文件
+                            pipeline.addLast("http-chunked", new ChunkedWriteHandler());
+                            //实际处理的Handler
                             pipeline.addLast(new NettyServerHandler());
                         }
                     });
