@@ -80,7 +80,7 @@
         <!--抓包工具-->
         <gecco.version>1.0.8</gecco.version>
         <aliyun.java.sdk.core.version>4.0.3</aliyun.java.sdk.core.version>
-        <shiro.version>1.2.4</shiro.version>
+        <shiro.version>1.7.1</shiro.version>
         <cors.version>2.5</cors.version>
     </properties>
 
