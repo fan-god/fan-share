@@ -23,7 +23,7 @@
         <!-- log4j日志文件管理包版本 -->
         <slf4j.version>1.7.7</slf4j.version>
         <log4j.version>1.2.17</log4j.version>
-        <mysql-vaersion>5.1.30</mysql-vaersion>
+        <mysql-vaersion>8.0.28</mysql-vaersion>
         <quartz-version>2.3.0</quartz-version>
         <freemark-version>2.3.28</freemark-version>
         <gson-version>2.2.3</gson-version>
