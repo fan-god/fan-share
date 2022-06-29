@@ -55,7 +55,7 @@
         <generator.version>1.3.2</generator.version>
         <swagger2.version>2.7.0</swagger2.version>
         <guava.version>27.0.1-jre</guava.version>
-        <apache.email.version>1.4</apache.email.version>
+        <apache.email.version>1.5</apache.email.version>
         <mail-version>1.4.5</mail-version>
         <!--redis-->
         <redis.version>2.7.2</redis.version>
